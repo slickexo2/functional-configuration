@@ -6,10 +6,10 @@
   <priority>1</priority>
   <page-nodes>
     <node>
-      <uri>activityComposerConfiguration</uri>
-      <name>activityComposerConfiguration</name>
-      <label>AS Composer configuration</label>
-      <page-reference>group::/platform/administrators::activityComposerConfiguration</page-reference>
+      <uri>functionalComposerConfiguration</uri>
+      <name>functionalComposerConfiguration</name>
+      <label>Functional configuration</label>
+      <page-reference>group::/platform/administrators::functionalComposerConfiguration</page-reference>
     </node>
   </page-nodes>
 </node-navigation>
