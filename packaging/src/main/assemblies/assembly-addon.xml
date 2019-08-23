@@ -21,7 +21,7 @@
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
-    <id>activity-composer-configuration</id>
+    <id>functional-configuration</id>
     <formats>
         <format>zip</format>
     </formats>
@@ -31,7 +31,7 @@
         <!-- Libraries -->
         <dependencySet>
             <useProjectArtifact>false</useProjectArtifact>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory>lib</outputDirectory>
             <includes>
                 <include>org.exoplatform.addons.functional-configuration:functional-configuration-service:jar</include>
             </includes>
@@ -41,7 +41,7 @@
         <!-- webapps -->
         <dependencySet>
             <useProjectArtifact>false</useProjectArtifact>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory>webapps</outputDirectory>
             <includes>
                 <include>org.exoplatform.addons.functional-configuration:functional-configuration-webapp:war</include>
             </includes>
@@ -49,7 +49,7 @@
         </dependencySet>
 		<dependencySet>
             <useProjectArtifact>false</useProjectArtifact>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory>webapps</outputDirectory>
             <includes>
                 <include>org.exoplatform.addons.functional-configuration:functional-configuration-portlets:war</include>
             </includes>

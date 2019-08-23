@@ -19,7 +19,7 @@
             <field name="dependencies">
               <collection type="java.util.ArrayList">
                 <value>
-                  <string>activity-composer-configuration-webapp</string>
+                  <string>functional-configuration</string>
                 </value>
               </collection>
             </field>

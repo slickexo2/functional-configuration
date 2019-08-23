@@ -34,6 +34,6 @@
 
   </dependencies>
   <build>
-    <finalName>functional-configuration-webapp</finalName>
+    <finalName>functional-configuration</finalName>
   </build>
 </project>
