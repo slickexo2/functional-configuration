@@ -13,8 +13,8 @@ value = {
 
 @Assets("*")
 @Application
-@Portlet(name="ActivityComposerConfigurationPortlet")
-@Bindings({@Binding(ActivityComposerConfigurationService.class)})
+@Portlet(name="FunctionalConfigurationPortlet")
+@Bindings({@Binding(FunctionalConfigurationService.class)})
 package org.exoplatform.portlets.activityComposerConfiguration;
 
 import juzu.Application;

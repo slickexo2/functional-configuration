@@ -20,9 +20,9 @@ import org.exoplatform.services.log.Log;
 import org.exoplatform.social.core.space.model.Space;
 
 
-public class ActivityComposerConfigurationController {
+public class FunctionalConfigurationController {
 
-    private static Log log = ExoLogger.getLogger(ActivityComposerConfigurationController.class);
+    private static Log log = ExoLogger.getLogger(FunctionalConfigurationController.class);
     private static final String NAME = "name";
     private static final String LABEL = "label";
     private static final String SPACES_WITH_ACTIVITY_COMPOSER = "spacesWithActivityComposer";
@@ -32,7 +32,7 @@ public class ActivityComposerConfigurationController {
     Template index;
     
     @Inject
-    ActivityComposerConfigurationService activityComposerConfigurationService;
+    FunctionalConfigurationService activityComposerConfigurationService;
     
     @View
     public Response.Content index() throws Exception {
@@ -52,7 +52,7 @@ public class ActivityComposerConfigurationController {
           json.put(LABEL, spaceWithoutActivityComposer.getDisplayName());
           jsonArray.put(json);
         }
-        jsonGlobal.put(ActivityComposerConfigurationService.SPACES_WITHOUT_ACTIVITY_COMPOSER, jsonArray);
+        jsonGlobal.put(FunctionalConfigurationService.SPACES_WITHOUT_ACTIVITY_COMPOSER, jsonArray);
       } catch (Exception e) {
         log.error("Cannot get spaces without activity composer", e);
       }
@@ -86,7 +86,7 @@ public class ActivityComposerConfigurationController {
       JSONObject jsonGlobal = new JSONObject();
       try {
         String userActivityComposerState = activityComposerConfigurationService.getUserActivityComposerState();
-        jsonGlobal.put(ActivityComposerConfigurationService.HIDE_USER_ACTIVITY_COMPOSER, userActivityComposerState);
+        jsonGlobal.put(FunctionalConfigurationService.HIDE_USER_ACTIVITY_COMPOSER, userActivityComposerState);
       } catch (Exception e) {
         log.error("Cannot get user activity composer state", e);
       }
