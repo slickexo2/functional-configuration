@@ -34,5 +34,10 @@
 			<artifactId>social-component-core</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.exoplatform.integration</groupId>
+			<artifactId>integ-ecms-social</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>

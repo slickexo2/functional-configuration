@@ -1,0 +1,11 @@
+<configuration
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.exoplatform.org/xml/ns/kernel_1_3.xsd http://www.exoplatform.org/xml/ns/kernel_1_3.xsd"
+        xmlns="http://www.exoplatform.org/xml/ns/kernel_1_3.xsd">
+
+    <!-- This configuration adds Functional Composer to Administration drop-down menu -->
+    <component>
+        <key>org.exoplatform.rest.DocumentActivityService</key>
+        <type>org.exoplatform.rest.DocumentActivityService</type>
+    </component>
+</configuration>
