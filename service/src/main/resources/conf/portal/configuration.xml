@@ -12,7 +12,7 @@
 	xmlns="http://www.exoplaform.org/xml/ns/kernel_1_2.xsd">
 
 	<component>
-		<type>org.exoplatform.service.ActivityComposerConfigurationService</type>
+		<type>org.exoplatform.service.FunctionalConfigurationService</type>
 	</component>
 
 	<component>

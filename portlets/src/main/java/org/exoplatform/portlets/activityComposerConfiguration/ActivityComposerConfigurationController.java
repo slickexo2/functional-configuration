@@ -14,7 +14,7 @@ import juzu.template.Template;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import org.exoplatform.service.ActivityComposerConfigurationService;
+import org.exoplatform.service.FunctionalConfigurationService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.social.core.space.model.Space;

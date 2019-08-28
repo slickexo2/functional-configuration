@@ -25,7 +25,7 @@
   import org.exoplatform.social.webui.composer.UIComposer;
   import org.exoplatform.social.webui.profile.UIUserActivitiesDisplay;
   import org.exoplatform.social.webui.Utils;
-  import org.exoplatform.service.ActivityComposerConfigurationService;
+  import org.exoplatform.service.FunctionalConfigurationService;
   import org.exoplatform.container.ExoContainerContext;
   
   def currentRemoteId = Utils.getViewerRemoteId();

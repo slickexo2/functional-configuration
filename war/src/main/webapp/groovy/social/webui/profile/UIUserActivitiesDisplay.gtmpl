@@ -26,7 +26,7 @@
   import org.exoplatform.social.core.service.LinkProvider;
   import org.exoplatform.social.webui.Utils;
   import java.util.Calendar;
-  import org.exoplatform.service.ActivityComposerConfigurationService;
+  import org.exoplatform.service.FunctionalConfigurationService;
   import org.exoplatform.container.ExoContainerContext;
 
   def rcontext = _ctx.getRequestContext() ;

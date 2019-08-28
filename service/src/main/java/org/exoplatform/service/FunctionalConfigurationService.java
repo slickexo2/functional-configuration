@@ -12,7 +12,7 @@ import org.exoplatform.commons.utils.ListAccess;
 import org.exoplatform.social.core.space.model.Space;
 import org.exoplatform.social.core.space.spi.SpaceService;
 
-public class ActivityComposerConfigurationService {
+public class FunctionalConfigurationService {
   
   public static final String HIDE_USER_ACTIVITY_COMPOSER = "hideUserActivityComposer";
   
@@ -32,7 +32,7 @@ public class ActivityComposerConfigurationService {
    * @param settingService
    * @param spaceService
    */
-  public ActivityComposerConfigurationService(SettingService settingService, SpaceService spaceService) {
+  public FunctionalConfigurationService(SettingService settingService, SpaceService spaceService) {
     this.settingService = settingService;
     this.spaceService = spaceService;
   }

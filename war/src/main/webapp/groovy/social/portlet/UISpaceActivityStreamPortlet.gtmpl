@@ -24,7 +24,7 @@
   import org.exoplatform.social.webui.Utils;
   import org.exoplatform.social.core.space.model.Space;
   import org.exoplatform.social.core.space.spi.SpaceService;
-  import org.exoplatform.service.ActivityComposerConfigurationService;
+  import org.exoplatform.service.FunctionalConfigurationService;
   import org.exoplatform.container.ExoContainerContext;
   import org.exoplatform.services.security.ConversationState;
   import org.exoplatform.services.security.Identity;
