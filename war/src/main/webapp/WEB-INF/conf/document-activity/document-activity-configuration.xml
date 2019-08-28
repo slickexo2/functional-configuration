@@ -5,7 +5,7 @@
 
     <!-- This configuration adds Functional Composer to Administration drop-down menu -->
     <component>
-        <key>org.exoplatform.rest.DocumentActivityService</key>
-        <type>org.exoplatform.rest.DocumentActivityService</type>
+        <key>org.exoplatform.rest.FunctionalConfigurationController</key>
+        <type>org.exoplatform.rest.FunctionalConfigurationController</type>
     </component>
 </configuration>
