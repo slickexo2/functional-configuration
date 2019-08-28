@@ -1,6 +1,12 @@
 <template>
 	<div id="functionConfiguration-content">
-		Hello World !!
+		 <div>
+
+            {{ $t('functionalConfiguration.unsetDocumentActivities') }}
+			<input type="checkbox" v-model="unsetDocumentActivities">
+
+            {{unsetDocumentActivities}}
+          </div>
 	</div>
 </template>
 
@@ -8,7 +14,8 @@
     export default {
         data() {
             return {
-                errors: []
+                errors: [],
+                unsetDocumentActivities: true
             }
         },
         created() {

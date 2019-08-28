@@ -1,4 +1,5 @@
 {
+  "functionalConfiguration.unsetDocumentActivities": "Désactiver les activités automatiques lors de l'ajout, création ou modification de documents : ",
   "configuration.spacesWithActivityComposer":"Liste des espaces avec composer",
   "configuration.add":"Ajouter",
   "configuration.delete":"Supprimer",
