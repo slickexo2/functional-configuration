@@ -16,4 +16,9 @@ export default {
         return axios.put(route + "/hide-document-activities?isHidden=" + isHidden);
     }
 
+
+//    updateDocumentActionActivities(){
+//        return axios.put("/rest/functional-configuration/document-action-activities?hidden=true").then((response) => console.log(response));
+////        return "test2";
+//    }
 }
