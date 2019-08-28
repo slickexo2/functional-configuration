@@ -5,6 +5,7 @@
 </template>
 
 <script>
+	import functionalConfigurationService from '../services/functionalConfigurationService'
     export default {
         data() {
             return {
@@ -12,6 +13,7 @@
             }
         },
         created() {
+        	console.log(functionalConfigurationService.getConfiguration());
             console.log("Created Initialization");
     	}
     }
