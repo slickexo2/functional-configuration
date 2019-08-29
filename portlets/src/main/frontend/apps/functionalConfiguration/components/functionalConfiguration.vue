@@ -1,6 +1,7 @@
 <template>
 	<div id="functionConfiguration-content">
 		 <div>
+
 			 {{ $t('functionalConfiguration.hideDocumentActionActivities') }}
 			 <input type="checkbox" v-model="configuration.hideDocumentActionActivities" @change="changeHideDocumentActionActivities">
 			 {{configuration.hideDocumentActionActivities}}
@@ -22,11 +23,13 @@
             }
         },
         created() {
-			this.configuration.hideDocumentActionActivities = true;
-			this.configuration.hideComposerActivities = true;
-			functionalConfigurationService.getConfiguration().then((response) =>
-					console.log(response)
-			);
+            const self = this;
+
+			functionalConfigurationService.getConfiguration().then((response) => {
+                self.configuration = response.data;
+
+                console.log(self.configuration, response.data);
+			});
 
             console.log("Created Initialization");
     	},

@@ -7,13 +7,15 @@ export default {
     },
 
     putHideComposerActivities(isHidden){
-        console.log("put /hide-user-activity-composer");
-        return axios.put(route + "/composer-activity?hidden=" + isHidden);
+        const restRoute = route + "/composer-activity?hidden=" + isHidden;
+        console.log(restRoute);
+        return axios.put(restRoute);
     },
 
     putHideDocumentActionActivities(isHidden){
-        console.log("put /hide-document-activities");
-        return axios.put(route + "/hide-document-activities?isHidden=" + isHidden);
+        const restRoute = route + "/document-activity?hidden=" + isHidden;
+        console.log(restRoute);
+        return axios.put(restRoute);
     }
 
 
