@@ -1,18 +1,53 @@
 <template>
 	<div id="functionConfiguration-content">
-		Hello World !!
+		 <div>
+
+			 {{ $t('functionalConfiguration.hideDocumentActionActivities') }}
+			 <input type="checkbox" v-model="configuration.hideDocumentActionActivities" @change="changeHideDocumentActionActivities">
+			 {{configuration.hideDocumentActionActivities}}
+				<br>
+            {{ $t('functionalConfiguration.hideComposerActivities') }}
+			<input type="checkbox" v-model="configuration.hideComposerActivities" @change="changeHideComposerActivities">
+            {{configuration.hideComposerActivities}}
+          </div>
 	</div>
 </template>
 
 <script>
+	import functionalConfigurationService from '../services/functionalConfigurationService'
     export default {
         data() {
             return {
-                errors: []
+                errors: [],
+                configuration: {}
             }
         },
         created() {
+            const self = this;
+
+			functionalConfigurationService.getConfiguration().then((response) => {
+                self.configuration = response.data;
+
+                console.log(self.configuration, response.data);
+			});
+
             console.log("Created Initialization");
-    	}
+    	},
+		methods:{
+			changeHideDocumentActionActivities(){
+				console.log("changeHideDocumentActionActivities");
+				functionalConfigurationService.putHideDocumentActionActivities(this.configuration.hideDocumentActionActivities).then((response) =>
+						console.log(response)
+				);
+			},
+
+			changeHideComposerActivities(){
+				console.log("changeHideComposerActivities");
+				functionalConfigurationService.putHideComposerActivities(this.configuration.hideComposerActivities).then((response) =>
+						console.log(response)
+				);
+			}
+		}
     }
+
 </script>

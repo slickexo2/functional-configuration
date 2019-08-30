@@ -25,7 +25,7 @@
   import org.exoplatform.social.webui.composer.UIComposer;
   import org.exoplatform.social.webui.profile.UIUserActivitiesDisplay;
   import org.exoplatform.social.webui.Utils;
-  import org.exoplatform.service.ActivityComposerConfigurationService;
+  import org.exoplatform.service.FunctionalConfigurationService;
   import org.exoplatform.container.ExoContainerContext;
   
   def currentRemoteId = Utils.getViewerRemoteId();
@@ -60,8 +60,8 @@
     }
     requireJs.addScripts("activity.setPageTitle(window.encodeURIComponent(\""+ activityTitle.replace("\"", "\\42").replace("\n", "").replace("\r", "") +"\").replace(/'/, '%27'));");
   }
-  ActivityComposerConfigurationService activityComposerConfigurationService = (ActivityComposerConfigurationService) ExoContainerContext.getCurrentContainer().getComponentInstanceOfType(ActivityComposerConfigurationService.class);
-  def userActivityComposerState = activityComposerConfigurationService.getUserActivityComposerState().equals("true");
+  FunctionalConfigurationService functionalConfigurationService = (FunctionalConfigurationService) ExoContainerContext.getCurrentContainer().getComponentInstanceOfType(FunctionalConfigurationService.class);
+  def userActivityComposerState = functionalConfigurationService.getUserActivityComposerState().equals("true");
     
 %>
 <div class="uiSocApplication uiUserActivityStreamPortlet uiUserActivityDetail" id="$uicomponent.id">
