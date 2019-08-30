@@ -48,7 +48,7 @@
 					<td v-if="!space.edition" >{{space.description}}</td>
 					<td v-if="space.hideActivityComposer.printed && !space.edition" >{{space.hideActivityComposer.order}} </td>
 					<td v-else-if="!space.edition" ></td>
-					<td v-if="!space.edition && !this.isEditing" ><button @click="edit(space, true)">editer</button></td>
+					<td v-if="!space.edition && !isEditing" ><button @click="edit(space, true)">editer</button></td>
 
 					<!--EDITION-->
 					<th v-if="space.edition" scope="row"> {{space.displayName}} </th>
