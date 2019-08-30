@@ -2,7 +2,7 @@ package org.exoplatform.rest.response;
 
 import java.util.List;
 
-public class FunctionalConfigurationResponse {
+public class FunctionalConfiguration {
 
     private boolean hideDocumentActionActivities;
 
