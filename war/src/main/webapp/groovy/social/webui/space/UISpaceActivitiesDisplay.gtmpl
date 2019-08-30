@@ -35,8 +35,8 @@
   def labelEmptyActivityList = _ctx.appRes("${uicomponentId}.label.Empty_Activity_List").replace("{0}", space.displayName);
   def hasActivities = uicomponent.getActivitiesLoader().getActivitiesContainer().getChildren().size() > 0;
   SpaceService spaceService = uicomponent.getParent().getSpaceService();
-  ActivityComposerConfigurationService activityComposerConfigurationService = (ActivityComposerConfigurationService) ExoContainerContext.getCurrentContainer().getComponentInstanceOfType(ActivityComposerConfigurationService.class);
-  def listSpacesWithActivityComposer = activityComposerConfigurationService.getListSpacesWithActivityComposer();
+  FunctionalConfigurationService functionalConfigurationService = (FunctionalConfigurationService) ExoContainerContext.getCurrentContainer().getComponentInstanceOfType(FunctionalConfigurationService.class);
+  def listSpacesWithActivityComposer = functionalConfigurationService.getListSpacesWithActivityComposer();
   Identity currentIdentity = ConversationState.getCurrent().getIdentity();
   def canCompose = spaceService.isManager(space, Utils.getViewerRemoteId()) || currentIdentity.isMemberOf("/platform/administrators") || listSpacesWithActivityComposer.contains(space);
  %>

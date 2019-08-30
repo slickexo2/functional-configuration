@@ -32,19 +32,19 @@ public class FunctionalConfigurationController {
     Template index;
     
     @Inject
-    FunctionalConfigurationService activityComposerConfigurationService;
+    FunctionalConfigurationService functionalConfigurationService;
     
     @View
     public Response.Content index() throws Exception {
       return index.ok();
     }
-    
+
     @Ajax
     @Resource
     public Response getSpacesWithoutActivityComposer() {
       JSONObject jsonGlobal = new JSONObject();
       try {
-        List<Space> listSpacesWithoutActivityComposer = activityComposerConfigurationService.getListSpacesWithoutActivityComposer();
+        List<Space> listSpacesWithoutActivityComposer = functionalConfigurationService.getListSpacesWithoutActivityComposer();
         JSONArray jsonArray = new JSONArray();
         for(Space spaceWithoutActivityComposer : listSpacesWithoutActivityComposer) {
           JSONObject json = new JSONObject();
@@ -58,13 +58,13 @@ public class FunctionalConfigurationController {
       }
       return Response.ok(jsonGlobal.toString());
     }
-    
+
     @Ajax
     @Resource
     public Response getSpacesWithActivityComposer() {
       JSONObject jsonGlobal = new JSONObject();
       try {
-        List<Space> listSpacesWithActivityComposer = activityComposerConfigurationService.getListSpacesWithActivityComposer();
+        List<Space> listSpacesWithActivityComposer = functionalConfigurationService.getListSpacesWithActivityComposer();
         JSONArray jsonArray = new JSONArray();
         for(Space spaceWithActivityComposer : listSpacesWithActivityComposer) {
           JSONObject json = new JSONObject();
@@ -78,39 +78,39 @@ public class FunctionalConfigurationController {
       }
       return Response.ok(jsonGlobal.toString());
     }
-    
-    
+
+
     @Ajax
     @Resource
     public Response getUserActivityComposerState() {
       JSONObject jsonGlobal = new JSONObject();
       try {
-        String userActivityComposerState = activityComposerConfigurationService.getUserActivityComposerState();
+        String userActivityComposerState = functionalConfigurationService.getUserActivityComposerState();
         jsonGlobal.put(FunctionalConfigurationService.HIDE_USER_ACTIVITY_COMPOSER, userActivityComposerState);
       } catch (Exception e) {
         log.error("Cannot get user activity composer state", e);
       }
       return Response.ok(jsonGlobal.toString());
     }
-    
+
     @Ajax
     @Resource
     public Response hideSpaceActivityComposer(String spaces) {
-      activityComposerConfigurationService.hideSpaceActivityComposer(spaces);
+      functionalConfigurationService.hideSpaceActivityComposer(spaces);
       return Response.ok();
     }
-    
+
     @Ajax
     @Resource
     public Response showSpaceActivityComposer(String spaces) {
-      activityComposerConfigurationService.showSpaceActivityComposer(spaces);
+      functionalConfigurationService.showSpaceActivityComposer(spaces);
       return Response.ok();
     }
-    
+
     @Ajax
     @Resource
     public Response configureUserActivityComposer(String hideUserActivityComposer) {
-      activityComposerConfigurationService.configureUserActivityComposer(hideUserActivityComposer);
+      functionalConfigurationService.configureActivityComposer(hideUserActivityComposer);
       return Response.ok();
     }
 }

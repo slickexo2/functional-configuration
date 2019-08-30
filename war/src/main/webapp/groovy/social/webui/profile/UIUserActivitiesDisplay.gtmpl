@@ -119,8 +119,8 @@
                             "});";
         
   jsManager.require("SHARED/jquery", "jq").addScripts(hint_text_script);
-  ActivityComposerConfigurationService activityComposerConfigurationService = (ActivityComposerConfigurationService) ExoContainerContext.getCurrentContainer().getComponentInstanceOfType(ActivityComposerConfigurationService.class);
-  def userActivityComposerState = activityComposerConfigurationService.getUserActivityComposerState().equals("true");
+  FunctionalConfigurationService functionalConfigurationService = (FunctionalConfigurationService) ExoContainerContext.getCurrentContainer().getComponentInstanceOfType(FunctionalConfigurationService.class);
+  def userActivityComposerState = functionalConfigurationService.getUserActivityComposerState().equals("true");
 %>
 <div id="$uicomponent.id" class="uiUserActivitiesDisplay uiActivitiesDisplay clearfix"> <!-- use js to add beside one class that named "notSeen" if having some new updates  -->
 <% if (uicomponent.isWelcomeActivity()) { %>

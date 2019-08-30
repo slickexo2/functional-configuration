@@ -10,7 +10,6 @@ import org.exoplatform.test.matchers.SettingValueMatcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -40,38 +39,46 @@ public class FunctionalConfigurationServiceTest {
 
     @Test
     public void should_hide_document_action_activity() {
-        testDocumentActionActivityShouldBe(true);
+        String hide = "true";
+
+        doNothing().when(settingService).set(any(), any(), any(), any());
+
+        functionalConfigurationService.configureActivityComposer(hide);
+
+        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(HIDE_DOCUMENT_ACTION_ACTIVITIES), argThat(new SettingValueMatcher(SettingValue.create(hide))));
     }
 
     @Test
     public void should_show_document_action_activity() {
-        testDocumentActionActivityShouldBe(false);
-    }
+        String hide = "false";
 
-    private void testDocumentActionActivityShouldBe(boolean hidden) {
         doNothing().when(settingService).set(any(), any(), any(), any());
 
-        functionalConfigurationService.updateDocumentActionActivity(hidden);
+        functionalConfigurationService.configureActivityComposer(hide);
 
-        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(HIDE_DOCUMENT_ACTION_ACTIVITIES), argThat(new SettingValueMatcher(SettingValue.create(hidden))));
+        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(HIDE_DOCUMENT_ACTION_ACTIVITIES), argThat(new SettingValueMatcher(SettingValue.create(hide))));
     }
 
     @Test
     public void should_hide_activity_composer() {
-        testActivityComposerShouldBe(true);
+        String hide = "true";
+
+        doNothing().when(settingService).set(any(), any(), any(), any());
+
+        functionalConfigurationService.configureActivityComposer(hide);
+
+        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(HIDE_USER_ACTIVITY_COMPOSER), argThat(new SettingValueMatcher(SettingValue.create(hide))));
     }
 
     @Test
     public void should_show_activity_composer() {
-        testActivityComposerShouldBe(false);
-    }
+        String hide = "false";
 
-    private void testActivityComposerShouldBe(boolean hidden) {
         doNothing().when(settingService).set(any(), any(), any(), any());
 
-        functionalConfigurationService.updateUserActivityComposer(hidden);
+        functionalConfigurationService.configureActivityComposer(hide);
 
-        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(HIDE_USER_ACTIVITY_COMPOSER), argThat(new SettingValueMatcher(SettingValue.create(hidden))));
+        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(HIDE_USER_ACTIVITY_COMPOSER), argThat(new SettingValueMatcher(SettingValue.create(hide))));
     }
 
     @Test
