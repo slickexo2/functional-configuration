@@ -20,14 +20,11 @@
 				>
 					<b-input-group size="sm">
 						<b-form-input
-								v-model="filter"
+								v-model="spaceFilter"
 								type="search"
 								id="filterInput"
 								placeholder="Type to Search"
 						></b-form-input>
-						<b-input-group-append>
-							<b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
-						</b-input-group-append>
 					</b-input-group>
 				</b-form-group>
 			</b-col>
@@ -42,22 +39,26 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr v-for="space in spaces">
+				<tr v-for="space in filterSpace">
 					<!--VUE-->
 					<th v-if="!space.edition" scope="row"> {{space.displayName}} </th>
 					<td v-if="!space.edition" >{{space.description}}</td>
 					<td v-if="space.hideActivityComposer.printed && !space.edition" >{{space.hideActivityComposer.order}} </td>
 					<td v-else-if="!space.edition" ></td>
-					<td v-if="!space.edition && !isEditing" ><button @click="edit(space, true)">editer</button></td>
+					<td v-if="!space.edition && !isEditing" ><button @click="openEdition(space)">editer</button></td>
+					<td v-else-if="!space.edition && isEditing"><button disabled>editer</button></td>
 
 					<!--EDITION-->
-					<th v-if="space.edition" scope="row"> {{space.displayName}} </th>
-					<td v-if="space.edition" >{{space.description}}</td>
+					<th v-if="space.edition" scope="row"> {{currentSpaceSaved.displayName}} </th>
+					<td v-if="space.edition" >{{currentSpaceSaved.description}}</td>
 					<td v-if="space.edition" >
-						<input type="checkbox" v-model="space.hideActivityComposer.printed">
-						<input type="number" v-model="space.hideActivityComposer.order">
+						<input type="checkbox" v-model="currentSpaceSaved.hideActivityComposer.printed">
+						<input type="number" v-model="currentSpaceSaved.hideActivityComposer.order">
 					</td>
-					<td  v-if="space.edition" ><button @click="edit(space, false)">enregistrer</button></td>
+					<td  v-if="space.edition" >
+						<button @click="save(space)">enregistrer</button>
+						<button @click="cancelEdit(space)">Annuler</button>
+					</td>
 				</tr>
 				</tbody>
 			</table>
@@ -78,6 +79,8 @@
 					'hideActivityComposer',
 					'Modifier',
 				],
+				currentSpaceSaved:Object,
+				spaceFilter:"",
 				spaces: [
 					{ id: "0", displayName: "pauline", description: "ceci est une description", hideActivityComposer: { printed: true, order: 1 } },
 					{ id: "0", displayName: "pierre", description: "ceci est une description", hideActivityComposer: { printed: false, order: 0 } },
@@ -116,9 +119,27 @@
 				);
 			},
 
-			edit(space, isEditing) {
-				this.isEditing = isEditing;
-				this.$set(space, 'edition', isEditing);
+			openEdition(space) {
+				this.currentSpaceSaved = this.deepCloneObject(space);
+				this.isEditing = true;
+				this.$set(space, 'edition', true);
+			},
+			cancelEdit(space){
+				this.isEditing = false;
+				this.$set(space, 'edition', false);
+			},
+			save(space){
+				this.isEditing = false;
+				// save à la place de space <- currentSpaceSaved
+				// reset currentSpaceSaved
+			},
+			deepCloneObject(obj){
+				return JSON.parse(JSON.stringify(obj));
+			}
+		},
+		computed: {
+			filterSpace: function () {
+				return this.spaceConfiguration.filter(space => space.displayName.includes(this.spaceFilter) || space.description.includes(this.spaceFilter) )
 			}
 		}
     }
