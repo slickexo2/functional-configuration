@@ -4,7 +4,7 @@ import org.exoplatform.commons.api.settings.SettingService;
 import org.exoplatform.commons.api.settings.SettingValue;
 import org.exoplatform.commons.api.settings.data.Context;
 import org.exoplatform.commons.api.settings.data.Scope;
-import org.exoplatform.rest.response.FunctionalConfigurationResponse;
+import org.exoplatform.rest.response.FunctionalConfiguration;
 import org.exoplatform.social.core.space.spi.SpaceService;
 import org.exoplatform.test.matchers.SettingValueMatcher;
 import org.junit.Before;
@@ -90,7 +90,7 @@ public class FunctionalConfigurationServiceTest {
         given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIDE_DOCUMENT_ACTION_ACTIVITIES)).willReturn((SettingValue) SettingValue.create(DOCUMENT_ACTION_ACTIVITIES_HIDDEN));
         given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIDE_USER_ACTIVITY_COMPOSER)).willReturn((SettingValue) SettingValue.create(COMPOSER_ACTIVITY_HIDDEN));
 
-        FunctionalConfigurationResponse configuration = functionalConfigurationService.getConfiguration();
+        FunctionalConfiguration configuration = functionalConfigurationService.getConfiguration();
 
         assertThat(configuration.isHideComposerActivities(), equalTo(COMPOSER_ACTIVITY_HIDDEN));
         assertThat(configuration.isHideDocumentActionActivities(), equalTo(DOCUMENT_ACTION_ACTIVITIES_HIDDEN));

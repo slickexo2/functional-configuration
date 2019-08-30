@@ -6,22 +6,6 @@
 	</component>
 
 	<component>
-		<type>org.exoplatform.listener.document.DocumentListenerAction</type>
-	</component>
-
-<!--	<component>-->
-<!--		<type>org.exoplatform.listener.document.FileCreateActivityWithConfigurationListener</type>-->
-<!--	</component>-->
-
-<!--	<component>-->
-<!--		<type>org.exoplatform.listener.document.FileUpdateActivityWithConfigurationListener</type>-->
-<!--	</component>-->
-
-<!--	<component>-->
-<!--		<type>org.exoplatform.listener.document.FileRemoveActivityWithConfigurationListener</type>-->
-<!--	</component>-->
-
-	<component>
 		<type>org.exoplatform.highlight.spaces.HighlightedSpacesService</type>
 	</component>
 
