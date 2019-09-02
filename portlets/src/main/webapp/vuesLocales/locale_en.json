@@ -1,4 +1,6 @@
 {
+  "functionalConfiguration.hideDocumentActionActivities": "Disable automatic activities when adding, creating or modifying documents : ",
+  "functionalConfiguration.hideComposerActivities": "Hide user activity stream composer : ",
   "configuration.spacesWithActivityComposer":"Spaces list with composer",
   "configuration.add":"Add",
   "configuration.delete":"Delete",
