@@ -2,7 +2,9 @@ import axios from "axios";
 
 class FunctionalConfigurationService {
 
-    route = '/rest/functional-configuration';
+    constructor() {
+        this.route = '/rest/functional-configuration';
+    }
 
     getConfiguration(){
         return new Promise((resolve, reject) => {
@@ -10,16 +12,25 @@ class FunctionalConfigurationService {
                 .then((response) => resolve(response.data));
                 .catch((error) => console.log(error));
         });
-    },
+    }
 
     putHideComposerActivities(isHidden){
+
         const restRoute = this.route + "/composer-activity?hidden=" + isHidden;
-        return axios.put(restRoute);
-    },
+
+        return new Promise((resolve, reject) => {
+            axios.put(restRoute)
+                .then((response) => resolve(response.data));
+                .catch((error) => console.log(error));
+    }
 
     putHideDocumentActionActivities(isHidden){
         const restRoute = this.route + "/document-activity?hidden=" + isHidden;
-        return axios.put(restRoute);
+
+        return new Promise((resolve, reject) => {
+            axios.get(restRoute)
+                .then((response) => resolve(response.data));
+                .catch((error) => console.log(error));
     }
 }
 

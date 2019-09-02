@@ -14,36 +14,36 @@
 </template>
 
 <script>
-	import functionalConfigurationService from '../services/functionalConfigurationService'
+import functionalConfigurationService from '../services/functionalConfigurationService'
 
-    export default {
-        data() {
-            return {
-                errors: [],
-                configuration: {}
-            }
+export default {
+    data() {
+        return {
+            errors: [],
+            configuration: {}
+        }
+    },
+    created() {
+        const self = this;
+
+        functionalConfigurationService.getConfiguration()
+            .then((data) => self.configuration = response);
+    },
+    methods:{
+        changeHideDocumentActionActivities(){
+
+            functionalConfigurationService.putHideDocumentActionActivities(this.configuration.hideDocumentActionActivities)
+                .then((response) => console.log(response))
+                .catch((error) => console.log("KO"));
         },
-        created() {
-            const self = this;
 
-			functionalConfigurationService.getConfiguration()
-			    .then((data) => self.configuration = response);
-    	},
-		methods:{
-			changeHideDocumentActionActivities(){
-				console.log("changeHideDocumentActionActivities");
-				functionalConfigurationService.putHideDocumentActionActivities(this.configuration.hideDocumentActionActivities).then((response) =>
-						console.log(response)
-				);
-			},
+        changeHideComposerActivities(){
 
-			changeHideComposerActivities(){
-				console.log("changeHideComposerActivities");
-				functionalConfigurationService.putHideComposerActivities(this.configuration.hideComposerActivities).then((response) =>
-						console.log(response)
-				);
-			}
-		}
+            functionalConfigurationService.putHideComposerActivities(this.configuration.hideComposerActivities)
+                .then((response) => console.log(response))
+                .catch((error) => console.log("KO"));
+        }
     }
+}
 
 </script>
