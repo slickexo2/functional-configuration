@@ -15,6 +15,7 @@
 
 <script>
 	import functionalConfigurationService from '../services/functionalConfigurationService'
+
     export default {
         data() {
             return {
@@ -25,13 +26,8 @@
         created() {
             const self = this;
 
-			functionalConfigurationService.getConfiguration().then((response) => {
-                self.configuration = response.data;
-
-                console.log(self.configuration, response.data);
-			});
-
-            console.log("Created Initialization");
+			functionalConfigurationService.getConfiguration()
+			    .then((data) => self.configuration = response);
     	},
 		methods:{
 			changeHideDocumentActionActivities(){
