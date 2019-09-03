@@ -208,6 +208,19 @@ export default {
     },
     clearSearch() {
       this.spaceFilter = "";
+    },
+    failedResponse(){
+        this.makeToast($t('functionalConfiguration.toast.fail'), $t('functionalConfiguration.toast.fail.message'), 'danger')
+    },
+    successResponse(){
+        this.makeToast($t('functionalConfiguration.toast.success'), $t('functionalConfiguration.toast.success.message'), 'success')
+    },
+    makeToast(title, message, variant) {
+        this.$bvToast.toast(message, {
+            title: title,
+            variant: variant,
+            solid: true,
+        })
     }
   },
   computed: {
@@ -223,12 +236,10 @@ export default {
         return (
           displayName.includes(this.spaceFilter) ||
           description.includes(this.spaceFilter)
-        );
-      };
+          );
+      }
 
-      return this.configuration.spaceConfigurations.filter(
-        diplayNameAndDescriptionFilter
-      );
+      return this.configuration.spaceConfigurations.filter(diplayNameAndDescriptionFilter);
     }
   }
 };

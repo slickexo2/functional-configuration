@@ -1,4 +1,8 @@
 {
+  "functionalConfiguration.toast.fail":"Error",
+  "functionalConfiguration.toast.fail.message":"Update not saved",
+  "functionalConfiguration.toast.success":"Success",
+  "functionalConfiguration.toast.success.message":"Update saved",
   "functionalConfiguration.table.search":"Search a space",
   "functionalConfiguration.table.clear":"Clear",
   "functionalConfiguration.table.displayName":"Spaces",
