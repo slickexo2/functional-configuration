@@ -6,7 +6,7 @@
 	</component>
 
 	<component>
-		<type>org.exoplatform.highlight.spaces.HighlightedSpacesService</type>
+		<type>org.exoplatform.highlight.spaces.HighlightSpacesService</type>
 	</component>
 
 

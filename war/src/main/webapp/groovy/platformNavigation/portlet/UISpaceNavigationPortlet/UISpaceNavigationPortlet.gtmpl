@@ -25,7 +25,7 @@
   import org.exoplatform.web.application.JavascriptManager;
   import org.apache.commons.lang.StringEscapeUtils;
 
-  import org.exoplatform.highlight.spaces.HighlightedSpacesService;
+  import org.exoplatform.highlight.spaces.HighlightSpacesService;
 
 
     def findSpacesLink = NavigationURLUtils.getURLInCurrentPortal("all-spaces");
@@ -37,19 +37,19 @@
 <%
   def prContext = _ctx.getRequestContext().getParentAppRequestContext();
 
-  HighlightedSpacesService highlightedSpacesService = uicomponent.getApplicationComponent(HighlightedSpacesService.class);
-  def highlightedSpaces = highlightedSpacesService.getUserHighlightedSpaces(prContext.getRemoteUser());
-  List<String> highlightedSpacesPrettyNames = new ArrayList<String> ();
+  HighlightSpacesService highlightSpacesService = uicomponent.getApplicationComponent(HighlightSpacesService.class);
+  def highlightSpaces = highlightSpacesService.getUserHighlightedSpaces(prContext.getRemoteUser());
+  List<String> highlightSpacesPrettyNames = new ArrayList<String> ();
 
-  if (highlightedSpaces.size() > 0) {%>
+  if (highlightSpaces.size() > 0) {%>
 	<div class="uiSpaceNavigationPortlet" id="highlightedSpaces">
     	<ul class="spaceNavigation ">
 <%
-      		for(space in highlightedSpaces) {
+      		for(space in highlightSpaces) {
             	String tabStyleNavigation="";
                 String spaceDisplayName = space.getDisplayName();
                 String spacePrettyName = space.getPrettyName(); 
-                highlightedSpacesPrettyNames.add(spacePrettyName);
+                highlightSpacesPrettyNames.add(spacePrettyName);
                 spaceImageSource = space.getAvatarUrl();
                 String link = uicomponent.event("SelectSpace", space.getId());
         		if(uicomponent.isSelectedSpace(space)) {
