@@ -14,7 +14,7 @@ class FunctionalConfigurationService {
         });
     }
 
-    putHideComposerActivities(isHidden){
+    putHideComposerActivities(isHidden) {
 
         const restRoute = this.route + "/composer-activity?hidden=" + isHidden;
 
@@ -25,7 +25,18 @@ class FunctionalConfigurationService {
         });
     }
 
-    putHideDocumentActionActivities(isHidden){
+    putSpaceConfiguration(configuration) {
+
+        const restRoute = this.route + "/configuration/space";
+
+        return new Promise((resolve, reject) => {
+            axios.put(restRoute, configuration)
+                .then((response) => resolve(response.data))
+                .catch((error) => console.log(error));
+        });
+    }
+
+    putHideDocumentActionActivities(isHidden) {
         const restRoute = this.route + "/document-activity?hidden=" + isHidden;
 
         return new Promise((resolve, reject) => {

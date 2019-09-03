@@ -9,6 +9,7 @@
 		<type>org.exoplatform.highlight.spaces.HighlightedSpacesService</type>
 	</component>
 
+
 	<external-component-plugins>
 		<target-component>org.exoplatform.social.core.space.spi.SpaceService</target-component>
 		<component-plugin>
