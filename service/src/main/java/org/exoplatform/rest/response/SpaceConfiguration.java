@@ -1,6 +1,8 @@
 package org.exoplatform.rest.response;
 
-public class SpaceConfiguration {
+import java.io.Serializable;
+
+public class SpaceConfiguration implements Serializable {
 
     private String id;
     private String displayName;
@@ -8,6 +10,8 @@ public class SpaceConfiguration {
     private boolean hideActivityComposer;
 
     private HighlightSpaceConfiguration highlightConfiguration;
+
+    public SpaceConfiguration() {}
 
     public String getId() {
         return id;

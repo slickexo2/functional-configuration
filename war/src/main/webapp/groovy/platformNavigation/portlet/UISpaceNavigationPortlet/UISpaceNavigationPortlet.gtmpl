@@ -17,7 +17,6 @@
      * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
      * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
      */
-
 %>
 <%
   import org.exoplatform.platform.webui.NavigationURLUtils;
@@ -33,9 +32,6 @@
     uicomponent.refresh();
     def userSpaces = uicomponent.getSpaces();
     def spaceImageSource;
-
-
-
 %>
 
 <%

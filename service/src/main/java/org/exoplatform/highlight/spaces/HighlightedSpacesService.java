@@ -2,7 +2,9 @@ package org.exoplatform.highlight.spaces;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.exoplatform.service.FunctionalConfigurationService;
 import org.exoplatform.services.cache.CacheService;
 import org.exoplatform.services.cache.ExoCache;
 import org.exoplatform.social.core.space.model.Space;
@@ -14,11 +16,14 @@ public class HighlightedSpacesService {
 
   private final String                        HIGHLIGHED_SPACES = "exo.addons.highlightedSpaces";
 
-  private SpaceService                        spaceService;
+  private SpaceService spaceService;
+  private FunctionalConfigurationService functionalConfigurationService;
 
   private final ExoCache<String, List<Space>> highlightedSpacesCache;
 
-  public HighlightedSpacesService(SpaceService spaceService, CacheService cacheService) {
+  public HighlightedSpacesService(SpaceService spaceService, CacheService cacheService, FunctionalConfigurationService functionalConfigurationService) {
+    this.functionalConfigurationService = functionalConfigurationService;
+
     highlightedSpaces = new ArrayList<>();
 
     String highlightedSpacesProperty = System.getProperty(HIGHLIGHED_SPACES, "").trim();
@@ -34,22 +39,33 @@ public class HighlightedSpacesService {
 
   }
 
-  public List<Space> getUserHighlightedSpaces(String remoteUser) {
+  public List<HighlightedSpace> getUserHighlightedSpaces(String remoteUser) {
 
-    List<Space> cachedResults = highlightedSpacesCache.get(remoteUser);
-    if (cachedResults != null) {
-      return cleanCachedResult(cachedResults);
-    }
-    List<Space> results = new ArrayList<>();
+//    Map<String, Integer> configurations = this.functionalConfigurationService.loadHighlightConfigAsMap();
+//
+//    List<HighlightedSpace> results = new ArrayList<>();
+//    for (Map.Entry<String, Integer> entry : configurations.entrySet()) {
+//      String prettyNameSpace = entry.getKey();
+//      Integer order = entry.getValue();
+//
+//      HighlightedSpace space = (HighlightedSpace) spaceService.getSpaceByPrettyName(prettyNameSpace);
+//      space.setOrder(order);
+//      results.add(space);
+//    }
 
-    for (String spaceName : highlightedSpaces) {
-      Space space = spaceService.getSpaceByPrettyName(spaceName);
-      if (space != null && spaceService.isMember(space, remoteUser)) {
-        results.add(space);
-      }
-    }
-    highlightedSpacesCache.put(remoteUser, results);
-    return results;
+//    List<Space> cachedResults = highlightedSpacesCache.get(remoteUser);
+//    if (cachedResults != null) {
+//      return cleanCachedResult(cachedResults);
+//    }
+
+//    for (String spaceName : highlightedSpaces) {
+//      Space space = spaceService.getSpaceByPrettyName(spaceName);
+//      if (space != null && spaceService.isMember(space, remoteUser)) {
+//        results.add(space);
+//      }
+//    }
+//    highlightedSpacesCache.put(remoteUser, results);
+    return new ArrayList<>();
   }
 
   public void invalidate(String target) {
