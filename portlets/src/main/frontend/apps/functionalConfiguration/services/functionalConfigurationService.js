@@ -9,7 +9,7 @@ class FunctionalConfigurationService {
     getConfiguration(){
         return new Promise((resolve, reject) => {
             axios.get(this.route + "/configuration")
-                .then((response) => resolve(response.data));
+                .then((response) => resolve(response.data))
                 .catch((error) => console.log(error));
         });
     }
@@ -20,8 +20,9 @@ class FunctionalConfigurationService {
 
         return new Promise((resolve, reject) => {
             axios.put(restRoute)
-                .then((response) => resolve(response.data));
+                .then((response) => resolve(response.data))
                 .catch((error) => console.log(error));
+        });
     }
 
     putHideDocumentActionActivities(isHidden){
@@ -29,8 +30,9 @@ class FunctionalConfigurationService {
 
         return new Promise((resolve, reject) => {
             axios.get(restRoute)
-                .then((response) => resolve(response.data));
+                .then((response) => resolve(response.data))
                 .catch((error) => console.log(error));
+        });
     }
 }
 

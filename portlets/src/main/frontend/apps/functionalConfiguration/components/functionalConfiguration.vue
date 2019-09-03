@@ -114,8 +114,7 @@ export default {
             functionalConfigurationService.putHideComposerActivities(this.configuration.hideComposerActivities)
                 .then((response) => console.log(response))
                 .catch((error) => console.log("KO"));
-        }
-
+        },
         openEdition(space) {
             this.currentSpaceSaved = this.deepCloneObject(space);
             this.isEditing = true;
@@ -143,7 +142,7 @@ export default {
     },
     computed: {
         filterSpace: function () {
-            return this.spaceConfiguration.filter(space => space.displayName.includes(this.spaceFilter) || space.description.includes(this.spaceFilter) )
+            return this.spaces.filter(space => space.displayName.includes(this.spaceFilter) || space.description.includes(this.spaceFilter) )
         }
     }
 }
