@@ -32,7 +32,7 @@ class FunctionalConfigurationService {
         return new Promise((resolve, reject) => {
             axios.put(restRoute, configuration)
                 .then((response) => resolve(response.data))
-                .catch((error) => console.log(error));
+                .catch((error) => reject(error));
         });
     }
 
@@ -40,9 +40,9 @@ class FunctionalConfigurationService {
         const restRoute = this.route + "/document-activity?hidden=" + isHidden;
 
         return new Promise((resolve, reject) => {
-            axios.get(restRoute)
+            axios.put(restRoute)
                 .then((response) => resolve(response.data))
-                .catch((error) => console.log(error));
+                .catch((error) => reject(error));
         });
     }
 }
