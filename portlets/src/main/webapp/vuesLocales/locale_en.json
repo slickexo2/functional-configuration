@@ -1,4 +1,11 @@
 {
+  "functionalConfiguration.table.search":"Search a space",
+  "functionalConfiguration.table.clear":"Clear",
+  "functionalConfiguration.table.displayName":"Spaces",
+  "functionalConfiguration.table.description":"Description",
+  "functionalConfiguration.table.hideActivityComposer":"Activity composer",
+  "functionalConfiguration.table.order":"Highlight spaces order",
+  "functionalConfiguration.table.edit":"Edit",
   "functionalConfiguration.hideDocumentActionActivities": "Disable automatic activities when adding, creating or modifying documents : ",
   "functionalConfiguration.hideComposerActivities": "Hide user activity stream composer : ",
   "configuration.spacesWithActivityComposer":"Spaces list with composer",
