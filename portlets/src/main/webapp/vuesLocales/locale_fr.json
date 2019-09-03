@@ -1,4 +1,8 @@
 {
+  "functionalConfiguration.toast.fail":"Erreur",
+  "functionalConfiguration.toast.fail.message":"Le changement n'a pas \u00E9t\u00E9 enregistr\u00E9",
+  "functionalConfiguration.toast.success":"Succ\u00E8s",
+  "functionalConfiguration.toast.success.message":"Le changement a bien \u00E9t\u00E9 enregistr\u00E9",
   "functionalConfiguration.table.search":"Rechercher un espace",
   "functionalConfiguration.table.clear":"Annuler",
   "functionalConfiguration.table.displayName":"Espaces",
