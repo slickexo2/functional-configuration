@@ -92,7 +92,7 @@
                     class="custom-control-input"
                     id="hideActivityComposerSwitch"
                     type="checkbox"
-                    v-model="space.hideActivityComposer"
+                    v-model="!space.hideActivityComposer"
                     disabled
                 />
                 <label class="custom-control-label" for="hideActivityComposerSwitch"></label>
@@ -134,7 +134,7 @@
                     class="custom-control-input"
                     id="hideActivityComposerSwitchEdit"
                     type="checkbox"
-                    v-model="currentSpaceSaved.hideActivityComposer"
+                    v-model="!currentSpaceSaved.hideActivityComposer"
                 />
                 <label class="custom-control-label" for="hideActivityComposerSwitchEdit"></label>
                 </div>
@@ -321,20 +321,16 @@ export default {
 
         var spaces = this.configuration.spaceConfigurations.filter(diplayNameAndDescriptionFilter);
         if (this.displayNameOrder === SORT_STATE.ASC){
-            console.log(this.displayNameOrder);
-            spaces = spaces.sort((a, b) => a.highlightConfiguration.displayName.localeCompare(b.highlightConfiguration.displayName));
+            spaces = spaces.sort((a, b) => a.displayName.localeCompare(b.displayName));
         } else if(this.displayNameOrder === SORT_STATE.DESC){
-            console.log(this.displayNameOrder);
-            spaces = spaces.sort((b, a) => a.highlightConfiguration.displayName.localeCompare(b.highlightConfiguration.displayName));
+            spaces = spaces.sort((b, a) => a.displayName.localeCompare(b.displayName));
         }
 
         if (this.highlightConfigurationOrder === SORT_STATE.ASC){
-            console.log(this.highlightConfiguration);
             spaces = spaces.sort(function(a, b) {
                 return a.highlightConfiguration.order - b.highlightConfiguration.order;
             });
         } else if(this.highlightConfigurationOrder === SORT_STATE.DESC){
-            console.log(this.highlightConfigurationOrder);
             spaces = spaces.sort(function(b, a) {
                 return a.highlightConfiguration.order - b.highlightConfiguration.order;
             });
