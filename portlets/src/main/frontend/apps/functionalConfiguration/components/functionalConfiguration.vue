@@ -1,5 +1,10 @@
 <template>
   <div id="functionConfiguration-content">
+      <div class="notification">
+          <div v-for="notification in notifications" class="alert" role="alert" v-if="notification.visible" :class="notification.cssClass">
+              {{notification.title}}
+          </div>
+      </div>
     <div class="custom-control custom-switch hide-switches">
       <input
         type="checkbox"
@@ -30,7 +35,7 @@
     <br/>
     <br/>
     
-    <div class="col-6 col-md-4 input-group mb-1">
+    <div class="col-6 col-md-4 input-group mb-1 table-search">
         <input
             type="text"
             class="form-control"
@@ -155,7 +160,8 @@ export default {
       configuration: {},
       currentSpaceSaved: {},
       spaceFilter: "",
-      spaces: []
+      spaces: [],
+      notifications: []
     };
   },
   created() {
@@ -222,21 +228,26 @@ export default {
     clearSearch() {
       this.spaceFilter = "";
     },
-    failedResponse(){
-        console.log(this);
-        this.makeToast(this.$t('functionalConfiguration.toast.fail'), this.$t('functionalConfiguration.toast.fail.message'), 'danger')
-    },
-    successResponse(){
-        console.log(this);
-        this.makeToast(this.$t('functionalConfiguration.toast.success'), this.$t('functionalConfiguration.toast.success.message'), 'success')
-    },
-    makeToast(title, message, variant) {
-        this.$bvToast.toast(message, {
-            title: title,
-            variant: variant,
-            solid: true,
-        })
-    }
+      successResponse(){
+          this.toastSuccess(this.$t('functionalConfiguration.toast.success.message'));
+      },
+      failedResponse(){
+          this.toastDanger(this.$t('functionalConfiguration.toast.fail.message'));
+      },
+      toastSuccess(message) {
+          this.makeToast(message, TOAST_TYPE.SUCCESS);
+      },
+      toastDanger(message) {
+          this.makeToast(message, TOAST_TYPE.DANGER);
+      },
+      makeToast(title, cssClass) {
+          const DEFAULT_TOAST_DELAY = 5000;
+
+          const notification = { id: this.notifications.length, title: title, visible: true, cssClass: cssClass };
+          this.notifications.push(notification);
+
+          setTimeout(() => { notification.visible = false; }, DEFAULT_TOAST_DELAY);
+      },
   },
   computed: {
     filteredSpaces: function() {
@@ -257,16 +268,22 @@ export default {
       return this.configuration.spaceConfigurations.filter(diplayNameAndDescriptionFilter);
     }
   }
+
 };
+const TOAST_TYPE = {
+    SUCCESS: 'alert-success',
+    DANGER: ' alert-danger',
+}
 </script>
 
 <style scoped lang="scss">
     @import "~bootstrap/dist/css/bootstrap.css";
-    @import "~bootstrap/scss/bootstrap";
-    @import "~bootstrap-vue/dist/bootstrap-vue.css";
 .form-control {
   height: 40px;
 }
+    .table-search{
+        margin-left: 5px;
+    }
 .table {
   border: 1px solid grey;
 }
@@ -325,4 +342,17 @@ export default {
 .table-wrapper {
     margin: 20px;
 }
+.notification {
+    position: absolute;
+    min-width: 300px;
+    max-width: 300px;
+    right: 10px;
+    top: 67px;
+}
+    a:not([href]):not([tabindex]){
+        color: #fff!important;
+    }
+    a:not([href]):not([tabindex]):hover{
+        color: #fff!important;
+    }
 </style>
