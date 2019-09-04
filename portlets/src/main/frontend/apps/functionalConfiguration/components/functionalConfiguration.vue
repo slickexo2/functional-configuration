@@ -25,13 +25,13 @@
         type="checkbox"
         class="custom-control-input"
         id="activityComposerVisibleSwitch"
-        v-model="configuration.activityComposerVisible"
-        @change="changeactivityComposerVisible"
+        v-model="configuration.hideComposerActivities"
+        @change="changeHideComposerActivities"
       />
       <label
         class="custom-control-label"
         for="activityComposerVisibleSwitch"
-      >{{ $t('functionalConfiguration.activityComposerVisible') }}</label>
+      >{{ $t('functionalConfiguration.hideComposerActivities') }}</label>
     </div>
 
     <br/>
@@ -85,17 +85,17 @@
             <td class="table-description" v-if="!space.edition">
                 <p class="p-description">{{space.description}}</p>
             </td>
-                <!--       SHOW hideActivity in view mode         -->
+                <!--       SHOW showActivity in view mode         -->
             <td class="table-hide" v-if="!space.edition">
                 <div class="custom-control custom-switch">
                 <input
                     class="custom-control-input"
-                    id="hideActivityComposerSwitch"
+                    id="activityComposerVisibleSwitch"
                     type="checkbox"
-                    v-model="space.hideActivityComposer"
+                    v-model="space.activityComposerVisible"
                     disabled
                 />
-                <label class="custom-control-label" for="hideActivityComposerSwitch"></label>
+                <label class="custom-control-label" for="activityComposerVisibleSwitch"></label>
                 </div>
             </td>
                 <!--       SHOW order in view mode         -->
@@ -132,11 +132,11 @@
                 <div class="custom-control custom-switch">
                 <input
                     class="custom-control-input"
-                    id="hideActivityComposerSwitchEdit"
+                    id="activityComposerVisibleSwitchEdit"
                     type="checkbox"
-                    v-model="currentSpaceSaved.hideActivityComposer"
+                    v-model="currentSpaceSaved.activityComposerVisible"
                 />
-                <label class="custom-control-label" for="hideActivityComposerSwitchEdit"></label>
+                <label class="custom-control-label" for="activityComposerVisibleSwitchEdit"></label>
                 </div>
             </td>
                 <!--       SHOW checkbox and input for order in edition mode        -->
@@ -213,9 +213,9 @@ export default {
         });
     },
     //  Edit activityComposerVisible
-    changeactivityComposerVisible() {
+    changeHideComposerActivities() {
       functionalConfigurationService
-        .putactivityComposerVisible(this.configuration.activityComposerVisible)
+        .putHideComposerActivities(this.configuration.hideComposerActivities)
         .then(response => {
             this.successResponse();
             }
@@ -242,7 +242,7 @@ export default {
         functionalConfigurationService.putSpaceConfiguration(self.currentSpaceSaved)
           .then(data => {
 
-            space.hideActivityComposer = data.hideActivityComposer;
+            space.activityComposerVisible = data.activityComposerVisible;
             space.highlightConfiguration = data.highlightConfiguration;
         
             self.cancelEdit(space);

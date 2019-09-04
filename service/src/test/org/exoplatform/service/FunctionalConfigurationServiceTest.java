@@ -77,7 +77,7 @@ public class FunctionalConfigurationServiceTest {
 
         functionalConfigurationService.configureActivityComposer(hide);
 
-        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(HIDE_USER_ACTIVITY_COMPOSER), argThat(new SettingValueMatcher(SettingValue.create(hide))));
+        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(HIDE_DOCUMENT_ACTION_ACTIVITIES), argThat(new SettingValueMatcher(SettingValue.create(hide))));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class FunctionalConfigurationServiceTest {
 
         functionalConfigurationService.configureActivityComposer(hide);
 
-        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(HIDE_USER_ACTIVITY_COMPOSER), argThat(new SettingValueMatcher(SettingValue.create(hide))));
+        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(HIDE_DOCUMENT_ACTION_ACTIVITIES), argThat(new SettingValueMatcher(SettingValue.create(hide))));
     }
 
     @Test
@@ -102,7 +102,7 @@ public class FunctionalConfigurationServiceTest {
         given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIDE_DOCUMENT_ACTION_ACTIVITIES)).willReturn((SettingValue) SettingValue.create(DOCUMENT_ACTION_ACTIVITIES_HIDDEN));
         given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIDE_USER_ACTIVITY_COMPOSER)).willReturn((SettingValue) SettingValue.create(COMPOSER_ACTIVITY_HIDDEN));
         given(settingService.get(Context.GLOBAL, Scope.GLOBAL, SPACES_WITHOUT_ACTIVITY_COMPOSER)).willReturn((SettingValue) SettingValue.create("pretty_name_1;pretty_name_2"));
-        given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIGHLIGHT_SPACES)).willReturn((SettingValue) SettingValue.create("pretty_name_1#2;PRETTY_NAME_2#1;pretty_name_4#5"));
+        given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIGHLIGHT_SPACES)).willReturn((SettingValue) SettingValue.create("pretty_name_1#2;pretty_name_2#1;pretty_name_4#5"));
 
         FunctionalConfiguration configuration = functionalConfigurationService.getConfiguration();
 
@@ -110,9 +110,9 @@ public class FunctionalConfigurationServiceTest {
         assertThat(configuration.isHideDocumentActionActivities(), equalTo(DOCUMENT_ACTION_ACTIVITIES_HIDDEN));
         assertThat(configuration.getSpaceConfigurations().size(), equalTo(3));
 
-        SpaceConfiguration expectedSpace0 = new SpaceConfigurationBuilder().spaceId("1").displayName("DISPLAY_NAME_1").hideActivityComposer(true).descritpion("DESCRIPTION_1").order(2).build();
-        SpaceConfiguration expectedSpace1 = new SpaceConfigurationBuilder().spaceId("2").displayName("DISPLAY_NAME_2").hideActivityComposer(true).descritpion("DESCRIPTION_2").order(1).build();
-        SpaceConfiguration expectedSpace2 = new SpaceConfigurationBuilder().spaceId("3").displayName("DISPLAY_NAME_3").hideActivityComposer(false).descritpion("DESCRIPTION_3").build();
+        SpaceConfiguration expectedSpace0 = new SpaceConfigurationBuilder().spaceId("1").displayName("DISPLAY_NAME_1").activityComposerVisible(false).descritpion("DESCRIPTION_1").order(2).build();
+        SpaceConfiguration expectedSpace1 = new SpaceConfigurationBuilder().spaceId("2").displayName("DISPLAY_NAME_2").activityComposerVisible(false).descritpion("DESCRIPTION_2").order(1).build();
+        SpaceConfiguration expectedSpace2 = new SpaceConfigurationBuilder().spaceId("3").displayName("DISPLAY_NAME_3").activityComposerVisible(true).descritpion("DESCRIPTION_3").build();
 
         assertSpaceConfiguration(configuration.getSpaceConfigurations().get(0), expectedSpace0);
         assertSpaceConfiguration(configuration.getSpaceConfigurations().get(1), expectedSpace1);
@@ -123,10 +123,10 @@ public class FunctionalConfigurationServiceTest {
         assertThat(actual.getId(), equalTo(expected.getId()));
         assertThat(actual.getDisplayName(), equalTo(expected.getDisplayName()));
         assertThat(actual.getDescription(), equalTo(expected.getDescription()));
-        assertThat(actual.isHideActivityComposer(), equalTo(expected.isHideActivityComposer()));
+        assertThat(actual.isActivityComposerVisbile(), equalTo(expected.isActivityComposerVisbile()));
         HighlightSpaceConfiguration highlightConfiguration = actual.getHighlightConfiguration();
 
-        if (Objects.nonNull(highlightConfiguration)) {
+        if (Objects.nonNull(highlightConfiguration) && Objects.nonNull(expected.getHighlightConfiguration())) {
             assertThat(highlightConfiguration.getOrder(), equalTo(expected.getHighlightConfiguration().getOrder()));
             assertThat(highlightConfiguration.isHighlight(), equalTo(expected.getHighlightConfiguration().isHighlight()));
         }
@@ -146,7 +146,7 @@ public class FunctionalConfigurationServiceTest {
         spaceConfiguration.setId(SPACE_ID);
         spaceConfiguration.setDisplayName(SPACE_DISPLAY_NAME);
         spaceConfiguration.setDescription(SPACE_DESCRIPTION);
-        spaceConfiguration.setHideActivityComposer(true);
+        spaceConfiguration.setActivityComposerVisible(false);
         HighlightSpaceConfiguration highlightConfiguration = new HighlightSpaceConfiguration();
         highlightConfiguration.setHighlight(SPACE_IS_HIGHLIGHT);
         highlightConfiguration.setOrder(SPACE_HIGHLIGHT_ORDER);
@@ -207,8 +207,8 @@ public class FunctionalConfigurationServiceTest {
             return this;
         }
 
-        public SpaceConfigurationBuilder hideActivityComposer(boolean HideActivityComposer) {
-            spaceConfiguration.setHideActivityComposer(HideActivityComposer);
+        public SpaceConfigurationBuilder activityComposerVisible(boolean activityComposerVisible) {
+            spaceConfiguration.setActivityComposerVisible(activityComposerVisible);
             return this;
         }
 

@@ -7,7 +7,7 @@ public class SpaceConfiguration implements Serializable {
     private String id;
     private String displayName;
     private String description;
-    private boolean hideActivityComposer;
+    private boolean activityComposerVisible;
 
     private HighlightSpaceConfiguration highlightConfiguration;
 
@@ -37,12 +37,12 @@ public class SpaceConfiguration implements Serializable {
         this.description = description;
     }
 
-    public boolean isHideActivityComposer() {
-        return hideActivityComposer;
+    public boolean isActivityComposerVisible() {
+        return activityComposerVisible;
     }
 
-    public void setHideActivityComposer(boolean hideActivityComposer) {
-        this.hideActivityComposer = hideActivityComposer;
+    public void setActivityComposerVisible(boolean activityComposerVisible) {
+        this.activityComposerVisible = activityComposerVisible;
     }
 
     public HighlightSpaceConfiguration getHighlightConfiguration() {
