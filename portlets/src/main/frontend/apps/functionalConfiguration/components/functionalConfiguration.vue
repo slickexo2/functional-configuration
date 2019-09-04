@@ -19,19 +19,19 @@
         for="hideDocumentActionActionActivitiesSwitch"
       >{{ $t('functionalConfiguration.hideDocumentActionActivities') }}</label>
     </div>
-      <!--        configuration.hideComposerActivities SWICH         -->
+      <!--        configuration.activityComposerVisible SWICH         -->
     <div class="custom-control custom-switch hide-switches">
       <input
         type="checkbox"
         class="custom-control-input"
-        id="hideComposerActivitiesSwitch"
-        v-model="configuration.hideComposerActivities"
-        @change="changeHideComposerActivities"
+        id="activityComposerVisibleSwitch"
+        v-model="configuration.activityComposerVisible"
+        @change="changeactivityComposerVisible"
       />
       <label
         class="custom-control-label"
-        for="hideComposerActivitiesSwitch"
-      >{{ $t('functionalConfiguration.hideComposerActivities') }}</label>
+        for="activityComposerVisibleSwitch"
+      >{{ $t('functionalConfiguration.activityComposerVisible') }}</label>
     </div>
 
     <br/>
@@ -92,7 +92,7 @@
                     class="custom-control-input"
                     id="hideActivityComposerSwitch"
                     type="checkbox"
-                    v-model="!space.hideActivityComposer"
+                    v-model="space.hideActivityComposer"
                     disabled
                 />
                 <label class="custom-control-label" for="hideActivityComposerSwitch"></label>
@@ -134,7 +134,7 @@
                     class="custom-control-input"
                     id="hideActivityComposerSwitchEdit"
                     type="checkbox"
-                    v-model="!currentSpaceSaved.hideActivityComposer"
+                    v-model="currentSpaceSaved.hideActivityComposer"
                 />
                 <label class="custom-control-label" for="hideActivityComposerSwitchEdit"></label>
                 </div>
@@ -212,10 +212,10 @@ export default {
             this.failedResponse();
         });
     },
-    //  Edit hideComposerActivities
-    changeHideComposerActivities() {
+    //  Edit activityComposerVisible
+    changeactivityComposerVisible() {
       functionalConfigurationService
-        .putHideComposerActivities(this.configuration.hideComposerActivities)
+        .putactivityComposerVisible(this.configuration.activityComposerVisible)
         .then(response => {
             this.successResponse();
             }
