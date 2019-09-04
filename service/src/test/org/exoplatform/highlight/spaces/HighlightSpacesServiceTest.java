@@ -105,7 +105,6 @@ public class HighlightSpacesServiceTest {
         given(spaceService.getSpaceByPrettyName(PRETTY_NAME_1)).willReturn(SPACE_1);
         given(spaceService.getSpaceByPrettyName(PRETTY_NAME_2)).willReturn(SPACE_2);
         given(spaceService.getSpaceByPrettyName(PRETTY_NAME_3)).willReturn(SPACE_3);
-        given(spaceService.getSpaceByPrettyName(PRETTY_NAME_4)).willReturn(SPACE_4);
         when(spaceService.isMember(any(Space.class), anyString())).thenReturn(true);
 
         List<Space> highlightedSpaces = highlightSpacesService.getUserHighlightedSpaces(REMOTE_USER);
