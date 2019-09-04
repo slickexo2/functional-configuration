@@ -1,9 +1,13 @@
 package org.exoplatform.rest.response;
 
-public class HighlightSpaceConfiguration {
+import java.io.Serializable;
+
+public class HighlightSpaceConfiguration implements Serializable {
 
     private boolean highlight;
     private int order;
+
+    public HighlightSpaceConfiguration() {}
 
     public boolean isHighlight() {
         return highlight;
