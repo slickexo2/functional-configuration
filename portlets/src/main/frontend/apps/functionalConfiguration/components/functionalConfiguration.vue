@@ -30,7 +30,7 @@
     <br/>
     <br/>
     
-    <div class="col-4 input-group mb-3">
+    <div class="col-6 col-md-4 input-group mb-1">
         <input
             type="text"
             class="form-control"
@@ -45,8 +45,6 @@
                 >{{$t('functionalConfiguration.table.clear')}}</button>
         </div>
     </div>
-    <br />
-
     <div class="table-wrapper">
         <table class="table">
         <thead class="thead-dark">
@@ -173,13 +171,23 @@ export default {
         .putHideDocumentActionActivities(
           this.configuration.hideDocumentActionActivities
         )
-        .then(response => console.log(response))
-        .catch(error => console.log("KO"));
+        .then(response => {
+            this.successResponse();
+        })
+        .catch(error => {
+            this.failedResponse();
+        });
     },
     changeHideComposerActivities() {
       functionalConfigurationService
         .putHideComposerActivities(this.configuration.hideComposerActivities)
-        .then(response => console.log(response));
+        .then(response => {
+            this.successResponse();
+            }
+        )
+          .catch(error => {
+              this.failedResponse();
+          });
     },
     openEdition(space) {
       this.isEditing = true;
@@ -201,7 +209,12 @@ export default {
         
             self.cancelEdit(space);
             delete self.currentSpaceSaved;
-          });
+
+              this.successResponse();
+          })
+            .catch(error => {
+                this.failedResponse();
+            });
     },
     deepCloneObject(obj) {
       return JSON.parse(JSON.stringify(obj));
@@ -210,10 +223,12 @@ export default {
       this.spaceFilter = "";
     },
     failedResponse(){
-        this.makeToast($t('functionalConfiguration.toast.fail'), $t('functionalConfiguration.toast.fail.message'), 'danger')
+        console.log(this);
+        this.makeToast(this.$t('functionalConfiguration.toast.fail'), this.$t('functionalConfiguration.toast.fail.message'), 'danger')
     },
     successResponse(){
-        this.makeToast($t('functionalConfiguration.toast.success'), $t('functionalConfiguration.toast.success.message'), 'success')
+        console.log(this);
+        this.makeToast(this.$t('functionalConfiguration.toast.success'), this.$t('functionalConfiguration.toast.success.message'), 'success')
     },
     makeToast(title, message, variant) {
         this.$bvToast.toast(message, {
@@ -245,7 +260,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    @import "~bootstrap/dist/css/bootstrap.css";
+    @import "~bootstrap/scss/bootstrap";
+    @import "~bootstrap-vue/dist/bootstrap-vue.css";
 .form-control {
   height: 40px;
 }
