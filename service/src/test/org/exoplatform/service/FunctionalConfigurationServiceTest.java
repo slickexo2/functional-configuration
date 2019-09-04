@@ -123,7 +123,7 @@ public class FunctionalConfigurationServiceTest {
         assertThat(actual.getId(), equalTo(expected.getId()));
         assertThat(actual.getDisplayName(), equalTo(expected.getDisplayName()));
         assertThat(actual.getDescription(), equalTo(expected.getDescription()));
-        assertThat(actual.isActivityComposerVisbile(), equalTo(expected.isActivityComposerVisbile()));
+        assertThat(actual.isActivityComposerVisible(), equalTo(expected.isActivityComposerVisible()));
         HighlightSpaceConfiguration highlightConfiguration = actual.getHighlightConfiguration();
 
         if (Objects.nonNull(highlightConfiguration) && Objects.nonNull(expected.getHighlightConfiguration())) {

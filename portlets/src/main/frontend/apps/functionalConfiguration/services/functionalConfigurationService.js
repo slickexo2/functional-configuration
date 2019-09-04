@@ -10,7 +10,7 @@ class FunctionalConfigurationService {
         return new Promise((resolve, reject) => {
             axios.get(this.route + "/configuration")
                 .then((response) => resolve(response.data))
-                .catch((error) => console.log(error));
+                .catch((error) => reject(error));
         });
     }
 
@@ -21,7 +21,7 @@ class FunctionalConfigurationService {
         return new Promise((resolve, reject) => {
             axios.put(restRoute)
                 .then((response) => resolve(response.data))
-                .catch((error) => console.log(error));
+                .catch((error) => reject(error));
         });
     }
 
