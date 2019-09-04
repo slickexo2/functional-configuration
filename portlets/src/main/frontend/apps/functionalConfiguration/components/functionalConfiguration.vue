@@ -1,5 +1,6 @@
 <template>
   <div id="functionConfiguration-content">
+      <!--        configuration.hideDocumentActionActivities SWICH         -->
       <div class="notification">
           <div v-for="notification in notifications" class="alert" role="alert" v-if="notification.visible" :class="notification.cssClass">
               {{notification.title}}
@@ -18,6 +19,7 @@
         for="hideDocumentActionActionActivitiesSwitch"
       >{{ $t('functionalConfiguration.hideDocumentActionActivities') }}</label>
     </div>
+      <!--        configuration.hideComposerActivities SWICH         -->
     <div class="custom-control custom-switch hide-switches">
       <input
         type="checkbox"
@@ -36,12 +38,14 @@
     <br/>
     
     <div class="col-6 col-md-4 input-group mb-1 table-search">
+        <!--        input search         -->
         <input
             type="text"
             class="form-control"
             :placeholder="$t('functionalConfiguration.table.search')"
             v-model="spaceFilter"/>
 
+        <!--        input search BUTTON clear         -->
         <div class="input-group-prepend">
             <button
                 class="btn btn-outline-secondary"
@@ -52,24 +56,36 @@
     </div>
     <div class="table-wrapper">
         <table class="table">
+            <!--        collumns         -->
         <thead class="thead-dark">
             <tr>
-            <th class="table-collumns">{{$t('functionalConfiguration.table.displayName')}}</th>
+            <th class="table-collumns" @click="orderDisplayName">{{$t('functionalConfiguration.table.displayName')}}
+                    <font-awesome-icon v-if="displayNameOrder === 0" :icon="['fas', 'sort']" />
+                    <font-awesome-icon v-if="displayNameOrder === 1" :icon="['fas', 'sort-down']" />
+                    <font-awesome-icon v-if="displayNameOrder === -1" :icon="['fas', 'sort-up']" />
+            </th>
             <th class="table-collumns">{{$t('functionalConfiguration.table.description')}}</th>
             <th class="table-collumns">{{$t('functionalConfiguration.table.hideActivityComposer')}}</th>
-            <th class="table-collumns">{{$t('functionalConfiguration.table.highLightSpaceorder')}}</th>
+            <th class="table-collumns" @click="orderHighlightConfiguration">{{$t('functionalConfiguration.table.highLightSpaceorder')}}
+                <font-awesome-icon v-if="highlightConfigurationOrder === 0" :icon="['fas', 'sort']" />
+                <font-awesome-icon v-if="highlightConfigurationOrder === 1" :icon="['fas', 'sort-down']" />
+                <font-awesome-icon v-if="highlightConfigurationOrder === -1" :icon="['fas', 'sort-up']" />
+            </th>
             <th class="table-collumns">{{$t('functionalConfiguration.table.actions')}}</th>
             </tr>
         </thead>
         <tbody>
             <tr class="table-rows" v-for="space in filteredSpaces" :key="space.id">
             <!--VUE-->
+                <!--       SHOW displayName in view mode         -->
             <th class="table-displayName" scope="row" v-if="!space.edition">
                 <p class="p-title">{{space.displayName}}</p>
             </th>
+                <!--       SHOW description in view mode         -->
             <td class="table-description" v-if="!space.edition">
                 <p class="p-description">{{space.description}}</p>
             </td>
+                <!--       SHOW hideActivity in view mode         -->
             <td class="table-hide" v-if="!space.edition">
                 <div class="custom-control custom-switch">
                 <input
@@ -82,29 +98,36 @@
                 <label class="custom-control-label" for="hideActivityComposerSwitch"></label>
                 </div>
             </td>
+                <!--       SHOW order in view mode         -->
             <td
                 class="table-order"
                 v-if="space.highlightConfiguration && space.highlightConfiguration.highlight && !space.edition"
             >{{space.highlightConfiguration.order}}</td>
+                <!--       SHOW order if empty in view mode         -->
             <td class="table-order" v-else-if="!space.edition"></td>
+                <!--       SHOW button EDIT in view mode         -->
             <td class="table-edition" v-if="!space.edition && !isEditing">
                 <button @click="openEdition(space)" class="btn btn-outline-dark edition-buttons">
                 <font-awesome-icon :icon="['fas', 'edit']" />
                 </button>
             </td>
+                <!--       SHOW button EDIT in DISABLED view mode         -->
             <td class="table-edition" v-else-if="!space.edition && isEditing">
                 <button class="btn btn-outline-dark edition-buttons" disabled>
                 <font-awesome-icon :icon="['fas', 'edit']" />
                 </button>
             </td>
 
-            <!--EDITION-->
+            <!-- /// EDITION /// -->
+            <!--       SHOW displayName in edition mode         -->
             <th class="table-displayName" scope="row" v-if="space.edition">
                 <p class="p-title">{{currentSpaceSaved.displayName}}</p>
             </th>
+                <!--       SHOW description in edition mode         -->
             <td class="table-description" v-if="space.edition">
                 <p class="p-description">{{currentSpaceSaved.description}}</p>
             </td>
+                <!--       SHOW buttons in edition         -->
             <td class="table-hide" v-if="space.edition">
                 <div class="custom-control custom-switch">
                 <input
@@ -116,6 +139,7 @@
                 <label class="custom-control-label" for="hideActivityComposerSwitchEdit"></label>
                 </div>
             </td>
+                <!--       SHOW checkbox and input for order in edition mode        -->
             <td class="table-order" v-if="space.edition">
                 <div class="input-group">
                 <div class="input-group-prepend">
@@ -135,6 +159,7 @@
                 />
                 </div>
             </td>
+            <!--       SHOW buttons in edition mode        -->
             <td class="table-edition" v-if="space.edition">
                 <button @click="cancelEdit(space)" class="btn btn-outline-warning edition-buttons">
                 <font-awesome-icon :icon="['fas', 'times']" />
@@ -156,6 +181,8 @@ import functionalConfigurationService from "../services/functionalConfigurationS
 export default {
   data() {
     return {
+      highlightConfigurationOrder: SORT_STATE.NONE,
+      displayNameOrder: SORT_STATE.ASC,
       isEditing: false,
       configuration: {},
       currentSpaceSaved: {},
@@ -172,6 +199,7 @@ export default {
       .then(data => (self.configuration = data));
   },
   methods: {
+      //  Edit hideDocumentActionActivities
     changeHideDocumentActionActivities() {
       functionalConfigurationService
         .putHideDocumentActionActivities(
@@ -184,6 +212,7 @@ export default {
             this.failedResponse();
         });
     },
+    //  Edit hideComposerActivities
     changeHideComposerActivities() {
       functionalConfigurationService
         .putHideComposerActivities(this.configuration.hideComposerActivities)
@@ -195,15 +224,18 @@ export default {
               this.failedResponse();
           });
     },
+      // open the edition for a line
     openEdition(space) {
       this.isEditing = true;
       this.currentSpaceSaved = this.deepCloneObject(space);
       this.$set(space, "edition", true);
     },
+      // stop the edition
     cancelEdit(space) {
       this.isEditing = false;
       this.$set(space, "edition", false);
     },
+      // save a space
     save(space) {
         const self = this;
 
@@ -222,9 +254,11 @@ export default {
                 this.failedResponse();
             });
     },
+      // copy a space content for save
     deepCloneObject(obj) {
       return JSON.parse(JSON.stringify(obj));
     },
+      // clear the search input
     clearSearch() {
       this.spaceFilter = "";
     },
@@ -248,8 +282,28 @@ export default {
 
           setTimeout(() => { notification.visible = false; }, DEFAULT_TOAST_DELAY);
       },
+      orderDisplayName(){
+          this.highlightConfigurationOrder = SORT_STATE.NONE;
+          if(this.displayNameOrder === SORT_STATE.ASC){
+              this.displayNameOrder = SORT_STATE.DESC
+          } else {
+      // change order in diplayName
+              this.displayNameOrder = SORT_STATE.ASC
+          }
+      },
+      // change order in highlightConfiguration
+      orderHighlightConfiguration(){
+          this.displayNameOrder = SORT_STATE.NONE;
+          if(this.highlightConfigurationOrder === SORT_STATE.ASC){
+              this.highlightConfigurationOrder = SORT_STATE.DESC
+          } else {
+              this.highlightConfigurationOrder = SORT_STATE.ASC
+          }
+      }
+
   },
   computed: {
+      // filter spaces
     filteredSpaces: function() {
       if (!this.configuration || !this.configuration.spaceConfigurations) {
         return [];
@@ -265,7 +319,28 @@ export default {
           );
       }
 
-      return this.configuration.spaceConfigurations.filter(diplayNameAndDescriptionFilter);
+        var spaces = this.configuration.spaceConfigurations.filter(diplayNameAndDescriptionFilter);
+        if (this.displayNameOrder === SORT_STATE.ASC){
+            console.log(this.displayNameOrder);
+            spaces = spaces.sort((a, b) => a.highlightConfiguration.displayName.localeCompare(b.highlightConfiguration.displayName));
+        } else if(this.displayNameOrder === SORT_STATE.DESC){
+            console.log(this.displayNameOrder);
+            spaces = spaces.sort((b, a) => a.highlightConfiguration.displayName.localeCompare(b.highlightConfiguration.displayName));
+        }
+
+        if (this.highlightConfigurationOrder === SORT_STATE.ASC){
+            console.log(this.highlightConfiguration);
+            spaces = spaces.sort(function(a, b) {
+                return a.highlightConfiguration.order - b.highlightConfiguration.order;
+            });
+        } else if(this.highlightConfigurationOrder === SORT_STATE.DESC){
+            console.log(this.highlightConfigurationOrder);
+            spaces = spaces.sort(function(b, a) {
+                return a.highlightConfiguration.order - b.highlightConfiguration.order;
+            });
+        }
+
+        return spaces;
     }
   }
 
@@ -274,10 +349,16 @@ const TOAST_TYPE = {
     SUCCESS: 'alert-success',
     DANGER: ' alert-danger',
 }
+
+const SORT_STATE = {
+    DESC: -1,
+    NONE: 0,
+    ASC: 1
+}
 </script>
 
-<style scoped lang="scss">
-    @import "~bootstrap/dist/css/bootstrap.css";
+<style scoped>
+
 .form-control {
   height: 40px;
 }
@@ -349,10 +430,4 @@ const TOAST_TYPE = {
     right: 10px;
     top: 67px;
 }
-    a:not([href]):not([tabindex]){
-        color: #fff!important;
-    }
-    a:not([href]):not([tabindex]):hover{
-        color: #fff!important;
-    }
 </style>
