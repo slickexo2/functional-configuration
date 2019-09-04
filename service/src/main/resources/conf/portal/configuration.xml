@@ -9,13 +9,4 @@
 		<type>org.exoplatform.highlight.spaces.HighlightSpacesService</type>
 	</component>
 
-
-	<external-component-plugins>
-		<target-component>org.exoplatform.social.core.space.spi.SpaceService</target-component>
-		<component-plugin>
-			<name>CacheHighlightedSpacesInvalidationListener</name>
-			<set-method>registerSpaceListenerPlugin</set-method>
-			<type>org.exoplatform.highlight.spaces.CacheHighlightedSpacesInvalidation</type>
-		</component-plugin>
-	</external-component-plugins>
 </configuration>
