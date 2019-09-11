@@ -26,10 +26,10 @@ public class HighlightSpacesService {
     List<HighlightSpace> highlightSpaces = new ArrayList<>();
 
     for (Map.Entry<String, Integer> entry : configurations.entrySet()) {
-      String prettyNameSpace = entry.getKey();
+      String spaceId = entry.getKey();
       Integer order = entry.getValue();
 
-      Space space = spaceService.getSpaceByPrettyName(prettyNameSpace);
+      Space space = spaceService.getSpaceById(spaceId);
 
       if (space != null && spaceService.isMember(space, remoteUser)) {
 

@@ -1,5 +1,22 @@
 package org.exoplatform.service;
 
+import static org.exoplatform.service.FunctionalConfigurationService.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
 import org.exoplatform.commons.api.settings.SettingService;
 import org.exoplatform.commons.api.settings.SettingValue;
 import org.exoplatform.commons.api.settings.data.Context;
@@ -8,28 +25,9 @@ import org.exoplatform.rest.response.FunctionalConfiguration;
 import org.exoplatform.rest.response.HighlightSpaceConfiguration;
 import org.exoplatform.rest.response.SpaceConfiguration;
 import org.exoplatform.service.exception.FunctionalConfigurationRuntimeException;
-import org.exoplatform.social.core.space.SpaceListAccess;
 import org.exoplatform.social.core.space.model.Space;
 import org.exoplatform.social.core.space.spi.SpaceService;
 import org.exoplatform.test.matchers.SettingValueMatcher;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
-import static org.exoplatform.service.FunctionalConfigurationService.*;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.*;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FunctionalConfigurationServiceTest {
@@ -101,8 +99,8 @@ public class FunctionalConfigurationServiceTest {
 
         given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIDE_DOCUMENT_ACTION_ACTIVITIES)).willReturn((SettingValue) SettingValue.create(DOCUMENT_ACTION_ACTIVITIES_HIDDEN));
         given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIDE_USER_ACTIVITY_COMPOSER)).willReturn((SettingValue) SettingValue.create(COMPOSER_ACTIVITY_HIDDEN));
-        given(settingService.get(Context.GLOBAL, Scope.GLOBAL, SPACES_WITHOUT_ACTIVITY_COMPOSER)).willReturn((SettingValue) SettingValue.create("pretty_name_1;pretty_name_2"));
-        given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIGHLIGHT_SPACES)).willReturn((SettingValue) SettingValue.create("pretty_name_1#2;pretty_name_2#1;pretty_name_4#5"));
+        given(settingService.get(Context.GLOBAL, Scope.GLOBAL, SPACES_WITHOUT_ACTIVITY_COMPOSER)).willReturn((SettingValue) SettingValue.create("id_1;id_2"));
+        given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIGHLIGHT_SPACES)).willReturn((SettingValue) SettingValue.create("id_1#2;id_2#1;id_4#5"));
 
         FunctionalConfiguration configuration = functionalConfigurationService.getConfiguration();
 
@@ -137,7 +135,6 @@ public class FunctionalConfigurationServiceTest {
 
         String SPACE_ID = "123";
         String SPACE_DISPLAY_NAME = "display name";
-        String SPACE_PRETTY_NAME = "pretty name";
         String SPACE_DESCRIPTION = "a description";
         boolean SPACE_IS_HIGHLIGHT = true;
         int SPACE_HIGHLIGHT_ORDER = 5;
@@ -154,18 +151,17 @@ public class FunctionalConfigurationServiceTest {
 
         Space space = new Space();
         space.setId(SPACE_ID);
-        space.setPrettyName(SPACE_PRETTY_NAME);
 
         given(spaceService.getSpaceById(SPACE_ID)).willReturn(space);
-        given(settingService.get(Context.GLOBAL, Scope.GLOBAL, "highlightspaces")).willReturn((SettingValue) SettingValue.create(""));
+        given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIGHLIGHT_SPACES)).willReturn((SettingValue) SettingValue.create(""));
         given(settingService.get(Context.GLOBAL, Scope.GLOBAL, SPACES_WITHOUT_ACTIVITY_COMPOSER)).willReturn((SettingValue) SettingValue.create(""));
 
         doNothing().doNothing().when(settingService).set(any(), any(), any(), any());
 
         SpaceConfiguration updatedSpace = functionalConfigurationService.updateSpaceConfiguration(spaceConfiguration);
 
-        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq("highlightspaces"), argThat(new SettingValueMatcher(SettingValue.create(space.getPrettyName() + "#" + SPACE_HIGHLIGHT_ORDER))));
-        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(SPACES_WITHOUT_ACTIVITY_COMPOSER), argThat(new SettingValueMatcher(SettingValue.create(space.getPrettyName()))));
+        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(HIGHLIGHT_SPACES), argThat(new SettingValueMatcher(SettingValue.create(space.getId() + "#" + SPACE_HIGHLIGHT_ORDER))));
+        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(SPACES_WITHOUT_ACTIVITY_COMPOSER), argThat(new SettingValueMatcher(SettingValue.create(space.getId()))));
 
         assertThat(updatedSpace.getId(), equalTo(SPACE_ID));
         assertThat(updatedSpace.getDisplayName(), equalTo(SPACE_DISPLAY_NAME));
@@ -188,31 +184,31 @@ public class FunctionalConfigurationServiceTest {
 
         private SpaceConfiguration spaceConfiguration;
 
-        public SpaceConfigurationBuilder() {
+        SpaceConfigurationBuilder() {
             this.spaceConfiguration = new SpaceConfiguration();
         }
 
-        public SpaceConfigurationBuilder spaceId(String spaceId) {
+        SpaceConfigurationBuilder spaceId(String spaceId) {
             spaceConfiguration.setId(spaceId);
             return this;
         }
 
-        public SpaceConfigurationBuilder displayName(String displayName) {
+        SpaceConfigurationBuilder displayName(String displayName) {
             spaceConfiguration.setDisplayName(displayName);
             return this;
         }
 
-        public SpaceConfigurationBuilder descritpion(String description) {
+        SpaceConfigurationBuilder descritpion(String description) {
             spaceConfiguration.setDescription(description);
             return this;
         }
 
-        public SpaceConfigurationBuilder activityComposerVisible(boolean activityComposerVisible) {
+        SpaceConfigurationBuilder activityComposerVisible(boolean activityComposerVisible) {
             spaceConfiguration.setActivityComposerVisible(activityComposerVisible);
             return this;
         }
 
-        public SpaceConfigurationBuilder order(int order) {
+        SpaceConfigurationBuilder order(int order) {
             HighlightSpaceConfiguration highlightConfiguration = new HighlightSpaceConfiguration();
             highlightConfiguration.setOrder(order);
             highlightConfiguration.setHighlight(true);
@@ -220,14 +216,14 @@ public class FunctionalConfigurationServiceTest {
             return this;
         }
 
-        public SpaceConfiguration build() {
+        SpaceConfiguration build() {
             return spaceConfiguration;
         }
     }
 
     class FunctionalConfigurationWithSpacesLoadingService extends FunctionalConfigurationService {
 
-        public FunctionalConfigurationWithSpacesLoadingService(SettingService settingService, SpaceService spaceService) {
+        FunctionalConfigurationWithSpacesLoadingService(SettingService settingService, SpaceService spaceService) {
             super(settingService, spaceService);
         }
 
@@ -236,17 +232,14 @@ public class FunctionalConfigurationServiceTest {
 
             Space space1 = new Space();
             space1.setId("1");
-            space1.setPrettyName("pretty_name_1");
             space1.setDisplayName("DISPLAY_NAME_1");
             space1.setDescription("DESCRIPTION_1");
             Space space2 = new Space();
             space2.setId("2");
-            space2.setPrettyName("pretty_name_2");
             space2.setDisplayName("DISPLAY_NAME_2");
             space2.setDescription("DESCRIPTION_2");
             Space space3 = new Space();
             space3.setId("3");
-            space3.setPrettyName("pretty_name_3");
             space3.setDisplayName("DISPLAY_NAME_3");
             space3.setDescription("DESCRIPTION_3");
 
