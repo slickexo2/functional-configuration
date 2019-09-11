@@ -36,27 +36,10 @@
 
     <br/>
     <br/>
-    
-    <!-- <div class="col-6 col-md-4 input-group mb-1 table-search"-->
-        <!--        input search         -->
-        <!-- <input
-            type="text"
-            class="form-control"
-            :placeholder="$t('functionalConfiguration.table.search')"
-            v-model="spaceFilter"/> -->
-
-        <!--        input search BUTTON clear         -->
-        <!-- <div class="input-group-prepend">
-            <button
-                class="btn btn-outline-secondary"
-                type="button"
-                @click="clearSearch"
-                >{{$t('functionalConfiguration.table.clear')}}</button>
-        </div>
-    </div>  -->
+ 
 
     <!-- Search in table input and clear btn -->
-    <div class="col-8 col-xl-4">
+    <div class="col-6 col-xl-4">
       <div class="input-append">
         <input type="text" :placeholder="$t('functionalConfiguration.table.search')" v-model="spaceFilter" />
         <button class="btn" type="button" @click="clearSearch">{{$t('functionalConfiguration.table.clear')}}</button>
@@ -85,16 +68,15 @@
           </tr>
         </thead>
         <tbody>
+          
+          <!-- Empty data -->
+          <tr v-if="filteredSpaces.length <= 0"><td class="empty" colspan="5">{{$t('functionalConfiguration.table.empty')}}</td></tr>
           <tr v-for="space in filteredSpaces" :key="space.id">
             <!--VUE-->
             <!--       SHOW displayName in view mode         -->
-            <td v-if="!space.edition">
-              <p>{{space.displayName}}</p>
-            </td>
+            <td v-if="!space.edition">{{space.displayName}}</td>
             <!--       SHOW description in view mode         -->
-            <td v-if="!space.edition">
-              <p>{{space.description}}</p>
-            </td>
+            <td v-if="!space.edition">{{space.description}}</td>
             <!--       SHOW showActivity in view mode         -->
             <td v-if="!space.edition">
               <span v-if="space.activityComposerVisible">{{$t('functionalConfiguration.table.acitivityComposer.visible')}}</span>
@@ -108,12 +90,9 @@
             <td v-else-if="!space.edition"></td>
                 <!--       SHOW button EDIT in view mode         -->
             <td v-if="!space.edition && !isEditing">
-              <a @click="openEdition(space)" data-placement="bottom" rel="tooltip" class="actionIcon" data-original-title="Edit">
+              <a @click="openEdition(space)" class="actionIcon" data-toggle="tooltip" :title="$t('functionalConfiguration.table.edit')">
                 <i class="uiIconEdit uiIconLightGray"></i>
               </a>
-                <!-- <button @click="openEdition(space)" class="btn btn-outline-dark edition-buttons">
-                <font-awesome-icon :icon="['fas', 'edit']" />
-                </button> -->
             </td>
                 <!--       SHOW button EDIT in DISABLED view mode         -->
             <td v-else-if="!space.edition && isEditing">
@@ -167,12 +146,12 @@
             <td v-if="space.edition">
 
               <!-- Save line edition -->
-              <a @click="save(space)" data-placement="bottom" rel="tooltip" class="actionIcon" data-original-title="Edit">
+              <a @click="save(space)" class="actionIcon" data-toggle="tooltip" :title="$t('functionalConfiguration.table.save')">
                 <i class="uiIconSave uiIconLightGray"></i>
               </a>
 
               <!-- Cancel line edition -->
-              <a @click="cancelEdit(space)" data-placement="bottom" rel="tooltip" class="actionIcon" data-original-title="Edit">
+              <a @click="cancelEdit(space)" class="actionIcon" data-toggle="tooltip" :title="$t('functionalConfiguration.table.cancel')">
                 <i class="uiIconClose uiIconLightGray"></i>
               </a>
             </td>
@@ -381,46 +360,10 @@ const SORT_STATE = {
   text-align: center !important;
 }
 
-/* .table-displayName {
-  width: 20%;
+.input-append {
+  width: 100%;
 }
-.table-description {
-  width: 35%;
-}
-.table-hide {
-  width: 10%;
-}
-.table-order {
-  width: 15%;
-}
-.table-edition {
-  width: 20%;
-} */
-/* .edition-buttons {
-  margin: 0 5px;
-  width: 40px;
-  height: 40px;
-} */
-/* .p-description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-height: 20px;
-  max-height: 40px;
-  margin-bottom: 0 !important;
-}
-.p-title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-height: 20px;
-  max-height: 40px;
-  margin-bottom: 0 !important;
-} */
+
 .table-wrapper {
     padding: 0 16px;
 }

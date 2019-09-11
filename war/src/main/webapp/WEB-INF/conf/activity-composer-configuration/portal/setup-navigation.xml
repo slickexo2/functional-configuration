@@ -5,11 +5,11 @@
     <priority>1</priority>
     <page-nodes>
         <node>
-            <uri>functional-composer</uri>
-            <name>functional-composer</name>
-            <label>Functional Composer</label>
-            <label xml:lang="en">Functional Composer</label>
-            <label xml:lang="fr">Functional Composer</label>
+            <uri>functional-configuration </uri>
+            <name>functional-configuration </name>
+            <label>Functional configuration</label>
+            <label xml:lang="en">Functional configuration </label>
+            <label xml:lang="fr">Functional configuration </label>
             <page-reference>group::/platform/administrators::functionalComposerConfiguration</page-reference>
         </node>
     </page-nodes>
