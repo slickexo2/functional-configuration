@@ -99,8 +99,8 @@ public class FunctionalConfigurationServiceTest {
 
         given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIDE_DOCUMENT_ACTION_ACTIVITIES)).willReturn((SettingValue) SettingValue.create(DOCUMENT_ACTION_ACTIVITIES_HIDDEN));
         given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIDE_USER_ACTIVITY_COMPOSER)).willReturn((SettingValue) SettingValue.create(COMPOSER_ACTIVITY_HIDDEN));
-        given(settingService.get(Context.GLOBAL, Scope.GLOBAL, SPACES_WITHOUT_ACTIVITY_COMPOSER)).willReturn((SettingValue) SettingValue.create("id_1;id_2"));
-        given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIGHLIGHT_SPACES)).willReturn((SettingValue) SettingValue.create("id_1#2;id_2#1;id_4#5"));
+        given(settingService.get(Context.GLOBAL, Scope.GLOBAL, SPACES_WITHOUT_ACTIVITY_COMPOSER)).willReturn((SettingValue) SettingValue.create("1;2"));
+        given(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIGHLIGHT_SPACES)).willReturn((SettingValue) SettingValue.create("1#2;2#1;4#5"));
 
         FunctionalConfiguration configuration = functionalConfigurationService.getConfiguration();
 

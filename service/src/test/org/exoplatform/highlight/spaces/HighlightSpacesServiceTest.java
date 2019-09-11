@@ -53,14 +53,14 @@ public class HighlightSpacesServiceTest {
         String REMOTE_USER = "me";
 
         HashMap<String, Integer> CONFIGURATION = new HashMap<>();
-        String PRETTY_NAME_1 = "PRETTY_NAME_1";
-        CONFIGURATION.put(PRETTY_NAME_1, 1);
+        String ID_1 = "1";
+        CONFIGURATION.put(ID_1, 1);
         Space SPACE_1 = new Space();
-        SPACE_1.setPrettyName(PRETTY_NAME_1);
+        SPACE_1.setPrettyName(ID_1);
 
 
         given(functionalConfigurationService.loadHighlightConfigAsMap()).willReturn(CONFIGURATION);
-        given(spaceService.getSpaceByPrettyName(PRETTY_NAME_1)).willReturn(SPACE_1);
+        given(spaceService.getSpaceById(ID_1)).willReturn(SPACE_1);
         given(spaceService.isMember(SPACE_1, REMOTE_USER)).willReturn(false);
 
         List<Space> highlightedSpaces = highlightSpacesService.getUserHighlightedSpaces(REMOTE_USER);
@@ -78,33 +78,33 @@ public class HighlightSpacesServiceTest {
         String DISPLAY_NAME_3 = "DISPLAY_NAME_3";
         String DISPLAY_NAME_4 = "DISPLAY_NAME_4";
 
-        String PRETTY_NAME_1 = "PRETTY_NAME_1";
-        String PRETTY_NAME_2 = "PRETTY_NAME_2";
-        String PRETTY_NAME_3 = "PRETTY_NAME_3";
-        String PRETTY_NAME_4 = "PRETTY_NAME_4";
+        String ID_1 = "1";
+        String ID_2 = "2";
+        String ID_3 = "3";
+        String ID_4 = "4";
 
         HashMap<String, Integer> CONFIGURATION = new HashMap<>();
-        CONFIGURATION.put(PRETTY_NAME_1, 6);
-        CONFIGURATION.put(PRETTY_NAME_2, 1);
-        CONFIGURATION.put(PRETTY_NAME_3, 1);
+        CONFIGURATION.put(ID_1, 6);
+        CONFIGURATION.put(ID_2, 1);
+        CONFIGURATION.put(ID_3, 1);
 
         Space SPACE_1 = new Space();
+        SPACE_1.setId(ID_1);
         SPACE_1.setDisplayName(DISPLAY_NAME_1);
-        SPACE_1.setPrettyName(PRETTY_NAME_1);
         Space SPACE_2 = new Space();
+        SPACE_2.setId(ID_2);
         SPACE_2.setDisplayName(DISPLAY_NAME_2);
-        SPACE_2.setPrettyName(PRETTY_NAME_2);
         Space SPACE_3 = new Space();
+        SPACE_3.setId(ID_3);
         SPACE_3.setDisplayName(DISPLAY_NAME_3);
-        SPACE_3.setPrettyName(PRETTY_NAME_3);
         Space SPACE_4 = new Space();
+        SPACE_4.setId(ID_4);
         SPACE_4.setDisplayName(DISPLAY_NAME_4);
-        SPACE_4.setPrettyName(PRETTY_NAME_4);
 
         given(functionalConfigurationService.loadHighlightConfigAsMap()).willReturn(CONFIGURATION);
-        given(spaceService.getSpaceByPrettyName(PRETTY_NAME_1)).willReturn(SPACE_1);
-        given(spaceService.getSpaceByPrettyName(PRETTY_NAME_2)).willReturn(SPACE_2);
-        given(spaceService.getSpaceByPrettyName(PRETTY_NAME_3)).willReturn(SPACE_3);
+        given(spaceService.getSpaceById(ID_1)).willReturn(SPACE_1);
+        given(spaceService.getSpaceById(ID_2)).willReturn(SPACE_2);
+        given(spaceService.getSpaceById(ID_3)).willReturn(SPACE_3);
         when(spaceService.isMember(any(Space.class), anyString())).thenReturn(true);
 
         List<Space> highlightedSpaces = highlightSpacesService.getUserHighlightedSpaces(REMOTE_USER);
