@@ -24,111 +24,115 @@
       <input
         type="checkbox"
         class="custom-control-input"
-        id="activityComposerVisibleSwitch"
+        id="userActivityComposer"
         v-model="configuration.hideComposerActivities"
         @change="changeHideComposerActivities"
       />
       <label
         class="custom-control-label"
-        for="activityComposerVisibleSwitch"
+        for="userActivityComposer"
       >{{ $t('functionalConfiguration.hideComposerActivities') }}</label>
     </div>
 
     <br/>
     <br/>
     
-    <div class="col-6 col-md-4 input-group mb-1 table-search">
+    <!-- <div class="col-6 col-md-4 input-group mb-1 table-search"-->
         <!--        input search         -->
-        <input
+        <!-- <input
             type="text"
             class="form-control"
             :placeholder="$t('functionalConfiguration.table.search')"
-            v-model="spaceFilter"/>
+            v-model="spaceFilter"/> -->
 
         <!--        input search BUTTON clear         -->
-        <div class="input-group-prepend">
+        <!-- <div class="input-group-prepend">
             <button
                 class="btn btn-outline-secondary"
                 type="button"
                 @click="clearSearch"
                 >{{$t('functionalConfiguration.table.clear')}}</button>
         </div>
+    </div>  -->
+
+    <!-- Search in table input and clear btn -->
+    <div class="col-8 col-xl-4">
+      <div class="input-append">
+        <input type="text" :placeholder="$t('functionalConfiguration.table.search')" v-model="spaceFilter" />
+        <button class="btn" type="button" @click="clearSearch">{{$t('functionalConfiguration.table.clear')}}</button>
+      </div>
     </div>
+
+
+    <!-- Spaces table -->
     <div class="table-wrapper">
-        <table class="table">
-            <!--        collumns         -->
-        <thead class="thead-dark">
-            <tr>
-            <th class="table-collumns" @click="orderDisplayName">{{$t('functionalConfiguration.table.displayName')}}
-                    <font-awesome-icon v-if="displayNameOrder === 0" :icon="['fas', 'sort']" />
-                    <font-awesome-icon v-if="displayNameOrder === 1" :icon="['fas', 'sort-down']" />
-                    <font-awesome-icon v-if="displayNameOrder === -1" :icon="['fas', 'sort-up']" />
+      <table class="uiGrid table table-hover table-striped">
+        <thead>
+          <tr>
+            <th @click="orderDisplayName">{{$t('functionalConfiguration.table.displayName')}}
+              <font-awesome-icon v-if="displayNameOrder === 0" :icon="['fas', 'sort']" />
+              <font-awesome-icon v-if="displayNameOrder === 1" :icon="['fas', 'sort-down']" />
+              <font-awesome-icon v-if="displayNameOrder === -1" :icon="['fas', 'sort-up']" />
             </th>
-            <th class="table-collumns">{{$t('functionalConfiguration.table.description')}}</th>
-            <th class="table-collumns">{{$t('functionalConfiguration.table.hideActivityComposer')}}</th>
-            <th class="table-collumns" @click="orderHighlightConfiguration">{{$t('functionalConfiguration.table.highLightSpaceorder')}}
-                <font-awesome-icon v-if="highlightConfigurationOrder === 0" :icon="['fas', 'sort']" />
-                <font-awesome-icon v-if="highlightConfigurationOrder === 1" :icon="['fas', 'sort-down']" />
-                <font-awesome-icon v-if="highlightConfigurationOrder === -1" :icon="['fas', 'sort-up']" />
+            <th>{{$t('functionalConfiguration.table.description')}}</th>
+            <th>{{$t('functionalConfiguration.table.hideActivityComposer')}}</th>
+            <th @click="orderHighlightConfiguration">{{$t('functionalConfiguration.table.highLightSpaceorder')}}
+              <font-awesome-icon v-if="highlightConfigurationOrder === 0" :icon="['fas', 'sort']" />
+              <font-awesome-icon v-if="highlightConfigurationOrder === 1" :icon="['fas', 'sort-down']" />
+              <font-awesome-icon v-if="highlightConfigurationOrder === -1" :icon="['fas', 'sort-up']" />
             </th>
-            <th class="table-collumns">{{$t('functionalConfiguration.table.actions')}}</th>
-            </tr>
+            <th>{{$t('functionalConfiguration.table.actions')}}</th>
+          </tr>
         </thead>
         <tbody>
-            <tr class="table-rows" v-for="space in filteredSpaces" :key="space.id">
+          <tr v-for="space in filteredSpaces" :key="space.id">
             <!--VUE-->
-                <!--       SHOW displayName in view mode         -->
-            <th class="table-displayName" scope="row" v-if="!space.edition">
-                <p class="p-title">{{space.displayName}}</p>
-            </th>
-                <!--       SHOW description in view mode         -->
-            <td class="table-description" v-if="!space.edition">
-                <p class="p-description">{{space.description}}</p>
+            <!--       SHOW displayName in view mode         -->
+            <td v-if="!space.edition">
+              <p>{{space.displayName}}</p>
             </td>
-                <!--       SHOW showActivity in view mode         -->
-            <td class="table-hide" v-if="!space.edition">
-                <div class="custom-control custom-switch">
-                <input
-                    class="custom-control-input"
-                    id="activityComposerVisibleSwitch"
-                    type="checkbox"
-                    v-model="space.activityComposerVisible"
-                    disabled
-                />
-                <label class="custom-control-label" for="activityComposerVisibleSwitch"></label>
-                </div>
+            <!--       SHOW description in view mode         -->
+            <td v-if="!space.edition">
+              <p>{{space.description}}</p>
             </td>
-                <!--       SHOW order in view mode         -->
-            <td
-                class="table-order"
-                v-if="space.highlightConfiguration && space.highlightConfiguration.highlight && !space.edition"
-            >{{space.highlightConfiguration.order}}</td>
+            <!--       SHOW showActivity in view mode         -->
+            <td v-if="!space.edition">
+              <span v-if="space.activityComposerVisible">{{$t('functionalConfiguration.table.acitivityComposer.visible')}}</span>
+              <span v-else>{{$t('functionalConfiguration.table.acitivityComposer.notVisible')}}</span>
+            </td>
+            <!--       SHOW order in view mode         -->
+            <td v-if="space.highlightConfiguration && space.highlightConfiguration.highlight && !space.edition">
+              {{space.highlightConfiguration.order}}
+            </td>
                 <!--       SHOW order if empty in view mode         -->
-            <td class="table-order" v-else-if="!space.edition"></td>
+            <td v-else-if="!space.edition"></td>
                 <!--       SHOW button EDIT in view mode         -->
-            <td class="table-edition" v-if="!space.edition && !isEditing">
-                <button @click="openEdition(space)" class="btn btn-outline-dark edition-buttons">
+            <td v-if="!space.edition && !isEditing">
+              <a @click="openEdition(space)" data-placement="bottom" rel="tooltip" class="actionIcon" data-original-title="Edit">
+                <i class="uiIconEdit uiIconLightGray"></i>
+              </a>
+                <!-- <button @click="openEdition(space)" class="btn btn-outline-dark edition-buttons">
                 <font-awesome-icon :icon="['fas', 'edit']" />
-                </button>
+                </button> -->
             </td>
                 <!--       SHOW button EDIT in DISABLED view mode         -->
-            <td class="table-edition" v-else-if="!space.edition && isEditing">
-                <button class="btn btn-outline-dark edition-buttons" disabled>
-                <font-awesome-icon :icon="['fas', 'edit']" />
-                </button>
+            <td v-else-if="!space.edition && isEditing">
+              <button class="btn btn-outline-dark edition-buttons" disabled>
+              <font-awesome-icon :icon="['fas', 'edit']" />
+              </button>
             </td>
 
             <!-- /// EDITION /// -->
             <!--       SHOW displayName in edition mode         -->
-            <th class="table-displayName" scope="row" v-if="space.edition">
-                <p class="p-title">{{currentSpaceSaved.displayName}}</p>
-            </th>
+            <td v-if="space.edition">
+                <p>{{currentSpaceSaved.displayName}}</p>
+            </td>
                 <!--       SHOW description in edition mode         -->
-            <td class="table-description" v-if="space.edition">
-                <p class="p-description">{{currentSpaceSaved.description}}</p>
+            <td v-if="space.edition">
+                <p>{{currentSpaceSaved.description}}</p>
             </td>
                 <!--       SHOW buttons in edition         -->
-            <td class="table-hide" v-if="space.edition">
+            <td v-if="space.edition">
                 <div class="custom-control custom-switch">
                 <input
                     class="custom-control-input"
@@ -140,7 +144,7 @@
                 </div>
             </td>
                 <!--       SHOW checkbox and input for order in edition mode        -->
-            <td class="table-order" v-if="space.edition">
+            <td v-if="space.edition">
                 <div class="input-group">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
@@ -160,17 +164,21 @@
                 </div>
             </td>
             <!--       SHOW buttons in edition mode        -->
-            <td class="table-edition" v-if="space.edition">
-                <button @click="cancelEdit(space)" class="btn btn-outline-warning edition-buttons">
-                <font-awesome-icon :icon="['fas', 'times']" />
-                </button>
-                <button @click="save(space)" class="btn btn-outline-primary edition-buttons">
-                <font-awesome-icon :icon="['fas', 'check']" />
-                </button>
+            <td v-if="space.edition">
+
+              <!-- Save line edition -->
+              <a @click="save(space)" data-placement="bottom" rel="tooltip" class="actionIcon" data-original-title="Edit">
+                <i class="uiIconSave uiIconLightGray"></i>
+              </a>
+
+              <!-- Cancel line edition -->
+              <a @click="cancelEdit(space)" data-placement="bottom" rel="tooltip" class="actionIcon" data-original-title="Edit">
+                <i class="uiIconClose uiIconLightGray"></i>
+              </a>
             </td>
-            </tr>
+          </tr>
         </tbody>
-        </table>
+      </table>
     </div>
   </div>
 </template>
@@ -358,12 +366,9 @@ const SORT_STATE = {
 .form-control {
   height: 40px;
 }
-    .table-search{
-        margin-left: 5px;
-    }
-.table {
-  border: 1px solid grey;
-}
+/* .table-search{
+    margin-left: 5px;
+} */
 .hide-switches {
   margin: 20px;
 }
@@ -376,7 +381,7 @@ const SORT_STATE = {
   text-align: center !important;
 }
 
-.table-displayName {
+/* .table-displayName {
   width: 20%;
 }
 .table-description {
@@ -390,13 +395,13 @@ const SORT_STATE = {
 }
 .table-edition {
   width: 20%;
-}
-.edition-buttons {
+} */
+/* .edition-buttons {
   margin: 0 5px;
   width: 40px;
   height: 40px;
-}
-.p-description {
+} */
+/* .p-description {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -415,9 +420,9 @@ const SORT_STATE = {
   line-height: 20px;
   max-height: 40px;
   margin-bottom: 0 !important;
-}
+} */
 .table-wrapper {
-    margin: 20px;
+    padding: 0 16px;
 }
 .notification {
     position: absolute;
