@@ -9,7 +9,12 @@ It provide a user interface to :
 - disable/enable activities on documents upload/modifications
 
 Interface :
+
 ![configuration](https://user-images.githubusercontent.com/807839/64876696-015b5000-d650-11e9-8a5d-59ebd8e0d6b2.png)
 
 Space Menu : 
+
 ![spaceNavigation](https://user-images.githubusercontent.com/807839/64876725-1506b680-d650-11e9-91ba-b7c5eb25d17f.png)
+
+
+This addon is tested on plf 5.2.0+ and 5.3.x
