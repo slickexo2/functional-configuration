@@ -8,6 +8,9 @@ It provide a user interface to :
 - configure if the composer is available for user stream
 - disable/enable activities on documents upload/modifications
 
+To install it :
+./addon install function-configuration
+
 Interface :
 
 ![configuration](https://user-images.githubusercontent.com/807839/64876696-015b5000-d650-11e9-8a5d-59ebd8e0d6b2.png)
