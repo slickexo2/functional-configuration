@@ -24,7 +24,7 @@
   import org.exoplatform.social.webui.Utils;
   import org.exoplatform.social.core.space.model.Space;
   import org.exoplatform.social.core.space.spi.SpaceService;
-  import org.exoplatform.service.ActivityComposerConfigurationService;
+  import org.exoplatform.service.FunctionalConfigurationService;
   import org.exoplatform.container.ExoContainerContext;
   import org.exoplatform.services.security.ConversationState;
   import org.exoplatform.services.security.Identity;
@@ -35,8 +35,8 @@
 
   SpaceService spaceService = uicomponent.getSpaceService();
   Space currentSpace = uicomponent.getSpace();
-  ActivityComposerConfigurationService activityComposerConfigurationService = (ActivityComposerConfigurationService) ExoContainerContext.getCurrentContainer().getComponentInstanceOfType(ActivityComposerConfigurationService.class);
-  def listSpacesWithActivityComposer = activityComposerConfigurationService.getListSpacesWithActivityComposer();
+  FunctionalConfigurationService functionalConfigurationService = (FunctionalConfigurationService) ExoContainerContext.getCurrentContainer().getComponentInstanceOfType(FunctionalConfigurationService.class);
+  def listSpacesWithActivityComposer = functionalConfigurationService.getListSpacesWithActivityComposer();
   Identity currentIdentity = ConversationState.getCurrent().getIdentity();
   def canCompose = spaceService.isManager(currentSpace, Utils.getViewerRemoteId()) || currentIdentity.isMemberOf("/platform/administrators") || listSpacesWithActivityComposer.contains(currentSpace);
 

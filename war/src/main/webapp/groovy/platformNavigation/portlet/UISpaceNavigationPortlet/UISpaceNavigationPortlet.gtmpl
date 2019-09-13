@@ -17,7 +17,6 @@
      * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
      * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
      */
-
 %>
 <%
   import org.exoplatform.platform.webui.NavigationURLUtils;
@@ -26,34 +25,31 @@
   import org.exoplatform.web.application.JavascriptManager;
   import org.apache.commons.lang.StringEscapeUtils;
 
-  import org.exoplatform.highlight.spaces.HighlightedSpacesService;
+  import org.exoplatform.highlight.spaces.HighlightSpacesService;
 
 
     def findSpacesLink = NavigationURLUtils.getURLInCurrentPortal("all-spaces");
     uicomponent.refresh();
     def userSpaces = uicomponent.getSpaces();
     def spaceImageSource;
-
-
-
 %>
 
 <%
   def prContext = _ctx.getRequestContext().getParentAppRequestContext();
 
-  HighlightedSpacesService highlightedSpacesService = uicomponent.getApplicationComponent(HighlightedSpacesService.class);
-  def highlightedSpaces = highlightedSpacesService.getUserHighlightedSpaces(prContext.getRemoteUser());
-  List<String> highlightedSpacesPrettyNames = new ArrayList<String> ();
+  HighlightSpacesService highlightSpacesService = uicomponent.getApplicationComponent(HighlightSpacesService.class);
+  def highlightSpaces = highlightSpacesService.getUserHighlightedSpaces(prContext.getRemoteUser());
+  List<String> highlightSpacesIds = new ArrayList<String> ();
 
-  if (highlightedSpaces.size() > 0) {%>
+  if (highlightSpaces.size() > 0) {%>
 	<div class="uiSpaceNavigationPortlet" id="highlightedSpaces">
     	<ul class="spaceNavigation ">
 <%
-      		for(space in highlightedSpaces) {
+      		for(space in highlightSpaces) {
             	String tabStyleNavigation="";
                 String spaceDisplayName = space.getDisplayName();
-                String spacePrettyName = space.getPrettyName(); 
-                highlightedSpacesPrettyNames.add(spacePrettyName);
+                String spaceId = space.getId();
+                highlightSpacesIds.add(spaceId);
                 spaceImageSource = space.getAvatarUrl();
                 String link = uicomponent.event("SelectSpace", space.getId());
         		if(uicomponent.isSelectedSpace(space)) {
@@ -114,7 +110,7 @@
                         if (spaceImageSource == null){
                                 spaceImageSource= LinkProvider.SPACE_DEFAULT_AVATAR_URL;
                         }
-                         if(!highlightedSpacesPrettyNames.contains(space.getPrettyName())){
+                         if(!highlightSpacesIds.contains(space.getId())){
         %>
                                 <li class="spaceItem $tabStyleNavigation">
                                         <a href="javascript:void(0);" onclick="$link" class="spaceIcon avatarMini" ><img data-container="body" alt="" src="$spaceImageSource" data-placement="right" rel="tooltip" data-toggle="tooltip" title="$spaceDisplayName"/><span data-placement="bottom" data-container="body" rel="tooltip" data-toggle="tooltip" data-original-title="$spaceDisplayName"> $spaceDisplayName</span></a>
