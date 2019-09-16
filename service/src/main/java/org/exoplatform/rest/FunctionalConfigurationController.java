@@ -2,6 +2,7 @@ package org.exoplatform.rest;
 
 import static org.exoplatform.rest.utils.RestUtils.isValidBooleanParameter;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -29,6 +30,7 @@ public class FunctionalConfigurationController implements ResourceContainer {
 
     @GET
     @Path(CONFIGURATION_ENDPOINT)
+    @RolesAllowed("administrators")
     public Response getConfiguration(){
 
         return Response
@@ -38,6 +40,7 @@ public class FunctionalConfigurationController implements ResourceContainer {
 
     @PUT
     @Path(DOCUMENT_ACTIVITY_ENDPOINT)
+    @RolesAllowed("administrators")
     public Response updateDocumentActionActivitiesVisibility(@QueryParam("hidden") String hidden) {
 
         if (!isValidBooleanParameter(hidden)) {
@@ -51,6 +54,7 @@ public class FunctionalConfigurationController implements ResourceContainer {
 
     @PUT
     @Path(COMPOSER_ACTIVITY_ENDPOINT)
+    @RolesAllowed("administrators")
     public Response updateComposerActivity(@QueryParam("hidden") String hidden) {
 
         if (!isValidBooleanParameter(hidden)) {
@@ -64,6 +68,7 @@ public class FunctionalConfigurationController implements ResourceContainer {
 
     @PUT
     @Path(UPDATE_SPACE_CONFIGURATION_ENDPOINT)
+    @RolesAllowed("administrators")
     public Response updateSpaceConfiguration(SpaceConfiguration space) {
 
         SpaceConfiguration spaceConfiguration = functionalConfigurationService.updateSpaceConfiguration(space);
