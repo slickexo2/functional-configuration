@@ -76,7 +76,7 @@
             <!--       SHOW displayName in view mode         -->
             <td v-if="!space.edition">{{space.displayName}}</td>
             <!--       SHOW description in view mode         -->
-            <td v-if="!space.edition">{{space.description}}</td>
+            <td v-if="!space.edition">{{decoder(space.description)}}</td>
             <!--       SHOW showActivity in view mode         -->
             <td v-if="!space.edition">
               <span v-if="space.activityComposerVisible">{{$t('functionalConfiguration.table.acitivityComposer.visible')}}</span>
@@ -108,7 +108,7 @@
             </td>
                 <!--       SHOW description in edition mode         -->
             <td v-if="space.edition">
-                <p>{{currentSpaceSaved.description}}</p>
+                <p>{{decoder(currentSpaceSaved.description)}}</p>
             </td>
                 <!--       SHOW buttons in edition         -->
             <td v-if="space.edition">
@@ -288,6 +288,11 @@ export default {
           } else {
               this.highlightConfigurationOrder = SORT_STATE.ASC
           }
+      },
+      decoder (str) {
+        var text = document.createElement('textarea');
+        text.innerHTML = str;
+        return text.value;
       }
 
   },
