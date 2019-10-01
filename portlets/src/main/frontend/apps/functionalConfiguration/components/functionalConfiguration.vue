@@ -42,7 +42,7 @@
     <div class="col-6 col-xl-4">
       <div class="input-append">
         <input type="text" :placeholder="$t('functionalConfiguration.table.search')" v-model="spaceFilter" />
-        <button class="btn" type="button" @click="clearSearch">{{$t('functionalConfiguration.table.clear')}}</button>
+        <button class="btn-primary" type="button" @click="clearSearch">{{$t('functionalConfiguration.table.clear')}}</button>
       </div>
     </div>
 
@@ -399,6 +399,7 @@ const SORT_STATE = {
 
 .input-append {
   width: 100%;
+  font-size:initial;
 }
 
 .table-wrapper {
