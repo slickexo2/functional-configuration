@@ -12,6 +12,8 @@ import javax.ws.rs.core.Response;
 
 import org.exoplatform.rest.response.SpaceConfiguration;
 import org.exoplatform.service.FunctionalConfigurationService;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 
 @Path("/functional-configuration")
@@ -23,6 +25,9 @@ public class FunctionalConfigurationController implements ResourceContainer {
     private static final String UPDATE_SPACE_CONFIGURATION_ENDPOINT = "/configuration/space";
 
     private FunctionalConfigurationService functionalConfigurationService;
+
+    private static final Log LOGGER = ExoLogger.getLogger(FunctionalConfigurationService.class);
+
 
     public FunctionalConfigurationController(FunctionalConfigurationService functionalConfigurationService){
         this.functionalConfigurationService = functionalConfigurationService;
@@ -47,6 +52,7 @@ public class FunctionalConfigurationController implements ResourceContainer {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
+        LOGGER.debug("Update document action actitivites visibility, set value="+hidden);
         functionalConfigurationService.configureDocumentActionActivities(hidden);
 
         return Response.ok().build();

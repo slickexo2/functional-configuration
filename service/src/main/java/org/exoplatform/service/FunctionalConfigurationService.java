@@ -171,6 +171,7 @@ public class FunctionalConfigurationService {
   }
 
   public boolean isDocumentActionActivityHidden() {
+    LOGGER.debug("Get value for DocumentActionActivityHidden : "+ getSettingValueAsBoolean(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIDE_DOCUMENT_ACTION_ACTIVITIES)));
     return getSettingValueAsBoolean(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIDE_DOCUMENT_ACTION_ACTIVITIES));
   }
 
