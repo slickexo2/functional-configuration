@@ -19,6 +19,9 @@
             <field name="dependencies">
               <collection type="java.util.ArrayList">
                 <value>
+                  <string>social-extension</string>
+                </value>
+                <value>
                   <string>functional-configuration-portlets</string>
                 </value>
                 <value>
