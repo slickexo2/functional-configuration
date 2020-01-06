@@ -3,10 +3,7 @@ package org.exoplatform.rest;
 import static org.exoplatform.rest.utils.RestUtils.isValidBooleanParameter;
 
 import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -21,6 +18,7 @@ public class FunctionalConfigurationController implements ResourceContainer {
 
     private static final String DOCUMENT_ACTIVITY_ENDPOINT = "/document-activity";
     private static final String CONFIGURATION_ENDPOINT = "/configuration";
+    private static final String SPACES_BY_GROUP = "/group/{id}/spaces";
     private static final String COMPOSER_ACTIVITY_ENDPOINT = "/composer-activity";
     private static final String UPDATE_SPACE_CONFIGURATION_ENDPOINT = "/configuration/space";
 
@@ -31,6 +29,16 @@ public class FunctionalConfigurationController implements ResourceContainer {
 
     public FunctionalConfigurationController(FunctionalConfigurationService functionalConfigurationService){
         this.functionalConfigurationService = functionalConfigurationService;
+    }
+
+    @GET
+    @Path(SPACES_BY_GROUP)
+    @RolesAllowed("administrators")
+    public Response getSpacesForGroup(@PathParam("id") String groupIdentifier){
+
+        return Response
+                .ok(functionalConfigurationService.getSpacesForGroup(groupIdentifier), MediaType.APPLICATION_JSON)
+                .build();
     }
 
     @GET
