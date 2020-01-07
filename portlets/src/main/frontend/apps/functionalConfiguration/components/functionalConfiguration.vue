@@ -36,7 +36,7 @@
 
     <br/>
     <br/>
-
+ 
 
     <!-- Search in table input and clear btn -->
     <div class="col-6 col-xl-4">
@@ -68,7 +68,7 @@
           </tr>
         </thead>
         <tbody>
-
+          
           <!-- Empty data -->
           <tr v-if="filteredSpaces.length <= 0"><td class="empty" colspan="5">{{$t('functionalConfiguration.table.empty')}}</td></tr>
           <tr v-for="space in filteredSpaces" :key="space.id">
@@ -84,7 +84,15 @@
             </td>
             <!--       SHOW order in view mode         -->
             <td v-if="space.highlightConfiguration && space.highlightConfiguration.highlight && !space.edition">
-              {{space.highlightConfiguration.order}}
+
+              <span>
+                <label><b>{{$t('functionalConfiguration.table.group')}}</b></label>
+                {{space.highlightConfiguration.groupIdentifier}}
+              </span>
+              <span>
+                <label><b>{{$t('functionalConfiguration.table.order')}}</b></label>
+                {{space.highlightConfiguration.order}}
+              </span>
             </td>
                 <!--       SHOW order if empty in view mode         -->
             <td v-else-if="!space.edition"></td>
@@ -125,21 +133,29 @@
                 <!--       SHOW checkbox and input for order in edition mode        -->
             <td v-if="space.edition">
                 <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                    <input
-                        aria-label="Checkbox for following text input"
-                        type="checkbox"
-                        v-model="currentSpaceSaved.highlightConfiguration.highlight"
-                    />
-                    </div>
-                </div>
-                <input
-                    aria-label="Text input with checkbox"
-                    class="form-control"
-                    type="number"
-                    v-model="currentSpaceSaved.highlightConfiguration.order"
-                />
+
+                  <div class="input-group-prepend">
+                      <div class="input-group-text">
+                      <input
+                          aria-label="Checkbox for following text input"
+                          type="checkbox"
+                          v-model="currentSpaceSaved.highlightConfiguration.highlight"
+                      />
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <select class="form-control" id="formSelectGroupSpaces" v-model="currentSpaceSaved.highlightConfiguration.groupIdentifier">
+                      <option value="0"></option>
+                      <option v-for="index in 10" :value="index">Groupe {{index}}</option>
+                    </select>
+                  </div>
+
+                  <input
+                      aria-label="Text input with checkbox"
+                      class="form-control"
+                      type="number"
+                      v-model="currentSpaceSaved.highlightConfiguration.order"
+                  />
                 </div>
             </td>
             <!--       SHOW buttons in edition mode        -->
@@ -182,6 +198,7 @@ export default {
   },
   created() {
     const self = this;
+
     functionalConfigurationService
       .getConfiguration()
       .then(data => (self.configuration = data));
@@ -226,12 +243,14 @@ export default {
       // save a space
     save(space) {
         const self = this;
+
         functionalConfigurationService.putSpaceConfiguration(self.currentSpaceSaved)
           .then(data => {
+
             space.activityComposerVisible = data.activityComposerVisible;
             var needReload = !(space.highlightConfiguration.highlight==data.highlightConfiguration.highlight && space.highlightConfiguration.order==data.highlightConfiguration.order);
             space.highlightConfiguration = data.highlightConfiguration;
-
+        
             self.cancelEdit(space);
             delete self.currentSpaceSaved;
             this.successResponse();
@@ -265,8 +284,10 @@ export default {
       },
       makeToast(title, cssClass) {
           const DEFAULT_TOAST_DELAY = 5000;
+
           const notification = { id: this.notifications.length, title: title, visible: true, cssClass: cssClass };
           this.notifications.push(notification);
+
           setTimeout(() => { notification.visible = false; }, DEFAULT_TOAST_DELAY);
       },
       orderDisplayName(){
@@ -292,6 +313,7 @@ export default {
         text.innerHTML = str;
         return text.value;
       }
+
   },
   computed: {
       // filter spaces
@@ -299,20 +321,24 @@ export default {
       if (!this.configuration || !this.configuration.spaceConfigurations) {
         return [];
       }
+
       const diplayNameAndDescriptionFilter = space => {
         const displayName = space.displayName ? space.displayName : "";
         const description = space.description ? space.description : "";
+
         return (
           displayName.toLowerCase().includes(this.spaceFilter.toLowerCase()) ||
           description.toLowerCase().includes(this.spaceFilter.toLowerCase())
           );
       }
+
         var spaces = this.configuration.spaceConfigurations.filter(diplayNameAndDescriptionFilter);
         if (this.displayNameOrder === SORT_STATE.ASC){
             spaces = spaces.sort((a, b) => a.displayName.localeCompare(b.displayName));
         } else if(this.displayNameOrder === SORT_STATE.DESC){
             spaces = spaces.sort((b, a) => a.displayName.localeCompare(b.displayName));
         }
+
         if (this.highlightConfigurationOrder === SORT_STATE.ASC){
             spaces = spaces.sort(function(a, b) {
                 if (!a.highlightConfiguration.highlight && !b.highlightConfiguration.highlight) {

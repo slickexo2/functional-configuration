@@ -21,9 +21,7 @@ public class HighlightSpacesPortlet extends GenericPortlet {
 
     @Override
     public void processAction(ActionRequest request, ActionResponse response) throws IOException, PortletException {
-
         PortletPreferences preferences = request.getPreferences();
-
         preferences.setValue("portlet_name", request.getParameter("portlet_name"));
         preferences.setValue("portlet_group", request.getParameter("portlet_group"));
         preferences.store();
