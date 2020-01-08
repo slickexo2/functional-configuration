@@ -21,10 +21,12 @@ Space Menu :
 
 
 Versions 1.0.x are for 5.2.x 
+
 Versions 1.1.x are for 5.3.x+
 
 Versions
 ========
 
 1.0.3 : Fix problem about document activities which can be displayed even if deactivated
+
 1.1.0 : Fix incompatibility with eXo Platform 5.3.0
