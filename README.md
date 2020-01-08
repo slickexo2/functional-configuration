@@ -20,9 +20,11 @@ Space Menu :
 ![spaceNavigation](https://user-images.githubusercontent.com/807839/64876725-1506b680-d650-11e9-91ba-b7c5eb25d17f.png)
 
 
-This addon is tested on plf 5.2.0+ and 5.3.xi
+Versions 1.0.x are for 5.2.x 
+Versions 1.1.x are for 5.3.x+
 
 Versions
 ========
 
 1.0.3 : Fix problem about document activities which can be displayed even if deactivated
+1.1.0 : Fix incompatibility with eXo Platform 5.3.0
