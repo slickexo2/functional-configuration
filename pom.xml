@@ -28,7 +28,7 @@
     </parent>
     <groupId>org.exoplatform.addons.functional-configuration</groupId>
     <artifactId>functional-configuration</artifactId>
-    <version>1.0.x-SNAPSHOT</version>
+    <version>1.1.x-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Functional configuration addon</name>
     <description>Functional configuration addon</description>
@@ -48,7 +48,7 @@
         <!-- **************************************** -->
         <!-- Dependencies versions -->
         <!-- **************************************** -->
-        <org.exoplatform.platform.version>5.3.x-SNAPSHOT</org.exoplatform.platform.version>
+        <org.exoplatform.platform.version>5.3.0</org.exoplatform.platform.version>
     </properties>
     <dependencyManagement>
         <dependencies>

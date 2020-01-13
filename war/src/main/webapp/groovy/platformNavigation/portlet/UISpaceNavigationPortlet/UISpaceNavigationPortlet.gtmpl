@@ -51,7 +51,8 @@
                 String spaceId = space.getId();
                 highlightSpacesIds.add(spaceId);
                 spaceImageSource = space.getAvatarUrl();
-                String link = uicomponent.event("SelectSpace", space.getId());
+                def spaceUrl = uicomponent.buildSpaceURL(space);
+
         		if(uicomponent.isSelectedSpace(space)) {
                 	tabStyleNavigation = "spaceItemSelected";
              	}
@@ -61,7 +62,7 @@
                        
         %>
                 <li class="spaceItem $tabStyleNavigation">
-                	<a href="javascript:void(0);" onclick="$link" class="spaceIcon avatarMini" ><img data-container="body" alt="" src="$spaceImageSource" data-placement="right" rel="tooltip" data-toggle="tooltip" title="$spaceDisplayName"/><span data-placement="bottom" data-container="body" rel="tooltip" data-toggle="tooltip" data-original-title="$spaceDisplayName"> $spaceDisplayName</span></a>
+                	<a href="$spaceUrl" class="spaceIcon avatarMini" ><img data-container="body" alt="" src="$spaceImageSource" data-placement="right" rel="tooltip" data-toggle="tooltip" title="$spaceDisplayName"/><span data-placement="bottom" data-container="body" rel="tooltip" data-toggle="tooltip" data-original-title="$spaceDisplayName"> $spaceDisplayName</span></a>
                 </li>
         <%  } %> <!-- END FOR -->
 
@@ -103,7 +104,7 @@
                         String tabStyleNavigation="";
                         String spaceDisplayName = space.getDisplayName();
                         spaceImageSource = space.getAvatarUrl();
-                String link = uicomponent.event("SelectSpace", space.getId());
+                        def spaceUrl = uicomponent.buildSpaceURL(space);
         if(uicomponent.isSelectedSpace(space)) {
                  tabStyleNavigation = "spaceItemSelected";
              }
@@ -113,7 +114,7 @@
                          if(!highlightSpacesIds.contains(space.getId())){
         %>
                                 <li class="spaceItem $tabStyleNavigation">
-                                        <a href="javascript:void(0);" onclick="$link" class="spaceIcon avatarMini" ><img data-container="body" alt="" src="$spaceImageSource" data-placement="right" rel="tooltip" data-toggle="tooltip" title="$spaceDisplayName"/><span data-placement="bottom" data-container="body" rel="tooltip" data-toggle="tooltip" data-original-title="$spaceDisplayName"> $spaceDisplayName</span></a>
+                                        <a href="$spaceUrl" class="spaceIcon avatarMini" ><img data-container="body" alt="" src="$spaceImageSource" data-placement="right" rel="tooltip" data-toggle="tooltip" title="$spaceDisplayName"/><span data-placement="bottom" data-container="body" rel="tooltip" data-toggle="tooltip" data-original-title="$spaceDisplayName"> $spaceDisplayName</span></a>
                                 </li>
         <%      }  } %> <!-- END FOR -->
 

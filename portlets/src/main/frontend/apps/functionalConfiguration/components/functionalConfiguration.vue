@@ -36,13 +36,13 @@
 
     <br/>
     <br/>
- 
+
 
     <!-- Search in table input and clear btn -->
     <div class="col-6 col-xl-4">
       <div class="input-append">
         <input type="text" :placeholder="$t('functionalConfiguration.table.search')" v-model="spaceFilter" />
-        <button class="btn" type="button" @click="clearSearch">{{$t('functionalConfiguration.table.clear')}}</button>
+        <button class="btn-primary" type="button" @click="clearSearch">{{$t('functionalConfiguration.table.clear')}}</button>
       </div>
     </div>
 
@@ -68,7 +68,7 @@
           </tr>
         </thead>
         <tbody>
-          
+
           <!-- Empty data -->
           <tr v-if="filteredSpaces.length <= 0"><td class="empty" colspan="5">{{$t('functionalConfiguration.table.empty')}}</td></tr>
           <tr v-for="space in filteredSpaces" :key="space.id">
@@ -76,7 +76,7 @@
             <!--       SHOW displayName in view mode         -->
             <td v-if="!space.edition">{{space.displayName}}</td>
             <!--       SHOW description in view mode         -->
-            <td v-if="!space.edition">{{space.description}}</td>
+            <td v-if="!space.edition">{{decoder(space.description)}}</td>
             <!--       SHOW showActivity in view mode         -->
             <td v-if="!space.edition">
               <span v-if="space.activityComposerVisible">{{$t('functionalConfiguration.table.acitivityComposer.visible')}}</span>
@@ -108,7 +108,7 @@
             </td>
                 <!--       SHOW description in edition mode         -->
             <td v-if="space.edition">
-                <p>{{currentSpaceSaved.description}}</p>
+                <p>{{decoder(currentSpaceSaved.description)}}</p>
             </td>
                 <!--       SHOW buttons in edition         -->
             <td v-if="space.edition">
@@ -162,9 +162,10 @@
   </div>
 </template>
 
+<style scoped src="bootstrap/dist/css/bootstrap.min.css"></style>
+
 <script>
 import functionalConfigurationService from "../services/functionalConfigurationService";
-
 export default {
   data() {
     return {
@@ -180,7 +181,6 @@ export default {
   },
   created() {
     const self = this;
-
     functionalConfigurationService
       .getConfiguration()
       .then(data => (self.configuration = data));
@@ -225,17 +225,18 @@ export default {
       // save a space
     save(space) {
         const self = this;
-
         functionalConfigurationService.putSpaceConfiguration(self.currentSpaceSaved)
           .then(data => {
-
             space.activityComposerVisible = data.activityComposerVisible;
+            var needReload = !(space.highlightConfiguration.highlight==data.highlightConfiguration.highlight && space.highlightConfiguration.order==data.highlightConfiguration.order);
             space.highlightConfiguration = data.highlightConfiguration;
-        
+
             self.cancelEdit(space);
             delete self.currentSpaceSaved;
-
-              this.successResponse();
+            this.successResponse();
+            if (needReload) {
+                location.reload();
+            }
           })
             .catch(error => {
                 this.failedResponse();
@@ -263,10 +264,8 @@ export default {
       },
       makeToast(title, cssClass) {
           const DEFAULT_TOAST_DELAY = 5000;
-
           const notification = { id: this.notifications.length, title: title, visible: true, cssClass: cssClass };
           this.notifications.push(notification);
-
           setTimeout(() => { notification.visible = false; }, DEFAULT_TOAST_DELAY);
       },
       orderDisplayName(){
@@ -286,8 +285,12 @@ export default {
           } else {
               this.highlightConfigurationOrder = SORT_STATE.ASC
           }
+      },
+      decoder (str) {
+        var text = document.createElement('textarea');
+        text.innerHTML = str;
+        return text.value;
       }
-
   },
   computed: {
       // filter spaces
@@ -295,44 +298,67 @@ export default {
       if (!this.configuration || !this.configuration.spaceConfigurations) {
         return [];
       }
-
       const diplayNameAndDescriptionFilter = space => {
         const displayName = space.displayName ? space.displayName : "";
         const description = space.description ? space.description : "";
-
         return (
-          displayName.includes(this.spaceFilter) ||
-          description.includes(this.spaceFilter)
+          displayName.toLowerCase().includes(this.spaceFilter.toLowerCase()) ||
+          description.toLowerCase().includes(this.spaceFilter.toLowerCase())
           );
       }
-
         var spaces = this.configuration.spaceConfigurations.filter(diplayNameAndDescriptionFilter);
         if (this.displayNameOrder === SORT_STATE.ASC){
             spaces = spaces.sort((a, b) => a.displayName.localeCompare(b.displayName));
         } else if(this.displayNameOrder === SORT_STATE.DESC){
             spaces = spaces.sort((b, a) => a.displayName.localeCompare(b.displayName));
         }
-
         if (this.highlightConfigurationOrder === SORT_STATE.ASC){
             spaces = spaces.sort(function(a, b) {
-                return a.highlightConfiguration.order - b.highlightConfiguration.order;
+                if (!a.highlightConfiguration.highlight && !b.highlightConfiguration.highlight) {
+                    //spaces are not highlighted, sort on name
+                    return a.displayName.localeCompare(b.displayName);
+                } else if (a.highlightConfiguration.highlight && !b.highlightConfiguration.highlight) {
+                    //space a is hightlighted, space b is not, so a should be after b
+                    return 1;
+                } else if (!a.highlightConfiguration.highlight && b.highlightConfiguration.highlight) {
+                    //space a is not hightlighted, space b is, so b should be after a
+                    return -1;
+                } else if (a.highlightConfiguration.order==b.highlightConfiguration.order) {
+                    //space are hightlighted with same rank, sort on name;
+                    return a.displayName.localeCompare(b.displayName);
+                } else {
+                    //space are hightlighted, with different rank
+                    return a.highlightConfiguration.order>b.highlightConfiguration.order;
+                }
             });
         } else if(this.highlightConfigurationOrder === SORT_STATE.DESC){
-            spaces = spaces.sort(function(b, a) {
-                return a.highlightConfiguration.order - b.highlightConfiguration.order;
+            spaces = spaces.sort(function(a, b) {
+                if (!b.highlightConfiguration.highlight && !a.highlightConfiguration.highlight) {
+                    //spaces are not highlighted, sort on name
+                    return b.displayName.localeCompare(a.displayName);
+                } else if (b.highlightConfiguration.highlight && !a.highlightConfiguration.highlight) {
+                    //space b is hightlighted, space a is not, so b should be after a
+                    return 1;
+                } else if (!b.highlightConfiguration.highlight && a.highlightConfiguration.highlight) {
+                    //space b is not hightlighted, space a is, so a should be after b
+                    return -1;
+                } else if (b.highlightConfiguration.order==a.highlightConfiguration.order) {
+                    //space are hightlighted with same rank, sort on name;
+                    return b.displayName.localeCompare(a.displayName);
+                } else {
+                    //space are hightlighted, with different rank
+                    return b.highlightConfiguration.order>a.highlightConfiguration.order;
+                }
             });
         }
-
         return spaces;
     }
   }
-
 };
 const TOAST_TYPE = {
     SUCCESS: 'alert-success',
     DANGER: ' alert-danger',
 }
-
 const SORT_STATE = {
     DESC: -1,
     NONE: 0,
@@ -341,7 +367,6 @@ const SORT_STATE = {
 </script>
 
 <style scoped>
-
 .form-control {
   height: 40px;
 }
@@ -359,11 +384,10 @@ const SORT_STATE = {
   vertical-align: inherit !important;
   text-align: center !important;
 }
-
 .input-append {
   width: 100%;
+  font-size:initial;
 }
-
 .table-wrapper {
     padding: 0 16px;
 }
