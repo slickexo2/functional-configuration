@@ -47,9 +47,19 @@ def jsManager = rcontext.getJavascriptManager();
 jsManager.require("SHARED/navigation-spaces-search", "spacesearch").addScripts("spacesearch.init('" + uicomponent.id + "','" + restUrl + "','" + StringEscapeUtils.escapeJavaScript(noSpace) + "','" + selectSpaceActionDyna + "');");
 
 def spaceLabel = _ctx.appRes("UISpaceNavigationPortlet.label.Spaces");
-%>
 
-<div class="uiSpaceNavigationPortlet" id="$uicomponent.id">
+HighlightSpacesService highlightSpacesService = uicomponent.getApplicationComponent(HighlightSpacesService.class);
+def highlightSpaces = highlightSpacesService.getUserHighlightedSpaces(prContext.getRemoteUser());
+
+List<String> highlightSpacesIds = new ArrayList<String> ();
+
+for(space in highlightSpaces) {
+    String spaceId = space.getId();
+    highlightSpacesIds.add(spaceId);
+}
+        %>
+
+        <div class="uiSpaceNavigationPortlet" id="$uicomponent.id">
 <h5 class="title accordionBar clearfix">
 <a href="/portal/intranet/spaces">
 <i class="uiIconSpaceNavigation" id="MySpacesItem" data-container="body" data-placement="right" rel="tooltip" data-toggle="tooltip" title="$spaceLabel"></i>
@@ -68,18 +78,25 @@ def spaceLabel = _ctx.appRes("UISpaceNavigationPortlet.label.Spaces");
 
     <%
       for(space in userSpaces) {
-                        String tabStyleNavigation="";
-                        String spaceDisplayName = space.getDisplayName();
-                        spaceImageSource = space.getAvatarUrl();
-                String link = uicomponent.event("SelectSpace", space.getId());
+        String tabStyleNavigation="";
+        String spaceDisplayName = space.getDisplayName();
+        spaceImageSource = space.getAvatarUrl();
+        String link = uicomponent.event("SelectSpace", space.getId());
+
         if(uicomponent.isSelectedSpace(space)) {
-                 tabStyleNavigation = "spaceItemSelected";
-             }
-                        if (spaceImageSource == null){
-                                spaceImageSource= LinkProvider.SPACE_DEFAULT_AVATAR_URL;
-                        }
+                tabStyleNavigation = "spaceItemSelected";
+        }
+
+        if (spaceImageSource == null){
+                spaceImageSource= LinkProvider.SPACE_DEFAULT_AVATAR_URL;
+        }
+
+        if (!highlightSpacesIds.contains(space.getId())) {
         %>
-        <%      } %> <!-- END FOR -->
+        <li class="spaceItem $tabStyleNavigation">
+                <a href="javascript:void(0);" onclick="$link" class="spaceIcon avatarMini" ><img data-container="body" alt="" src="$spaceImageSource" data-placement="right" rel="tooltip" data-toggle="tooltip" title="$spaceDisplayName"/><span data-placement="bottom" data-container="body" rel="tooltip" data-toggle="tooltip" data-original-title="$spaceDisplayName"> $spaceDisplayName</span></a>
+</li>
+        <% }     } %> <!-- END FOR -->
 
 
     <!-- FIN -->

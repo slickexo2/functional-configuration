@@ -199,14 +199,14 @@ export default {
   created() {
     const self = this;
 
-    functionalConfigurationService
+    FunctionalConfigurationService
       .getConfiguration()
       .then(data => (self.configuration = data));
   },
   methods: {
       //  Edit hideDocumentActionActivities
     changeHideDocumentActionActivities() {
-      functionalConfigurationService
+      FunctionalConfigurationService
         .putHideDocumentActionActivities(
           this.configuration.hideDocumentActionActivities
         )
@@ -219,7 +219,7 @@ export default {
     },
     //  Edit activityComposerVisible
     changeHideComposerActivities() {
-      functionalConfigurationService
+      FunctionalConfigurationService
         .putHideComposerActivities(this.configuration.hideComposerActivities)
         .then(response => {
             this.successResponse();
@@ -244,7 +244,7 @@ export default {
     save(space) {
         const self = this;
 
-        functionalConfigurationService.putSpaceConfiguration(self.currentSpaceSaved)
+        FunctionalConfigurationService.putSpaceConfiguration(self.currentSpaceSaved)
           .then(data => {
 
             space.activityComposerVisible = data.activityComposerVisible;
@@ -431,4 +431,9 @@ const SORT_STATE = {
     right: 10px;
     top: 67px;
 }
+
+.input-group-text {
+    height: 40px !important;
+}
 </style>
+
