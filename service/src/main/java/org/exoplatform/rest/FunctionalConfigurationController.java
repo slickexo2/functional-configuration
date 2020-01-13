@@ -37,7 +37,7 @@ public class FunctionalConfigurationController implements ResourceContainer {
     @Path(CONFIGURATION_ENDPOINT)
     @RolesAllowed("administrators")
     public Response getConfiguration(){
-
+        LOGGER.info("FunctionalConfiguration : GetConfiguration");
         return Response
                 .ok(functionalConfigurationService.getConfiguration(), MediaType.APPLICATION_JSON)
                 .build();
@@ -47,12 +47,11 @@ public class FunctionalConfigurationController implements ResourceContainer {
     @Path(DOCUMENT_ACTIVITY_ENDPOINT)
     @RolesAllowed("administrators")
     public Response updateDocumentActionActivitiesVisibility(@QueryParam("hidden") String hidden) {
+        LOGGER.info("FunctionalConfiguration : updateDocumentActionActivitiesVisibility, hidden="+hidden);
 
         if (!isValidBooleanParameter(hidden)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
-        LOGGER.debug("Update document action actitivites visibility, set value="+hidden);
         functionalConfigurationService.configureDocumentActionActivities(hidden);
 
         return Response.ok().build();
@@ -62,6 +61,7 @@ public class FunctionalConfigurationController implements ResourceContainer {
     @Path(COMPOSER_ACTIVITY_ENDPOINT)
     @RolesAllowed("administrators")
     public Response updateComposerActivity(@QueryParam("hidden") String hidden) {
+        LOGGER.info("FunctionalConfiguration : updateComposerActivity, hidden="+hidden);
 
         if (!isValidBooleanParameter(hidden)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -76,6 +76,7 @@ public class FunctionalConfigurationController implements ResourceContainer {
     @Path(UPDATE_SPACE_CONFIGURATION_ENDPOINT)
     @RolesAllowed("administrators")
     public Response updateSpaceConfiguration(SpaceConfiguration space) {
+        LOGGER.info("FunctionalConfiguration : updateSpaceConfiguration for space "+space.getDisplayName());
 
         SpaceConfiguration spaceConfiguration = functionalConfigurationService.updateSpaceConfiguration(space);
 
