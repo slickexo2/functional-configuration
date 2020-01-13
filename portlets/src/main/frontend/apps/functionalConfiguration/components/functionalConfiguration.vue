@@ -165,7 +165,8 @@
 <style scoped src="bootstrap/dist/css/bootstrap.min.css"></style>
 
 <script>
-import functionalConfigurationService from "../services/functionalConfigurationService";
+import FunctionalConfigurationService from "../../shared/services/FunctionalConfigurationService";
+
 export default {
   data() {
     return {
