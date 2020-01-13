@@ -76,7 +76,7 @@
             <!--       SHOW displayName in view mode         -->
             <td v-if="!space.edition">{{space.displayName}}</td>
             <!--       SHOW description in view mode         -->
-            <td v-if="!space.edition">{{decoder(space.description)}}</td>
+            <td v-if="!space.edition">{{space.description}}</td>
             <!--       SHOW showActivity in view mode         -->
             <td v-if="!space.edition">
               <span v-if="space.activityComposerVisible">{{$t('functionalConfiguration.table.acitivityComposer.visible')}}</span>
@@ -116,7 +116,7 @@
             </td>
                 <!--       SHOW description in edition mode         -->
             <td v-if="space.edition">
-                <p>{{decoder(currentSpaceSaved.description)}}</p>
+                <p>{{currentSpaceSaved.description}}</p>
             </td>
                 <!--       SHOW buttons in edition         -->
             <td v-if="space.edition">
@@ -378,14 +378,17 @@ export default {
                 }
             });
         }
+
         return spaces;
     }
   }
+
 };
 const TOAST_TYPE = {
     SUCCESS: 'alert-success',
     DANGER: ' alert-danger',
 }
+
 const SORT_STATE = {
     DESC: -1,
     NONE: 0,
@@ -394,6 +397,7 @@ const SORT_STATE = {
 </script>
 
 <style scoped>
+
 .form-control {
   height: 40px;
 }
@@ -411,10 +415,12 @@ const SORT_STATE = {
   vertical-align: inherit !important;
   text-align: center !important;
 }
+
 .input-append {
   width: 100%;
   font-size:initial;
 }
+
 .table-wrapper {
     padding: 0 16px;
 }
