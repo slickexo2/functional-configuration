@@ -39,11 +39,21 @@
   <!-- ================================================================== -->
   <servlet>
     <servlet-name>CharteUtilisationViewServlet</servlet-name>
-    <servlet-class>org.exoplatform.rest.CharteUtilisationViewServlet</servlet-class>
+    <servlet-class>org.exoplatform.charteutilisation.CharteUtilisationViewServlet</servlet-class>
   </servlet>
-
   <servlet-mapping>
     <servlet-name>CharteUtilisationViewServlet</servlet-name>
     <url-pattern>/charte-utilisation</url-pattern>
   </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>CharteUtilisationActionServlet</servlet-name>
+    <servlet-class>org.exoplatform.charteutilisation.CharteUtilisationActionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CharteUtilisationActionServlet</servlet-name>
+    <url-pattern>/charte-utilisation-action</url-pattern>
+  </servlet-mapping>
+
 </web-app>

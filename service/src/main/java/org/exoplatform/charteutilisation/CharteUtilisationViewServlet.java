@@ -1,4 +1,4 @@
-package org.exoplatform.rest;
+package org.exoplatform.charteutilisation;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -8,14 +8,11 @@ import java.io.IOException;
 
 public class CharteUtilisationViewServlet extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/charte-utilisation/charte.jsp").forward(request, response);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);
     }
 }
