@@ -14,7 +14,6 @@
             <label class="control-label" for="portlet_name">Sélection du groupe : </label>
             <div class="controls">
                 <select name="portlet_group" v-model="$preferences.portletGroup">
-                    <option value="0"></option>
                     <option v-for="group of groups" :value="group">Groupe {{group}}</option>
                 </select>
             </div>

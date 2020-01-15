@@ -145,7 +145,7 @@
                   </div>
                   <div class="form-group">
                     <select class="form-control" id="formSelectGroupSpaces" v-model="currentSpaceSaved.highlightConfiguration.groupIdentifier">
-                      <option value="0"></option>
+                      <option value=""></option>
                       <option v-for="index in 10" :value="index">Groupe {{index}}</option>
                     </select>
                   </div>
