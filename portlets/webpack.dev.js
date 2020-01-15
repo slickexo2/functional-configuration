@@ -7,7 +7,9 @@ module.exports = merge(common, {
     context: path.resolve(__dirname, 'src/main/frontend/apps'),
 
     entry: {
-    	functionalConfiguration: "./functionalConfiguration/functionalConfiguration.js"
+    	functionalConfiguration: "./functionalConfiguration/functionalConfiguration.js",
+        highlightSpacesView: "./hightLightSpaces/view/HighlightSpacesView.js",
+        highlightSpacesEdit: "./hightLightSpaces/edit/HighlightSpacesEdit.js"
     },
     output: {
     	path: path.resolve(__dirname, '../webapp/js/'),
