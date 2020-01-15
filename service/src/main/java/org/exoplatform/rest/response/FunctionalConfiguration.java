@@ -9,6 +9,8 @@ public class FunctionalConfiguration implements Serializable {
 
     private boolean hideComposerActivities;
 
+    private String termsAndConditionsWebContentUrl;
+
     private List<SpaceConfiguration> spaceConfigurations;
 
     public FunctionalConfiguration() {}
@@ -35,5 +37,13 @@ public class FunctionalConfiguration implements Serializable {
 
     public void setSpaceConfigurations(List<SpaceConfiguration> spaceConfigurations) {
         this.spaceConfigurations = spaceConfigurations;
+    }
+
+    public String getTermsAndConditionsWebContentUrl() {
+        return termsAndConditionsWebContentUrl;
+    }
+
+    public void setTermsAndConditionsWebContentUrl(String termsAndConditionsWebContentUrl) {
+        this.termsAndConditionsWebContentUrl = termsAndConditionsWebContentUrl;
     }
 }

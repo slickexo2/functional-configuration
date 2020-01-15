@@ -196,6 +196,8 @@ public class FunctionalConfigurationService {
 
     configuration.setSpaceConfigurations(findSpaceConfigurations());
 
+    configuration.setTermsAndConditionsWebContentUrl(loadSettingsAsString(TERMS_AND_CONDITIONS_WEBCONTENT_URL));
+
     return configuration;
   }
 
@@ -427,4 +429,5 @@ public class FunctionalConfigurationService {
   public void updateTermsAndConditions(String termsAndConditionsWebContentUrl) {
     settingService.set(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_WEBCONTENT_URL, SettingValue.create(termsAndConditionsWebContentUrl));
   }
+
 }
