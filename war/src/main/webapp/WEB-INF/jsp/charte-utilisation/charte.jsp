@@ -2,6 +2,8 @@
 <%@ page import="javax.servlet.http.Cookie" %>
 <%@ page import="org.exoplatform.container.PortalContainer" %>
 <%@ page import="org.exoplatform.services.resources.ResourceBundleService" %>
+<%@ page import="org.exoplatform.portal.config.UserPortalConfigService" %>
+<%@ page import="org.exoplatform.portal.resource.SkinService"%>
 <%@ page import="java.util.ResourceBundle" %>
 <%@ page import="org.gatein.common.text.EntityEncoder" %>
 <%@ page language="java" %>
@@ -10,6 +12,14 @@
     String lang = request.getLocale().getLanguage();
     response.setCharacterEncoding("UTF-8");
     response.setContentType("text/html; charset=UTF-8");
+
+
+    PortalContainer portalContainer = PortalContainer.getCurrentInstance(session.getServletContext());
+    UserPortalConfigService userPortalConfigService = portalContainer.getComponentInstanceOfType(UserPortalConfigService.class);
+    String skinName = userPortalConfigService.getDefaultPortalSkinName();
+
+    SkinService skinService = portalContainer.getComponentInstanceOfType(SkinService.class);
+    String cssPath = skinService.getSkin("portal/Conditions", skinName).getCSSPath();
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -19,13 +29,7 @@
     <title>Charte utilisateur</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-    <!--link href="<%=request.getContextPath()%>/skin/charte/css/charte.css" rel="stylesheet" type="text/css"/-->
-
-    <!--script type="text/javascript">
-      function resizeIframe(obj){
-         obj.style.height = 0.85 * screen.height + 'px';
-     }
-    </script-->
+    <link href="<%=cssPath%>" rel="stylesheet" type="text/css"/>
 
 </head>
 <body>
@@ -35,19 +39,11 @@
 
     <div class="uiWelcomeBox" id="AccountSetup">
         <div class="bottom clearfix">
-
-            <form name="charteForm" action="<%= contextPath + "/charte-utilisation-action"%>" method="post">
+            <form name="tcForm" action="<%= contextPath + "/terms-and-conditions-action"%>" method="post">
+                <%-- <input style="display: none; visibility: hidden;" id="userid" name="userid" value="<%=userId%>" /> --%>
                 <div class="pull-right">
-                    <button class="btn inactive" id="continueButton" type="submit">Continuer</button>
+                    <button class="btn" id="continueButton" >Agree</button>
                 </div>
-
-                <div class="pull-left">
-                    <label class="uiCheckbox"><input type="checkbox" id="agreement" name="checkcharte" value="false" onclick="toggleState();" class="checkbox"/>
-                        <span>Je reconnais avoir pris connaissance de la présente charte d’utilisation
-                            et m’engage à respecter les clauses décrites dans ce document.</span>
-                    </label>
-                </div>
-
             </form>
         </div>
     </div>

@@ -1,4 +1,4 @@
-package org.exoplatform.charteutilisation;
+package org.exoplatform.termsconditions;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class CharteUtilisationViewServlet extends HttpServlet {
+public class TermsAndConditionsViewServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/charte-utilisation/charte.jsp").forward(request, response);

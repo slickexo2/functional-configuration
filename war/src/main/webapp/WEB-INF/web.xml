@@ -38,22 +38,22 @@
   <!--           Servlet Charte d'utilisation                             -->
   <!-- ================================================================== -->
   <servlet>
-    <servlet-name>CharteUtilisationViewServlet</servlet-name>
-    <servlet-class>org.exoplatform.charteutilisation.CharteUtilisationViewServlet</servlet-class>
+    <servlet-name>TermsAndConditionsViewServlet</servlet-name>
+    <servlet-class>org.exoplatform.termsconditions.TermsAndConditionsViewServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>CharteUtilisationViewServlet</servlet-name>
-    <url-pattern>/charte-utilisation</url-pattern>
+    <servlet-name>TermsAndConditionsViewServlet</servlet-name>
+    <url-pattern>/terms-and-conditions</url-pattern>
   </servlet-mapping>
 
 
   <servlet>
-    <servlet-name>CharteUtilisationActionServlet</servlet-name>
-    <servlet-class>org.exoplatform.charteutilisation.CharteUtilisationActionServlet</servlet-class>
+    <servlet-name>TermsAndConditionsActionServlet</servlet-name>
+    <servlet-class>org.exoplatform.termsconditions.TermsAndConditionsActionServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>CharteUtilisationActionServlet</servlet-name>
-    <url-pattern>/charte-utilisation-action</url-pattern>
+    <servlet-name>TermsAndConditionsActionServlet</servlet-name>
+    <url-pattern>/terms-and-conditions-action</url-pattern>
   </servlet-mapping>
 
 </web-app>
