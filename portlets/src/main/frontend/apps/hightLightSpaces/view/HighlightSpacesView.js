@@ -1,4 +1,4 @@
-import HighLightSpacesView from './components/HighLightSpacesView.vue'
+import HighLightSpacesView from './components/HighlightSpacesView.vue'
 
 import axios from 'axios';
  

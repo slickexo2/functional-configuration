@@ -1,4 +1,4 @@
-import HighLightSpacesEdit from './components/HighLightSpacesEdit.vue'
+import HighLightSpacesEdit from './components/HighlightSpacesEdit.vue'
 
 import axios from 'axios';
  
