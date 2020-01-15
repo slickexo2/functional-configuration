@@ -6,10 +6,10 @@ class FunctionalConfigurationService {
         this.route = '/rest/functional-configuration';
     }
 
-    getConfiguration() {
+    getConfiguration(){
         return new Promise((resolve, reject) => {
             axios.get(this.route + "/configuration")
-               .then((response) => resolve(response.data))
+                .then((response) => resolve(response.data))
                 .catch((error) => reject(error));
         });
     }
@@ -46,6 +46,16 @@ class FunctionalConfigurationService {
 
     putHideDocumentActionActivities(isHidden) {
         const restRoute = this.route + "/document-activity?hidden=" + isHidden;
+
+        return new Promise((resolve, reject) => {
+            axios.put(restRoute)
+                .then((response) => resolve(response.data))
+                .catch((error) => reject(error));
+        });
+    }
+
+    putTermsAndConditions(webContentUrl) {
+        const restRoute = this.route + "/terms-and-conditions?webContentUrl=" + webContentUrl;
 
         return new Promise((resolve, reject) => {
             axios.put(restRoute)

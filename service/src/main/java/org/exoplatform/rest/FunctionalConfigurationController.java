@@ -21,6 +21,7 @@ public class FunctionalConfigurationController implements ResourceContainer {
     private static final String SPACES_BY_GROUP = "/group/{id}/spaces";
     private static final String COMPOSER_ACTIVITY_ENDPOINT = "/composer-activity";
     private static final String UPDATE_SPACE_CONFIGURATION_ENDPOINT = "/configuration/space";
+    private static final String UPDATE_TERMS_AND_CONDITIONS = "/terms-and-conditions";
 
     private FunctionalConfigurationService functionalConfigurationService;
 
@@ -89,6 +90,19 @@ public class FunctionalConfigurationController implements ResourceContainer {
 
         return Response
                 .ok(spaceConfiguration, MediaType.APPLICATION_JSON)
+                .build();
+    }
+
+    @PUT
+    @Path(UPDATE_TERMS_AND_CONDITIONS)
+    @RolesAllowed("administrators")
+    public Response updateTermsAndConditions(@QueryParam("webContentUrl") String webContentUrl) {
+        LOGGER.info("FunctionalConfiguration : updateTermsAndConditions", webContentUrl);
+
+        functionalConfigurationService.updateTermsAndConditions(webContentUrl);
+
+        return Response
+                .ok(MediaType.APPLICATION_JSON)
                 .build();
     }
 }

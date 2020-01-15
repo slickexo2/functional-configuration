@@ -1,7 +1,10 @@
 package org.exoplatform.service;
 
-import com.google.common.collect.Maps;
+import java.util.*;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
+
 import org.exoplatform.commons.api.settings.SettingService;
 import org.exoplatform.commons.api.settings.SettingValue;
 import org.exoplatform.commons.api.settings.data.Context;
@@ -36,6 +39,8 @@ public class FunctionalConfigurationService {
   public static final String SPACES_WITHOUT_ACTIVITY_COMPOSER = "spacesWithoutActivityComposer";
 
   public static final String HIGHLIGHT_SPACES = "highlightspaces";
+
+  static final String TERMS_AND_CONDITIONS_WEBCONTENT_URL = "TERMS_AND_CONDITIONS_WEBCONTENT_URL";
 
   // SEPARATOR between space_id and highlight_space_order : ID#ORDER
   public static final String HIGHLIGHT_SPACES_SEPARATOR = "#";
@@ -210,7 +215,7 @@ public class FunctionalConfigurationService {
             || StringUtils.isEmpty(settingValue.getValue().toString())) {
       return false;
     }
-    return Boolean.parseBoolean(settingValue.getValue().toString());
+    return Boolean.valueOf(settingValue.getValue().toString());
   }
 
   public SpaceConfiguration updateSpaceConfiguration(SpaceConfiguration spaceConfiguration) {
@@ -221,7 +226,6 @@ public class FunctionalConfigurationService {
       LOGGER.error("Space with id : " + spaceConfiguration.getId() + " NOT FOUND");
       throw new FunctionalConfigurationRuntimeException("space.notfound");
     }
-
 
     // load highlight configuration as map from setting service
     Map<String, Integer> highlightConfigurationsMap = loadHighlightConfigAsMap();
@@ -412,29 +416,15 @@ public class FunctionalConfigurationService {
             : new ArrayList<>();
   }
 
-  private String loadSettingsAsString(String settingKey) {
-    SettingValue settingValue = settingService.get(Context.GLOBAL, Scope.GLOBAL, settingKey);
+  private String loadSettingsAsString(String highlightSpaces) {
+    SettingValue settingValue = settingService.get(Context.GLOBAL, Scope.GLOBAL, highlightSpaces);
 
     return nonNull(settingValue)
             ? (String) settingValue.getValue()
             : "";
   }
 
-  public List<SpaceConfiguration> getSpacesForGroup(String groupIdentifier) {
-
-    final String LEGACY_IDENTIFIER = "0"; // For compatibility we are using identifier 0
-    List<SpaceConfiguration> spaceConfigurations = findSpaceConfigurations();
-
-    if (LEGACY_IDENTIFIER.equals(groupIdentifier)) {
-      return spaceConfigurations.stream()
-              .filter(space -> Objects.nonNull(space.getHighlightConfiguration()))
-              .filter(space -> space.getHighlightConfiguration().isHighlight() && StringUtils.isEmpty(space.getHighlightConfiguration().getGroupIdentifier()))
-              .collect(Collectors.toList());
-    }
-
-    return spaceConfigurations.stream()
-            .filter(space -> Objects.nonNull(space.getHighlightConfiguration()) && space.getHighlightConfiguration().isHighlight())
-            .filter(space -> groupIdentifier.equals(space.getHighlightConfiguration().getGroupIdentifier()))
-            .collect(Collectors.toList());
+  public void updateTermsAndConditions(String termsAndConditionsWebContentUrl) {
+    settingService.set(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_WEBCONTENT_URL, SettingValue.create(termsAndConditionsWebContentUrl));
   }
 }

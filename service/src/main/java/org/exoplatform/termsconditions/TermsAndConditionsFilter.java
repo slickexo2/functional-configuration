@@ -25,22 +25,15 @@ public class TermsAndConditionsFilter implements Filter {
         String remoteUser = httpServletRequest.getRemoteUser();
         if (remoteUser != null) {
             String requestUri = httpServletRequest.getRequestURI();
-//            String atisNetworkContextPath = httpServletRequest.getContextPath();
-//            boolean isLoginUri = (requestUri.contains(atisNetworkContextPath + LOGIN)) || (requestUri.contains(atisNetworkContextPath + DO_LOGIN));
-//            boolean isRestUri = requestUri.contains(restUri);
-//            boolean isDevMod = PropertyManager.isDevelopping();
 
-//            boolean atisCharterChecked = getTermsAndConditionsService().isAccepted(remoteUser);
             if (!getTermsAndConditionsService().isAccepted(remoteUser)) {
                 ServletContext atisnetworkExtensionContext = httpServletRequest.getSession().getServletContext().getContext(ATISNETWORK_EXTENSION_WAR);
                 String queryString = httpServletRequest.getQueryString();
                 if (queryString != null) {
                     requestUri = requestUri + "?" + queryString;
                 }
-//                HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-//                String targetUri = CHARTER_SERVLET_URL + "?initialURI=" + requestUri;
-                atisnetworkExtensionContext.getRequestDispatcher(CHARTER_SERVLET_URL).forward(httpServletRequest, response);
-                return;
+//                atisnetworkExtensionContext.getRequestDispatcher(CHARTER_SERVLET_URL).forward(httpServletRequest, response);
+//                return;
             }
         }
         chain.doFilter(request, response);

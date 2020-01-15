@@ -34,6 +34,24 @@
       >{{ $t('functionalConfiguration.hideComposerActivities') }}</label>
     </div>
 
+    <!-- Terms and conditions -->
+    <div class="custom-control">
+
+      <label
+        class="custom-control-label"
+        for="inputTermsAndConditions"
+      >{{ $t('functionalConfiguration.termsAndConditionsWebContentUrl') }}</label>
+
+      <input type="text" v-model="configuration.urlWebContent" v-on:blur="updateTermsAndConditions"/>
+      <!-- <input
+        class="custom-control-input"
+        id="inputTermsAndConditions"
+        v-model="configuration.urlWebContent"
+
+      /> -->
+    </div>
+
+
     <br/>
     <br/>
  
@@ -204,6 +222,16 @@ export default {
       .then(data => (self.configuration = data));
   },
   methods: {
+    updateTermsAndConditions() {
+      functionalConfigurationService.putTermsAndConditions(configuration.urlWebContent)
+        .then(response => {
+            this.successResponse();
+        })
+        .catch(error => {
+            this.failedResponse();
+        });
+
+    },
       //  Edit hideDocumentActionActivities
     changeHideDocumentActionActivities() {
       functionalConfigurationService
