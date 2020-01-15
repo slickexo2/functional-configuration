@@ -1,9 +1,9 @@
 <template>
     <div>
-        <span style="color: #ffffff;padding-left:15px;font-weight:bold;">{{$root.portletName}}</span>
+        <span class="portletName">{{$root.portletName}}</span>
         <ul>
-            <li style="color: #ffffff;padding-left:15px;" v-for="space in spaces">
-                <a :href="space.spaceUri" style="color:#ffffff;margin-left:15px;">{{space.displayName}}</span></a>
+            <li class="portletSpace" v-for="space in spaces">
+                <a class="portletSpaceLink" :href="space.spaceUri" >{{space.displayName}}</span></a>
             </li>
         </ul>
 
@@ -29,3 +29,23 @@ export default {
     },
 }
 </script>
+
+
+<style scoped>
+
+    .portletName {
+        color: #ffffff;
+        padding-left:15px;
+        font-weight:bold;
+    }
+
+    .portletSpace {
+        color: #ffffff;
+        padding-left:15px;
+    }
+
+    .portletSpaceLink {
+        color:#ffffff;
+        margin-left:15px;
+    }
+</style>

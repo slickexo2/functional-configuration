@@ -14,7 +14,8 @@
             <label class="control-label" for="portlet_name">Sélection du groupe : </label>
             <div class="controls">
                 <select name="portlet_group" v-model="$preferences.portletGroup">
-                    <option v-for="group of groups" :value="group">Groupe {{group}}</option>
+
+                    <option v-for="index in 10" :value="index">Groupe {{index}}</option>
                 </select>
             </div>
         </div>
@@ -29,28 +30,7 @@
 </template>
 
 <script>
-import FunctionalConfigurationService from "../../../shared/services/FunctionalConfigurationService";
-
-export default {
-    data() {
-        return {
-            groups: []
-        }
-    },
-    created() {
-        FunctionalConfigurationService.getConfiguration()
-            .then(result => { this.groups = this.provideGroupsConfiguration(result.spaceConfigurations); })
-            .catch(error => console.log(error));
-    },
-    methods: {
-        provideGroupsConfiguration: function(spaceConfigurations) {
-            console.log(spaceConfigurations);
-            return (spaceConfigurations)
-                ? [...new Set(spaceConfigurations.map(space => space.highlightConfiguration).filter(space => space.groupIdentifier).map(space => space.groupIdentifier))]
-                : [];
-        }
-    }
-}
+export default {}
 </script>
 
 <style scoped>
