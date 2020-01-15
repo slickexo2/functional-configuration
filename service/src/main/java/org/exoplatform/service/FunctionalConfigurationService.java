@@ -142,8 +142,8 @@ public class FunctionalConfigurationService {
     return spaceConfigurations;
   }
 
-  String findGroupIdentifierForSpace(Map<String, List<String>> groupSpacesConfigurations, String spaceId) {
-    final String DEFAULT_GROUP_ID = "0";
+  public String findGroupIdentifierForSpace(Map<String, List<String>> groupSpacesConfigurations, String spaceId) {
+    final String DEFAULT_GROUP_ID = "";
 
     for (Map.Entry<String, List<String>> entry: groupSpacesConfigurations.entrySet()) {
 
@@ -291,7 +291,7 @@ public class FunctionalConfigurationService {
     return groupJoiner.toString();
   }
 
-  private Map<String, List<String>> loadGroupSpacesSettingAsMap() {
+  public Map<String, List<String>> loadGroupSpacesSettingAsMap() {
 
     final int GROUP_CONFIGURATION_POSITION = 0;
 

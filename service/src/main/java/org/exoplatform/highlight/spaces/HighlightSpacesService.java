@@ -3,7 +3,6 @@ package org.exoplatform.highlight.spaces;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.exoplatform.service.FunctionalConfigurationService;
 import org.exoplatform.social.core.space.model.Space;
@@ -19,9 +18,10 @@ public class HighlightSpacesService {
     this.spaceService = spaceService;
   }
 
-  public List<Space> getUserHighlightedSpaces(String remoteUser) {
+  public List<HighlightSpace> getUserHighlightedSpaces(String remoteUser) {
 
     Map<String, Integer> configurations = functionalConfigurationService.loadHighlightConfigAsMap();
+    Map<String, List<String>> groupSpacesSettings = functionalConfigurationService.loadGroupSpacesSettingAsMap();
 
     List<HighlightSpace> highlightSpaces = new ArrayList<>();
 
@@ -37,12 +37,17 @@ public class HighlightSpacesService {
         highlightSpace.setOrder(order);
         highlightSpace.setSpace(space);
 
+
+        highlightSpace.setGroupIdentifier(
+                functionalConfigurationService.findGroupIdentifierForSpace(groupSpacesSettings, spaceId)
+        );
+
         highlightSpaces.add(highlightSpace);
       }
     }
 
     highlightSpaces.sort(new HighlightSpacesComparator());
 
-    return highlightSpaces.stream().map(HighlightSpace::getSpace).collect(Collectors.toList());
+    return highlightSpaces;//.stream().map(HighlightSpace::getSpace).collect(Collectors.toList());
   }
 }
