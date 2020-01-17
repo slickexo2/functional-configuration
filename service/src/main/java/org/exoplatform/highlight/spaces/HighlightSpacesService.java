@@ -48,6 +48,6 @@ public class HighlightSpacesService {
 
     highlightSpaces.sort(new HighlightSpacesComparator());
 
-    return highlightSpaces;//.stream().map(HighlightSpace::getSpace).collect(Collectors.toList());
+    return highlightSpaces;
   }
 }

@@ -33,7 +33,6 @@ public class FunctionalConfigurationController implements ResourceContainer {
 
     @GET
     @Path(SPACES_BY_GROUP)
-    @RolesAllowed("administrators")
     public Response getSpacesForGroup(@PathParam("id") String groupIdentifier){
 
         return Response

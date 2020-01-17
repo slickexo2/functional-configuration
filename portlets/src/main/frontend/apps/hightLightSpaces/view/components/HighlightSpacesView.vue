@@ -2,8 +2,8 @@
     <div>
         <span class="portletName">{{$root.portletName}}</span>
         <ul>
-            <li class="portletSpace" v-for="space in spaces">
-                <a class="portletSpaceLink" :href="space.spaceUri" >{{space.displayName}}</span></a>
+            <li class="portletSpace" v-for="space in spaces" :key="space.id">
+                <a class="portletSpaceLink" :href="space.spaceUri" >{{space.displayName}}</a>
             </li>
         </ul>
 

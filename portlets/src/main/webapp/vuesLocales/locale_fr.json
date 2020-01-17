@@ -19,5 +19,10 @@
   "functionalConfiguration.table.save": "Sauvegarder",
   "functionalConfiguration.table.empty": "Aucun espace",
   "functionalConfiguration.table.group": "Groupe : ",
-  "functionalConfiguration.table.order": "Ordre : "
+  "functionalConfiguration.table.order": "Ordre : ",
+  "functionalConfiguration.highlightSpaces.edit.portletName": "Nom de la portlet : ",
+  "functionalConfiguration.highlightSpaces.edit.groupSelection": "Sélection du groupe : ",
+  "functionalConfiguration.highlightSpaces.edit.group": "Groupe",
+  "functionalConfiguration.highlightSpaces.edit.close": "Fermer",
+  "functionalConfiguration.highlightSpaces.edit.save": "Sauvegarder"
 }
