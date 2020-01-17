@@ -30,7 +30,7 @@
 		<supported-locale>fr</supported-locale>
 		<portlet-info>
 			<title>Highlighted spaces group</title>
-			<keywords>Spaces group</keywords>
+			<keywords>Highlighted spaces group</keywords>
 		</portlet-info>
 	</portlet>
 </portlet-app>
