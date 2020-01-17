@@ -29,7 +29,7 @@
 		</supports>
 		<supported-locale>fr</supported-locale>
 		<portlet-info>
-			<title>Spaces group</title>
+			<title>Highlighted spaces group</title>
 			<keywords>Spaces group</keywords>
 		</portlet-info>
 	</portlet>
