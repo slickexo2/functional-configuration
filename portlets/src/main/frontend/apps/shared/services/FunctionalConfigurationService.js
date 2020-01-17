@@ -54,11 +54,11 @@ class FunctionalConfigurationService {
         });
     }
 
-    putTermsAndConditions(webContentUrl) {
-        const restRoute = this.route + "/terms-and-conditions?webContentUrl=" + webContentUrl;
+    putTermsAndConditions(termsAndConditions) {
+        const restRoute = this.route + "/terms-and-conditions";
 
         return new Promise((resolve, reject) => {
-            axios.put(restRoute)
+            axios.put(restRoute, termsAndConditions)
                 .then((response) => resolve(response.data))
                 .catch((error) => reject(error));
         });

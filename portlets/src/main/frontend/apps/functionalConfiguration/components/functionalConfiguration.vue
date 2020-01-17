@@ -35,22 +35,29 @@
     </div>
 
     <!-- Terms and conditions -->
-    <div class="custom-control">
-     
-      <label
-        class="custom-control-label"
-        for="inputTermsAndConditions"
-      >{{ $t('functionalConfiguration.termsAndConditionsWebContentUrl') }}</label>
-     
-      <input type="text" v-model="configuration.termsAndConditionsWebContentUrl" v-on:blur="updateTermsAndConditions"/>
-      <!-- <input
-        class="custom-control-input"
-        id="inputTermsAndConditions"
-        v-model="configuration.termsAndConditionsWebContentUrl"
-        
-      /> -->
-    </div>
+    <div class="d-flex justify-content-start">
+      <div class="custom-control custom-switch hide-switches" style="min-width: 250px;">
 
+        <input
+            type="checkbox"
+            class="custom-control-input"
+            id="inputActiveTermsAndConditions"
+            v-model="configuration.termsAndConditions.active"
+          />
+          <label class="custom-control-label" for="inputActiveTermsAndConditions">{{ $t('functionalConfiguration.activeTermsAndConditions') }}</label>
+      </div>
+
+      <div class="d-flex align-items-center">
+        <label class="control-label" for="inputTermsAndConditions" style="margin-left:10px">
+          {{ $t('functionalConfiguration.termsAndConditionsWebContentUrl') }}
+        </label>
+        <input id="inputTermsAndConditions" :disabled="!configuration.termsAndConditions.active" type="text" v-model="configuration.termsAndConditions.webContentUrl"/>
+      </div>
+
+      <button @click="saveTermsAndConditions(configuration.termsAndConditions)" class="actionIcon" data-toggle="tooltip" :title="$t('functionalConfiguration.table.save')">
+        <i class="uiIconSave uiIconLightGray"></i>
+      </button>
+    </div>
 
     <br/>
     <br/>
@@ -341,6 +348,11 @@ export default {
         var text = document.createElement('textarea');
         text.innerHTML = str;
         return text.value;
+      },
+      saveTermsAndConditions(termsAndConditions) {
+        functionalConfigurationService.putTermsAndConditions(termsAndConditions)
+          .then(response => this.successResponse())
+          .catch(error => this.failedResponse());
       }
 
   },

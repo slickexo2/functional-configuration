@@ -18,6 +18,8 @@
   "functionalConfiguration.table.cancel": "Annuler",
   "functionalConfiguration.table.save": "Sauvegarder",
   "functionalConfiguration.table.empty": "Aucun espace",
+  "functionalConfiguration.activeTermsAndConditions": "Activer la charte utilisateur",
+  "functionalConfiguration.termsAndConditionsWebContentUrl": "Lien du contenu WEB"
   "functionalConfiguration.table.group": "Groupe : ",
   "functionalConfiguration.table.order": "Ordre : ",
   "functionalConfiguration.highlightSpaces.edit.portletName": "Nom de la portlet : ",
