@@ -13,10 +13,10 @@ import org.exoplatform.rest.response.TermsAndConditions;
 import org.exoplatform.service.exception.FunctionalConfigurationRuntimeException;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
-import org.exoplatform.social.core.service.LinkProvider;
 import org.exoplatform.social.core.space.model.Space;
 import org.exoplatform.social.core.space.spi.SpaceService;
 
+import javax.jcr.Node;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -132,7 +132,6 @@ public class FunctionalConfigurationService {
       if (highlightConfigurationMap.containsKey(space.getId())) {
         highlightConfiguration.setHighlight(true);
         highlightConfiguration.setOrder(highlightConfigurationMap.get(space.getId()));
-        highlightConfiguration.setGroupIdentifier(findGroupIdentifierForSpace(groupSpacesConfigurations, space.getId()));
       } else {
         highlightConfiguration.setHighlight(false);
       }
@@ -193,6 +192,13 @@ public class FunctionalConfigurationService {
 
     configuration.setSpaceConfigurations(findSpaceConfigurations());
 
+    configuration.setTermsAndConditions(getTermsAndConditions());
+
+    return configuration;
+  }
+
+  public TermsAndConditions getTermsAndConditions() {
+    TermsAndConditions termsAndConditions = new TermsAndConditions();
     boolean isTermsAndConditionsActive = isTermsAndConditionsActive();
     if (isTermsAndConditionsActive) {
       TermsAndConditions termsAndConditions = new TermsAndConditions();
@@ -434,8 +440,19 @@ public class FunctionalConfigurationService {
   }
 
   public void updateTermsAndConditions(TermsAndConditions termsAndConditions) {
+
+    Node nodeByExpression = findNodeFileByAbsoluteName(termsAndConditions.getWebContentUrl());
+    if (Objects.isNull(nodeByExpression)) {
+      throw new FunctionalConfigurationRuntimeException("termsAndConditions.fileNotFound");
+    }
     settingService.set(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_ACTIVE, SettingValue.create(termsAndConditions.isActive()));
     settingService.set(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_WEBCONTENT_URL, SettingValue.create(termsAndConditions.getWebContentUrl()));
+  }
+
+  public Node findNodeFileByAbsoluteName(String webContentUrl) {
+    final String FILE_PREFIX = "repository:collaboration:";
+
+    return NodeLocation.getNodeByExpression(FILE_PREFIX + webContentUrl);
   }
 
 }

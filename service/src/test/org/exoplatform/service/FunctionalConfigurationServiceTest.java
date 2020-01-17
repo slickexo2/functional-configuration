@@ -9,7 +9,6 @@ import org.exoplatform.rest.response.HighlightSpaceConfiguration;
 import org.exoplatform.rest.response.SpaceConfiguration;
 import org.exoplatform.rest.response.TermsAndConditions;
 import org.exoplatform.service.exception.FunctionalConfigurationRuntimeException;
-import org.exoplatform.service.helpers.SpaceConfigurationBuilder;
 import org.exoplatform.social.core.space.model.Space;
 import org.exoplatform.social.core.space.spi.SpaceService;
 import org.exoplatform.test.matchers.SettingValueMatcher;
@@ -19,7 +18,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static org.exoplatform.service.FunctionalConfigurationService.*;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -36,6 +37,9 @@ public class FunctionalConfigurationServiceTest {
 
     @Mock
     private SpaceService spaceService;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     private FunctionalConfigurationService functionalConfigurationService;
 
@@ -285,6 +289,29 @@ public class FunctionalConfigurationServiceTest {
 
         verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(TERMS_AND_CONDITIONS_ACTIVE), argThat(new SettingValueMatcher(SettingValue.create(active))));
         verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(TERMS_AND_CONDITIONS_WEBCONTENT_URL), argThat(new SettingValueMatcher(SettingValue.create(webcontentUrl))));
+    }
 
+    @Test
+    public void should_send_error_when_webcontent_not_found() {
+
+        FunctionalConfigurationWithWebContentNotFoundService functionalConfigurationService = new FunctionalConfigurationWithWebContentNotFoundService(settingService, spaceService);
+
+        thrown.expect(FunctionalConfigurationRuntimeException.class);
+        thrown.expectMessage("termsAndConditions.fileNotFound");
+
+        functionalConfigurationService.updateTermsAndConditions(new TermsAndConditions());
+
+    }
+
+    class FunctionalConfigurationWithWebContentNotFoundService extends FunctionalConfigurationService {
+
+        public FunctionalConfigurationWithWebContentNotFoundService(SettingService settingService, SpaceService spaceService) {
+            super(settingService, spaceService);
+        }
+
+//        @Override
+        public Node findNodeFileByAbsoluteName(String webContentUrl) {
+            return null;
+        }
     }
 }
