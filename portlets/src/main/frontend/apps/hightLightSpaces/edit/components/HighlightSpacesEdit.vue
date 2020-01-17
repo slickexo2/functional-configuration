@@ -23,7 +23,7 @@
 
         <div class="control-group submit-form">
             <input type="submit" class="btn" :value="$t('functionalConfiguration.highlightSpaces.edit.save')"/>
-            <!-- <input type="button" class="btn" :value="$t('functionalConfiguration.highlightSpaces.edit.close')" onclick="javascript:eXo.webui.UIForm.submitForm('UIPortletForm','Close',true)"/> -->
+            <input type="button" class="btn" :value="$t('functionalConfiguration.highlightSpaces.edit.close')" onclick="javascript:eXo.webui.UIForm.submitForm('UIPortletForm','Close',true)"/>
         </div>
       </form>
   </div>
