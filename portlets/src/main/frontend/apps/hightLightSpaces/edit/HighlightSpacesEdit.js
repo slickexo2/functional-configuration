@@ -1,6 +1,4 @@
 import HighLightSpacesEdit from './components/HighlightSpacesEdit.vue'
-
-import axios from 'axios';
  
 Vue.config.productionTip = false
 
@@ -12,7 +10,7 @@ const fallbAckLangUrl = `/functional-configuration-portlets/vuesLocales/locale_$
 
 function fetchLangFileExist(langUrl) {
 	return new Promise((success, error) => {
-		axios.get(langUrl)
+		fetch(langUrl)
 			.then(() => success())
 			.catch(() => error());
 	});
