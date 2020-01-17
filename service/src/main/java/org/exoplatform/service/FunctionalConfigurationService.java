@@ -1,10 +1,6 @@
 package org.exoplatform.service;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.StringUtils;
-
 import org.exoplatform.commons.api.settings.SettingService;
 import org.exoplatform.commons.api.settings.SettingValue;
 import org.exoplatform.commons.api.settings.data.Context;
@@ -13,6 +9,7 @@ import org.exoplatform.commons.utils.ListAccess;
 import org.exoplatform.rest.response.FunctionalConfiguration;
 import org.exoplatform.rest.response.HighlightSpaceConfiguration;
 import org.exoplatform.rest.response.SpaceConfiguration;
+import org.exoplatform.rest.response.TermsAndConditions;
 import org.exoplatform.service.exception.FunctionalConfigurationRuntimeException;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
@@ -40,13 +37,13 @@ public class FunctionalConfigurationService {
 
   public static final String HIGHLIGHT_SPACES = "highlightspaces";
 
+  static final String TERMS_AND_CONDITIONS_ACTIVE = "TERMS_AND_CONDITIONS_ACTIVE";
   static final String TERMS_AND_CONDITIONS_WEBCONTENT_URL = "TERMS_AND_CONDITIONS_WEBCONTENT_URL";
 
   // SEPARATOR between space_id and highlight_space_order : ID#ORDER
   public static final String HIGHLIGHT_SPACES_SEPARATOR = "#";
 
   private static final String SETTINGS_SEPARATOR = ";";
-
 
   private SettingService settingService;
 
@@ -196,7 +193,13 @@ public class FunctionalConfigurationService {
 
     configuration.setSpaceConfigurations(findSpaceConfigurations());
 
-    configuration.setTermsAndConditionsWebContentUrl(loadSettingsAsString(TERMS_AND_CONDITIONS_WEBCONTENT_URL));
+    boolean isTermsAndConditionsActive = isTermsAndConditionsActive();
+    if (isTermsAndConditionsActive) {
+      TermsAndConditions termsAndConditions = new TermsAndConditions();
+      termsAndConditions.setActive(isTermsAndConditionsActive);
+      termsAndConditions.setWebContentUrl(loadSettingsAsString(TERMS_AND_CONDITIONS_WEBCONTENT_URL));
+      configuration.setTermsAndConditions(termsAndConditions);
+    }
 
     return configuration;
   }
@@ -208,6 +211,10 @@ public class FunctionalConfigurationService {
 
   private boolean isActivityComposerHidden() {
     return getSettingValueAsBoolean(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIDE_USER_ACTIVITY_COMPOSER));
+  }
+
+  private boolean isTermsAndConditionsActive() {
+    return getSettingValueAsBoolean(settingService.get(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_ACTIVE));
   }
 
   private boolean getSettingValueAsBoolean(SettingValue<?> settingValue) {
@@ -426,8 +433,9 @@ public class FunctionalConfigurationService {
             : "";
   }
 
-  public void updateTermsAndConditions(String termsAndConditionsWebContentUrl) {
-    settingService.set(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_WEBCONTENT_URL, SettingValue.create(termsAndConditionsWebContentUrl));
+  public void updateTermsAndConditions(TermsAndConditions termsAndConditions) {
+    settingService.set(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_ACTIVE, SettingValue.create(termsAndConditions.isActive()));
+    settingService.set(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_WEBCONTENT_URL, SettingValue.create(termsAndConditions.getWebContentUrl()));
   }
 
 }

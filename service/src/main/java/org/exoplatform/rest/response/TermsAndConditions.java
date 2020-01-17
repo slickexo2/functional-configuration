@@ -1,8 +1,8 @@
-package org.exoplatform.rest.request;
+package org.exoplatform.rest.response;
 
 public class TermsAndConditions {
 
-    private boolean active;
+    private boolean active = false;
     private String webContentUrl;
 
     public boolean isActive() {

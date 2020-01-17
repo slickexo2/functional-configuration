@@ -1,22 +1,5 @@
 package org.exoplatform.service;
 
-import static org.exoplatform.service.FunctionalConfigurationService.*;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-
 import org.exoplatform.commons.api.settings.SettingService;
 import org.exoplatform.commons.api.settings.SettingValue;
 import org.exoplatform.commons.api.settings.data.Context;
@@ -24,6 +7,7 @@ import org.exoplatform.commons.api.settings.data.Scope;
 import org.exoplatform.rest.response.FunctionalConfiguration;
 import org.exoplatform.rest.response.HighlightSpaceConfiguration;
 import org.exoplatform.rest.response.SpaceConfiguration;
+import org.exoplatform.rest.response.TermsAndConditions;
 import org.exoplatform.service.exception.FunctionalConfigurationRuntimeException;
 import org.exoplatform.service.helpers.SpaceConfigurationBuilder;
 import org.exoplatform.social.core.space.model.Space;
@@ -37,11 +21,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
 import static org.exoplatform.service.FunctionalConfigurationService.*;
-import static org.exoplatform.service.helpers.SpaceAssertion.assertSpaceConfiguration;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
@@ -293,9 +274,16 @@ public class FunctionalConfigurationServiceTest {
     @Test
     public void should_update_terms_and_conditions() {
 
+        boolean active = true;
         String webcontentUrl = "toto";
-        functionalConfigurationService.updateTermsAndConditions(webcontentUrl);
 
+        TermsAndConditions termsAndConditionsRequest = new TermsAndConditions();
+        termsAndConditionsRequest.setActive(active);
+        termsAndConditionsRequest.setWebContentUrl(webcontentUrl);
+
+        functionalConfigurationService.updateTermsAndConditions(termsAndConditionsRequest);
+
+        verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(TERMS_AND_CONDITIONS_ACTIVE), argThat(new SettingValueMatcher(SettingValue.create(active))));
         verify(settingService).set(eq(Context.GLOBAL), eq(Scope.GLOBAL), eq(TERMS_AND_CONDITIONS_WEBCONTENT_URL), argThat(new SettingValueMatcher(SettingValue.create(webcontentUrl))));
 
     }
