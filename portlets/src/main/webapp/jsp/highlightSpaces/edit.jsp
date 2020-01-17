@@ -11,7 +11,7 @@
   String portletGroup = preferences.getValue("portlet_group", "");
 %>
 
-<div id="highlightSpacesEdit">
+<div id="highlightSpacesEdit" class="toto">
 	<script>
 		require(['SHARED/highlightSpacesEditBundle'], function(highlightSpacesEditBundle) {
 
@@ -21,4 +21,9 @@
 	    });
 
 	</script>
+
 </div>
+
+<style>
+    #Close { display: none; }
+</style>
