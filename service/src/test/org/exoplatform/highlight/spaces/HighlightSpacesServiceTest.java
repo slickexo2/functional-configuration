@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -42,7 +42,7 @@ public class HighlightSpacesServiceTest {
 
         given(functionalConfigurationService.loadHighlightConfigAsMap()).willReturn(new HashMap<>());
 
-        List<Space> highlightedSpaces = highlightSpacesService.getUserHighlightedSpaces(REMOTE_USER);
+        List<HighlightSpace> highlightedSpaces = highlightSpacesService.getUserHighlightedSpaces(REMOTE_USER);
 
         assertThat(highlightedSpaces.size(), equalTo(0));
     }
@@ -63,7 +63,7 @@ public class HighlightSpacesServiceTest {
         given(spaceService.getSpaceById(ID_1)).willReturn(SPACE_1);
         given(spaceService.isMember(SPACE_1, REMOTE_USER)).willReturn(false);
 
-        List<Space> highlightedSpaces = highlightSpacesService.getUserHighlightedSpaces(REMOTE_USER);
+        List<HighlightSpace> highlightedSpaces = highlightSpacesService.getUserHighlightedSpaces(REMOTE_USER);
 
         assertThat(highlightedSpaces.size(), equalTo(0));
     }
@@ -107,7 +107,7 @@ public class HighlightSpacesServiceTest {
         given(spaceService.getSpaceById(ID_3)).willReturn(SPACE_3);
         when(spaceService.isMember(any(Space.class), anyString())).thenReturn(true);
 
-        List<Space> highlightedSpaces = highlightSpacesService.getUserHighlightedSpaces(REMOTE_USER);
+        List<HighlightSpace> highlightedSpaces = highlightSpacesService.getUserHighlightedSpaces(REMOTE_USER);
 
         assertThat(highlightedSpaces.size(), equalTo(3));
         assertThat(highlightedSpaces.get(0), equalTo(SPACE_2));

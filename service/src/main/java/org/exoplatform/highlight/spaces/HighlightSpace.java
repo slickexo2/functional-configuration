@@ -6,6 +6,7 @@ public class HighlightSpace {
 
     private Space space;
     private Integer order;
+    private String groupIdentifier;
 
     public Integer getOrder() {
         return order;
@@ -21,5 +22,13 @@ public class HighlightSpace {
 
     public void setSpace(Space space) {
         this.space = space;
+    }
+
+    public String getGroupIdentifier() {
+        return groupIdentifier;
+    }
+
+    public void setGroupIdentifier(String groupIdentifier) {
+        this.groupIdentifier = groupIdentifier;
     }
 }
