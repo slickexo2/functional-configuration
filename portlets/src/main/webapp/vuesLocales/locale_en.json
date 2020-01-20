@@ -19,7 +19,8 @@
   "functionalConfiguration.table.save": "Save",
   "functionalConfiguration.table.empty": "No data",
   "functionalConfiguration.activeTermsAndConditions": "Active user terms and conditions",
-  "functionalConfiguration.termsAndConditionsWebContentUrl": "Web content url"
+  "functionalConfiguration.termsAndConditionsWebContentUrl": "Web content url",
+  "functionalConfiguration.termsAndConditionsWebContentUrl.info": "Webcontent link should be into collaboration shared folder (eg:/myTerms.pdf). This document should have a version."
   "functionalConfiguration.table.group": "Group: ",
   "functionalConfiguration.table.order": "Order: ",
   "functionalConfiguration.highlightSpaces.edit.portletName": "Portlet name: ",

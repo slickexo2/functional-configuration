@@ -37,7 +37,7 @@
     <!-- Terms and conditions -->
     <div class="d-flex justify-content-start">
       <div class="custom-control custom-switch hide-switches" style="min-width: 250px;">
-
+      
         <input
             type="checkbox"
             class="custom-control-input"
@@ -46,10 +46,13 @@
           />
           <label class="custom-control-label" for="inputActiveTermsAndConditions">{{ $t('functionalConfiguration.activeTermsAndConditions') }}</label>
       </div>
-
+      
       <div class="d-flex align-items-center">
         <label class="control-label" for="inputTermsAndConditions" style="margin-left:10px">
           {{ $t('functionalConfiguration.termsAndConditionsWebContentUrl') }}
+
+          <font-awesome-icon :title="$t('functionalConfiguration.termsAndConditionsWebContentUrl.info')" :icon="['fas', 'info-circle']" />
+
         </label>
         <input id="inputTermsAndConditions" :disabled="!configuration.termsAndConditions.active" type="text" v-model="configuration.termsAndConditions.webContentUrl"/>
       </div>
@@ -61,7 +64,6 @@
 
     <br/>
     <br/>
- 
 
     <!-- Search in table input and clear btn -->
     <div class="col-6 col-xl-4">

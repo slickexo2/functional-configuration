@@ -27,4 +27,5 @@
   "functionalConfiguration.highlightSpaces.edit.group": "Groupe",
   "functionalConfiguration.highlightSpaces.edit.close": "Fermer",
   "functionalConfiguration.highlightSpaces.edit.save": "Sauvegarder"
+  "functionalConfiguration.termsAndConditionsWebContentUrl.info": "Le fichier doit se trouver dans le dossier collaboration (ex : /charte.pdf). Le document doit être versionné."
 }

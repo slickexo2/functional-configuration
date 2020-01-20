@@ -20,6 +20,8 @@
 
     SkinService skinService = portalContainer.getComponentInstanceOfType(SkinService.class);
     String cssPath = skinService.getSkin("portal/Conditions", skinName).getCSSPath();
+
+    String chartUrl = request.getAttribute("chartUrl") + "";
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -34,15 +36,16 @@
 </head>
 <body>
 
+    <div class="uiWelcomeBox" id="AccountSetup" style="width:605px;">
 
-	<!--iframe src="/gendarmerie-extension-war/charte-utilisation.html" onload='resizeIframe(this)' style="width:100%;" scrolling="yes" ></iframe-->
+        <h2 style="text-align:center">Charte utilisateur</h2>
 
-    <div class="uiWelcomeBox" id="AccountSetup">
+        <iframe src="<%=chartUrl%>" width="600" height="600"></iframe>
+
         <div class="bottom clearfix">
             <form name="tcForm" action="<%= contextPath + "/terms-and-conditions-action"%>" method="post">
-                <%-- <input style="display: none; visibility: hidden;" id="userid" name="userid" value="<%=userId%>" /> --%>
                 <div class="pull-right">
-                    <button class="btn" id="continueButton" >Agree</button>
+                    <button class="btn" id="continueButton" >J'accepte</button>
                 </div>
             </form>
         </div>

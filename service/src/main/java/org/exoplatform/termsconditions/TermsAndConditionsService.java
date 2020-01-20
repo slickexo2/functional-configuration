@@ -3,12 +3,15 @@ package org.exoplatform.termsconditions;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.rest.response.TermsAndConditions;
 import org.exoplatform.service.FunctionalConfigurationService;
+import org.exoplatform.service.exception.FunctionalConfigurationRuntimeException;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.social.core.identity.model.Profile;
 import org.exoplatform.social.core.manager.IdentityManager;
+import org.exoplatform.utils.NodeUtils;
 
 import javax.jcr.Node;
+import javax.jcr.RepositoryException;
 import javax.jcr.version.Version;
 
 public class TermsAndConditionsService {
@@ -23,55 +26,48 @@ public class TermsAndConditionsService {
         this.functionalConfigurationService = functionalConfigurationService;
     }
 
-    private boolean isAcceptedBy(String userName){
+    private boolean hasAccepted(String userName){
         Profile socialProfile = findUserProfileByUserName(userName);
 
         try {
             String acceptedTermsVersion = "" + socialProfile.getProperty(TERMS_AND_CONDITONS_PROPERTY);
+            String currentVersionUid = getCurrentTermsAndConditionsVersionUUID();
 
-            TermsAndConditions termsAndConditions = functionalConfigurationService.getTermsAndConditions();
-            Node termsAndConditionsNode = functionalConfigurationService.findNodeFileByAbsoluteName(termsAndConditions.getWebContentUrl());
-            Version baseVersion = termsAndConditionsNode.getBaseVersion(); // TODO regarder
-
-            return false;
+            return currentVersionUid.equals(acceptedTermsVersion);
         } catch (Exception e) {
             log.warn("Terms and conditions still not accepted by OBF user: " + userName, e);
             return false;
         }
     }
 
+    private String getCurrentTermsAndConditionsVersionUUID() {
+
+        TermsAndConditions termsAndConditions = functionalConfigurationService.getTermsAndConditions();
+        Node termsAndConditionsNode = NodeUtils.findCollaborationFile(termsAndConditions.getWebContentUrl());
+
+        try {
+            Version baseVersion = termsAndConditionsNode.getBaseVersion();
+            return baseVersion.getUUID();
+        } catch (RepositoryException e) {
+            // TODO log
+            throw new FunctionalConfigurationRuntimeException("tototototo");
+        }
+
+    }
+
     private Profile findUserProfileByUserName(String userName) {
         return CommonsUtils.getService(IdentityManager.class).getOrCreateIdentity("organization", userName).getProfile();
     }
 
-    public void accept(String userId){
+    public void accept(String userName){
+        hasAccepted(userName);
+        String currentTermsAndConditionsVersionUUID = getCurrentTermsAndConditionsVersionUUID();
+        Profile userProfileByUserName = findUserProfileByUserName(userName);
 
-        TermsAndConditions termsAndConditions = functionalConfigurationService.getTermsAndConditions();
-        Node termsAndConditionsNode = functionalConfigurationService.findNodeFileByAbsoluteName(termsAndConditions.getWebContentUrl());
-//        Version baseVersion = termsAndConditionsNode.getBaseVersion();
-
-        // versionning
-
-
-
-//        PortalContainer container = PortalContainer.getInstance();
-//        IdentityManager identityManager = (IdentityManager) container.getComponentInstanceOfType(IdentityManager.class);
-//        try {
-//            Identity currentIdentity = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, userId, false);
-//            Profile currentProfile = currentIdentity.getProfile();
-//            currentProfile.setProperty(TERMS_AND_CONDITONS_PROPERTY, true);
-//            identityManager.updateProfile(currentProfile);
-//        } catch (Exception e) {
-//            log.warn("Failed to set TERMS_AND_CONDITONS_PROPERTY for OBF user: " + userId, e);
-//        }
+        userProfileByUserName.setProperty(TERMS_AND_CONDITONS_PROPERTY, currentTermsAndConditionsVersionUUID);
     }
 
-    private boolean isActive() {
-        return functionalConfigurationService.isTermsAndConditionsActive();
-    }
-
-    boolean isActiveFor(String remoteUser) {
-         return !isAcceptedBy(remoteUser)
-                 && isActive();
+    boolean hasToValidateTermsAndConditions(String remoteUser) {
+         return !(hasAccepted(remoteUser) && functionalConfigurationService.isTermsAndConditionsActive());
     }
 }

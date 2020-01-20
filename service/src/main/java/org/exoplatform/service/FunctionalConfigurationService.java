@@ -15,6 +15,7 @@ import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.social.core.space.model.Space;
 import org.exoplatform.social.core.space.spi.SpaceService;
+import org.exoplatform.utils.NodeUtils;
 
 import javax.jcr.Node;
 import java.util.*;
@@ -441,18 +442,13 @@ public class FunctionalConfigurationService {
 
   public void updateTermsAndConditions(TermsAndConditions termsAndConditions) {
 
-    Node nodeByExpression = findNodeFileByAbsoluteName(termsAndConditions.getWebContentUrl());
-    if (Objects.isNull(nodeByExpression)) {
-      throw new FunctionalConfigurationRuntimeException("termsAndConditions.fileNotFound");
+    boolean isActive = termsAndConditions.isActive();
+    settingService.set(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_ACTIVE, SettingValue.create(isActive));
+
+    if (isActive && Objects.nonNull(NodeUtils.findCollaborationFile(termsAndConditions.getWebContentUrl()))) {
+      settingService.set(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_WEBCONTENT_URL, SettingValue.create(termsAndConditions.getWebContentUrl()));
+    } else {
+      settingService.set(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_WEBCONTENT_URL, SettingValue.create(""));
     }
-    settingService.set(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_ACTIVE, SettingValue.create(termsAndConditions.isActive()));
-    settingService.set(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_WEBCONTENT_URL, SettingValue.create(termsAndConditions.getWebContentUrl()));
   }
-
-  public Node findNodeFileByAbsoluteName(String webContentUrl) {
-    final String FILE_PREFIX = "repository:collaboration:";
-
-    return NodeLocation.getNodeByExpression(FILE_PREFIX + webContentUrl);
-  }
-
 }
