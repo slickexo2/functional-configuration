@@ -19,6 +19,7 @@ public class NodeUtils {
 
         Node nodeByExpression = NodeLocation.getNodeByExpression(COLLABORATION_FILE_PREFIX + webContentUrl);
         if (Objects.isNull(nodeByExpression)) {
+            LOGGER.error("File not found with URL : {}", webContentUrl);
             throw new FunctionalConfigurationRuntimeException("termsAndConditions.fileNotFound");
         }
         return nodeByExpression;
@@ -29,11 +30,10 @@ public class NodeUtils {
 
         try {
             String encodedPath =  node.getPath();
-            return "/" + CommonsUtils.getRestContextName() + "/private/jcr/" + "repository/collaboration" + encodedPath;
+            return "/" + CommonsUtils.getRestContextName() + "/private/jcr/repository/collaboration" + encodedPath;
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            LOGGER.error("File not found with URL : {}", webContentUrl);
+            throw new FunctionalConfigurationRuntimeException("termsAndConditions.fileNotFound");
         }
-
     }
 }

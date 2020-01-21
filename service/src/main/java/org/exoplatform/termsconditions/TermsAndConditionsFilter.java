@@ -17,15 +17,14 @@ public class TermsAndConditionsFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String remoteUser = httpServletRequest.getRemoteUser();
         if (remoteUser != null) {
-            String requestUri = httpServletRequest.getRequestURI();
 
             TermsAndConditionsService termsAndConditionsService = getTermsAndConditionsService();
 
-//            if (termsAndConditionsService.hasToValidateTermsAndConditions(remoteUser)) {
-//                ServletContext atisnetworkExtensionContext = httpServletRequest.getSession().getServletContext().getContext(ATISNETWORK_EXTENSION_WAR);
-//                atisnetworkExtensionContext.getRequestDispatcher(CHARTER_SERVLET_URL).forward(httpServletRequest, response);
-//                return;
-//            }
+            if (termsAndConditionsService.hasToValidateTermsAndConditions(remoteUser)) {
+                ServletContext atisnetworkExtensionContext = httpServletRequest.getSession().getServletContext().getContext(ATISNETWORK_EXTENSION_WAR);
+                atisnetworkExtensionContext.getRequestDispatcher(CHARTER_SERVLET_URL).forward(httpServletRequest, response);
+                return;
+            }
         }
         chain.doFilter(request, response);
     }
