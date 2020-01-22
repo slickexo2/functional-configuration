@@ -12,6 +12,8 @@ import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.version.Version;
 
+import java.util.Objects;
+
 import static org.exoplatform.utils.IdentityUtils.findUserProfileByUserName;
 
 public class TermsAndConditionsService {
@@ -62,7 +64,15 @@ public class TermsAndConditionsService {
     }
 
     public boolean isTermsAndConditionsActive()  {
-        return functionalConfigurationService.isTermsAndConditionsActive();
+
+        TermsAndConditions termsAndConditions = functionalConfigurationService.getTermsAndConditions();
+        boolean isValidFile = false;
+        try {
+            isValidFile = Objects.nonNull(NodeUtils.findCollaborationFile(termsAndConditions.getWebContentUrl()));
+        } catch (Exception e) {
+        }
+
+        return functionalConfigurationService.isTermsAndConditionsActive() && isValidFile;
     }
 
 }
