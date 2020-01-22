@@ -231,7 +231,7 @@ public class FunctionalConfigurationService {
             || StringUtils.isEmpty(settingValue.getValue().toString())) {
       return false;
     }
-    return Boolean.valueOf(settingValue.getValue().toString());
+    return Boolean.parseBoolean(settingValue.getValue().toString());
   }
 
   public SpaceConfiguration updateSpaceConfiguration(SpaceConfiguration spaceConfiguration) {
