@@ -13,6 +13,7 @@ import org.exoplatform.rest.response.TermsAndConditions;
 import org.exoplatform.service.exception.FunctionalConfigurationRuntimeException;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.social.core.service.LinkProvider;
 import org.exoplatform.social.core.space.model.Space;
 import org.exoplatform.social.core.space.spi.SpaceService;
 import org.exoplatform.utils.NodeUtils;
@@ -133,6 +134,7 @@ public class FunctionalConfigurationService {
       if (highlightConfigurationMap.containsKey(space.getId())) {
         highlightConfiguration.setHighlight(true);
         highlightConfiguration.setOrder(highlightConfigurationMap.get(space.getId()));
+        highlightConfiguration.setGroupIdentifier(findGroupIdentifierForSpace(groupSpacesConfigurations, space.getId()));
       } else {
         highlightConfiguration.setHighlight(false);
       }
@@ -202,13 +204,11 @@ public class FunctionalConfigurationService {
     TermsAndConditions termsAndConditions = new TermsAndConditions();
     boolean isTermsAndConditionsActive = isTermsAndConditionsActive();
     if (isTermsAndConditionsActive) {
-      TermsAndConditions termsAndConditions = new TermsAndConditions();
       termsAndConditions.setActive(isTermsAndConditionsActive);
       termsAndConditions.setWebContentUrl(loadSettingsAsString(TERMS_AND_CONDITIONS_WEBCONTENT_URL));
-      configuration.setTermsAndConditions(termsAndConditions);
     }
 
-    return configuration;
+    return termsAndConditions;
   }
 
   public boolean isDocumentActionActivityHidden() {
@@ -220,11 +220,11 @@ public class FunctionalConfigurationService {
     return getSettingValueAsBoolean(settingService.get(Context.GLOBAL, Scope.GLOBAL, HIDE_USER_ACTIVITY_COMPOSER));
   }
 
-  private boolean isTermsAndConditionsActive() {
+  public boolean isTermsAndConditionsActive() {
     return getSettingValueAsBoolean(settingService.get(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_ACTIVE));
   }
 
-  private boolean getSettingValueAsBoolean(SettingValue<?> settingValue) {
+  public boolean getSettingValueAsBoolean(SettingValue<?> settingValue) {
 
     if (Objects.isNull(settingValue)
             || Objects.isNull(settingValue.getValue())
@@ -450,5 +450,23 @@ public class FunctionalConfigurationService {
     } else {
       settingService.set(Context.GLOBAL, Scope.GLOBAL, TERMS_AND_CONDITIONS_WEBCONTENT_URL, SettingValue.create(""));
     }
+  }
+
+  public List<SpaceConfiguration> getSpacesForGroup(String groupIdentifier) {
+
+    final String LEGACY_IDENTIFIER = "0"; // For compatibility we are using identifier 0
+    List<SpaceConfiguration> spaceConfigurations = findSpaceConfigurations();
+
+    if (LEGACY_IDENTIFIER.equals(groupIdentifier)) {
+      return spaceConfigurations.stream()
+              .filter(space -> Objects.nonNull(space.getHighlightConfiguration()))
+              .filter(space -> space.getHighlightConfiguration().isHighlight() && StringUtils.isEmpty(space.getHighlightConfiguration().getGroupIdentifier()))
+              .collect(Collectors.toList());
+    }
+
+    return spaceConfigurations.stream()
+            .filter(space -> Objects.nonNull(space.getHighlightConfiguration()) && space.getHighlightConfiguration().isHighlight())
+            .filter(space -> groupIdentifier.equals(space.getHighlightConfiguration().getGroupIdentifier()))
+            .collect(Collectors.toList());
   }
 }

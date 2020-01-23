@@ -13,14 +13,13 @@ public class NodeUtils {
 
     private static final Log LOGGER = ExoLogger.getLogger(NodeUtils.class);
 
-    private static final String COLLABORATION_FILE_PREFIX = "repository:collaboration:";
+        private static final String COLLABORATION_FILE_PREFIX = "repository:collaboration:";
 
     public static Node findCollaborationFile(String webContentUrl) {
-
-        Node nodeByExpression = NodeLocation.getNodeByExpression(COLLABORATION_FILE_PREFIX + webContentUrl);
+        Node nodeByExpression = NodeLocation.getNodeByLocation(new NodeLocation("repository", "collaboration", webContentUrl, null,true));
         if (Objects.isNull(nodeByExpression)) {
             LOGGER.error("File not found with URL : {}", webContentUrl);
-            throw new FunctionalConfigurationRuntimeException("termsAndConditions.fileNotFound");
+            throw new FunctionalConfigurationRuntimeException("functionalConfiguration.termsAndConditions.fileNotFound");
         }
         return nodeByExpression;
     }

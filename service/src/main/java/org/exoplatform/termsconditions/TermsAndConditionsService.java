@@ -5,7 +5,9 @@ import org.exoplatform.service.FunctionalConfigurationService;
 import org.exoplatform.service.exception.FunctionalConfigurationRuntimeException;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.social.core.identity.model.Profile;
+import org.exoplatform.social.core.manager.IdentityManager;
 import org.exoplatform.utils.NodeUtils;
 
 import javax.jcr.Node;
@@ -23,8 +25,11 @@ public class TermsAndConditionsService {
 
     private final FunctionalConfigurationService functionalConfigurationService;
 
-    public TermsAndConditionsService(FunctionalConfigurationService functionalConfigurationService) {
+    private IdentityManager identityManager;
+
+    public TermsAndConditionsService(FunctionalConfigurationService functionalConfigurationService, IdentityManager identityManager) {
         this.functionalConfigurationService = functionalConfigurationService;
+        this.identityManager = identityManager;
     }
 
     public boolean isTermsAndConditionsAcceptedBy(String userName){
@@ -61,6 +66,12 @@ public class TermsAndConditionsService {
         String currentTermsAndConditionsVersionUUID = getCurrentTermsAndConditionsVersionUUID();
 
         userProfile.setProperty(TERMS_AND_CONDITONS_PROPERTY, currentTermsAndConditionsVersionUUID);
+
+        try {
+            identityManager.updateProfile(userProfile);
+        } catch (Exception e) {
+            LOGGER.error("Cannot update user profile to store terms and conditions acceptation", e);
+        }
     }
 
     public boolean isTermsAndConditionsActive()  {
@@ -72,7 +83,7 @@ public class TermsAndConditionsService {
         } catch (Exception e) {
         }
 
-        return functionalConfigurationService.isTermsAndConditionsActive() && isValidFile;
+        return termsAndConditions.isActive() && isValidFile;
     }
 
 }

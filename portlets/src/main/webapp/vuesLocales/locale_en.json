@@ -27,5 +27,6 @@
   "functionalConfiguration.highlightSpaces.edit.groupSelection": "Group selection: ",
   "functionalConfiguration.highlightSpaces.edit.group": "Group",
   "functionalConfiguration.highlightSpaces.edit.close": "Close",
-  "functionalConfiguration.highlightSpaces.edit.save": "Save"
+  "functionalConfiguration.highlightSpaces.edit.save": "Save",
+  "functionalConfiguration.termsAndConditions.fileNotFound": "Le fichier est introuvable"
 }

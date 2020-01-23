@@ -28,6 +28,8 @@ public class TermsAndConditionsViewServlet extends HttpServlet {
         TermsAndConditions termsAndConditions = getTermsAndConditionsService().getTermsAndConditions();
         String nodePath = getBaseUrl(request) + NodeUtils.getNodePath(termsAndConditions.getWebContentUrl());
 
+
+
         request.setAttribute(REQUEST_ATTRIBUTE_TERMS_URL, nodePath);
 
         getServletContext().getRequestDispatcher(JSP_PATH).forward(request, response);

@@ -35,7 +35,7 @@
     </div>
 
     <!-- Terms and conditions -->
-    <div class="d-flex justify-content-start">
+    <div class="d-flex justify-content-start align-items-center">
       <div class="custom-control custom-switch hide-switches" style="min-width: 250px;">
       
         <input
@@ -47,8 +47,8 @@
           <label class="custom-control-label" for="inputActiveTermsAndConditions">{{ $t('functionalConfiguration.activeTermsAndConditions') }}</label>
       </div>
       
-      <div class="d-flex align-items-center">
-        <label class="control-label" for="inputTermsAndConditions" style="margin-left:10px">
+      <div class="d-flex align-items-center pr-2">
+        <label class="control-label pr-1" for="inputTermsAndConditions" style="margin-left:10px">
           {{ $t('functionalConfiguration.termsAndConditionsWebContentUrl') }}
 
           <font-awesome-icon :title="$t('functionalConfiguration.termsAndConditionsWebContentUrl.info')" :icon="['fas', 'info-circle']" />
@@ -57,7 +57,7 @@
         <input id="inputTermsAndConditions" :disabled="!configuration.termsAndConditions.active" type="text" v-model="configuration.termsAndConditions.webContentUrl"/>
       </div>
 
-      <button @click="saveTermsAndConditions(configuration.termsAndConditions)" class="actionIcon" data-toggle="tooltip" :title="$t('functionalConfiguration.table.save')">
+      <button @click="saveTermsAndConditions(configuration.termsAndConditions)" class="actionIcon saveTermsButton" type="button" data-toggle="tooltip" :title="$t('functionalConfiguration.table.save')">
         <i class="uiIconSave uiIconLightGray"></i>
       </button>
     </div>
@@ -354,7 +354,12 @@ export default {
       saveTermsAndConditions(termsAndConditions) {
         functionalConfigurationService.putTermsAndConditions(termsAndConditions)
           .then(response => this.successResponse())
-          .catch(error => this.failedResponse());
+          .catch(error => {
+            
+            const errorMessage = error.response.data;
+            console.log(termsAndConditions.webContentUrl)
+            this.toastDanger(this.$t(errorMessage, { "url": termsAndConditions.webContentUrl }) );
+          });
       }
 
   },
@@ -476,5 +481,8 @@ const SORT_STATE = {
 }
 .input-group-text {
     height: 40px;
+}
+.saveTermsButton {
+  background-color: transparent;
 }
 </style>
