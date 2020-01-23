@@ -16,7 +16,7 @@ import static org.exoplatform.utils.ServletUtils.getBaseUrl;
 public class TermsAndConditionsViewServlet extends HttpServlet {
 
     private static final String JSP_PATH = "/WEB-INF/jsp/charte-utilisation/charte.jsp";
-    private static final String REQUEST_ATTRIBUTE_TERMS_URL = "chartUrl";
+    private static final String WEB_CONTENT_ATTRIBUTE_NAME = "WEB_CONTENT";
 
     private FunctionalConfigurationService getTermsAndConditionsService() {
         return CommonsUtils.getService(FunctionalConfigurationService.class);
@@ -26,11 +26,8 @@ public class TermsAndConditionsViewServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         TermsAndConditions termsAndConditions = getTermsAndConditionsService().getTermsAndConditions();
-        String nodePath = getBaseUrl(request) + NodeUtils.getNodePath(termsAndConditions.getWebContentUrl());
 
-
-
-        request.setAttribute(REQUEST_ATTRIBUTE_TERMS_URL, nodePath);
+        request.setAttribute(WEB_CONTENT_ATTRIBUTE_NAME, NodeUtils.getWebContentContentFromUrl(termsAndConditions.getWebContentUrl()));
 
         getServletContext().getRequestDispatcher(JSP_PATH).forward(request, response);
     }

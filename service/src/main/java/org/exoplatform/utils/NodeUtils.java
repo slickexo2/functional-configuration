@@ -7,6 +7,7 @@ import org.exoplatform.services.log.Log;
 import org.exoplatform.services.wcm.core.NodeLocation;
 
 import javax.jcr.Node;
+import javax.jcr.RepositoryException;
 import java.util.Objects;
 
 public class NodeUtils {
@@ -33,6 +34,15 @@ public class NodeUtils {
         } catch (Exception e) {
             LOGGER.error("File not found with URL : {}", webContentUrl);
             throw new FunctionalConfigurationRuntimeException("termsAndConditions.fileNotFound");
+        }
+    }
+
+    public static String getWebContentContentFromUrl(String webContentUrl) {
+        try {
+            return NodeUtils.findCollaborationFile(webContentUrl).getNode("default.html/jcr:content").getProperty("jcr:data").getString();
+        } catch (RepositoryException e) {
+            LOGGER.error("Cannot find WEBCONTENT content from URL : {}", webContentUrl);
+            throw new FunctionalConfigurationRuntimeException(e.getMessage());
         }
     }
 }

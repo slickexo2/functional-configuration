@@ -12,7 +12,7 @@ module.exports = merge(common, {
         highlightSpacesEdit: "./hightLightSpaces/edit/HighlightSpacesEdit.js"
     },
     output: {
-    	path: path.resolve('/project/exoplatform/platform/5.3.0/webapps/functional-configuration-portlets/js'),
+    	path: path.resolve(__dirname, 'src/main/webapp/js/'),
     	filename: '[name].bundle.js',
     	libraryTarget: 'amd'
     },

@@ -21,7 +21,7 @@
     SkinService skinService = portalContainer.getComponentInstanceOfType(SkinService.class);
     String cssPath = skinService.getSkin("portal/Conditions", skinName).getCSSPath();
 
-    String chartUrl = request.getAttribute("chartUrl") + "";
+    String webContentContent = (String) request.getAttribute("WEB_CONTENT");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -40,7 +40,7 @@
 
         <h2 style="text-align:center">Charte utilisateur</h2>
 
-        <iframe src="<%=chartUrl%>" width="600" height="600"></iframe>
+        <div><%=webContentContent%></div>
 
         <div class="bottom clearfix">
             <form name="tcForm" action="<%= contextPath + "/terms-and-conditions-action"%>" method="post">
