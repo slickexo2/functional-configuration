@@ -43,9 +43,9 @@
 
     <div class="uiWelcomeBox">
 
-        <h2><%=resource.getString("termsAndConditions.title")%></h2>
+        <h2 class="termsTitle"><%=resource.getString("termsAndConditions.title")%></h2>
 
-        <div><%=webContentContent%></div>
+        <div class="termsContent"><%=webContentContent%></div>
 
         <div class="bottom clearfix">
             <form name="tcForm" action="<%= contextPath + "/terms-and-conditions-action"%>" method="post">
@@ -57,4 +57,15 @@
     </div>
 
 </body>
+
+<style>
+.termsTitle {
+    text-align: center;
+}
+.termsContent {
+    margin-left: 20px;
+    max-height: 450px;
+    overflow-y: scroll;
+}
+</style>
 </html>
