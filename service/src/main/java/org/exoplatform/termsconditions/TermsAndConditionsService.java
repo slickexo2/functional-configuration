@@ -37,23 +37,22 @@ public class TermsAndConditionsService {
 
         try {
             String acceptedTermsVersion = socialProfile.getProperty(TERMS_AND_CONDITONS_PROPERTY) + "";
-            String currentVersionUid = getCurrentTermsAndConditionsVersionUUID();
+            String currentVersion = getCurrentTermsAndConditionsVersion();
 
-            return currentVersionUid.equals(acceptedTermsVersion);
+            return currentVersion.equals(acceptedTermsVersion);
         } catch (Exception e) {
             LOGGER.warn("Terms and conditions still not accepted by user: " + userName, e);
             return false;
         }
     }
 
-    private String getCurrentTermsAndConditionsVersionUUID() {
+    private String getCurrentTermsAndConditionsVersion() {
 
         TermsAndConditions termsAndConditions = functionalConfigurationService.getTermsAndConditions();
         Node termsAndConditionsNode = NodeUtils.findCollaborationFile(termsAndConditions.getWebContentUrl());
 
         try {
-            Version baseVersion = termsAndConditionsNode.getBaseVersion();
-            return baseVersion.getUUID();
+            return termsAndConditionsNode.getBaseVersion().getName();
         } catch (RepositoryException e) {
             throw new FunctionalConfigurationRuntimeException("invalid.termsAndConditions");
         }
@@ -62,9 +61,9 @@ public class TermsAndConditionsService {
     public void accept(String userName){
 
         Profile userProfile = findUserProfileByUserName(userName);
-        String currentTermsAndConditionsVersionUUID = getCurrentTermsAndConditionsVersionUUID();
+        String currentVersionName = getCurrentTermsAndConditionsVersion();
 
-        userProfile.setProperty(TERMS_AND_CONDITONS_PROPERTY, currentTermsAndConditionsVersionUUID);
+        userProfile.setProperty(TERMS_AND_CONDITONS_PROPERTY, currentVersionName);
 
         try {
             identityManager.updateProfile(userProfile);
