@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class TermsAndConditionsViewServlet extends HttpServlet {
 
-    private static final String JSP_PATH = "/WEB-INF/jsp/charte-utilisation/charte.jsp";
+    private static final String JSP_PATH = "/WEB-INF/jsp/user-terms-and-conditions/terms-and-conditions.jsp";
     private static final String WEB_CONTENT_ATTRIBUTE_NAME = "WEB_CONTENT";
 
     private FunctionalConfigurationService getTermsAndConditionsService() {

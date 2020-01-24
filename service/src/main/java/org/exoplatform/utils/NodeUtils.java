@@ -2,8 +2,6 @@ package org.exoplatform.utils;
 
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.service.exception.FunctionalConfigurationRuntimeException;
-import org.exoplatform.services.log.ExoLogger;
-import org.exoplatform.services.log.Log;
 import org.exoplatform.services.wcm.core.NodeLocation;
 
 import javax.jcr.Node;
@@ -12,14 +10,12 @@ import java.util.Objects;
 
 public class NodeUtils {
 
-    private static final Log LOGGER = ExoLogger.getLogger(NodeUtils.class);
-
-        private static final String COLLABORATION_FILE_PREFIX = "repository:collaboration:";
+    private final static String NODE_REPOSITORY = "repository";
+    private final static String NODE_WORKSPACE = "collaboration";
 
     public static Node findCollaborationFile(String webContentUrl) {
-        Node nodeByExpression = NodeLocation.getNodeByLocation(new NodeLocation("repository", "collaboration", webContentUrl, null,true));
+        Node nodeByExpression = NodeLocation.getNodeByLocation(new NodeLocation(NODE_REPOSITORY, NODE_WORKSPACE, webContentUrl, null,true));
         if (Objects.isNull(nodeByExpression)) {
-            LOGGER.error("File not found with URL : {}", webContentUrl);
             throw new FunctionalConfigurationRuntimeException("functionalConfiguration.termsAndConditions.fileNotFound");
         }
         return nodeByExpression;
@@ -32,7 +28,6 @@ public class NodeUtils {
             String encodedPath =  node.getPath();
             return "/" + CommonsUtils.getRestContextName() + "/private/jcr/repository/collaboration" + encodedPath;
         } catch (Exception e) {
-            LOGGER.error("File not found with URL : {}", webContentUrl);
             throw new FunctionalConfigurationRuntimeException("termsAndConditions.fileNotFound");
         }
     }
@@ -41,7 +36,6 @@ public class NodeUtils {
         try {
             return NodeUtils.findCollaborationFile(webContentUrl).getNode("default.html/jcr:content").getProperty("jcr:data").getString();
         } catch (RepositoryException e) {
-            LOGGER.error("Cannot find WEBCONTENT content from URL : {}", webContentUrl);
             throw new FunctionalConfigurationRuntimeException(e.getMessage());
         }
     }

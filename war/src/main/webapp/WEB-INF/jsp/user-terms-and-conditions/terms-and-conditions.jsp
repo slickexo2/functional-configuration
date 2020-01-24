@@ -7,7 +7,6 @@
 <%@ page import="java.util.ResourceBundle" %>
 <%@ page import="org.gatein.common.text.EntityEncoder" %>
 <%@ page language="java" %>
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 <%@ page import="java.util.ResourceBundle"%>
 
 <%
@@ -25,7 +24,9 @@
     String cssPath = skinService.getSkin("portal/Conditions", skinName).getCSSPath();
 
     String webContentContent = (String) request.getAttribute("WEB_CONTENT");
-    ResourceBundle resource = portletConfig.getResourceBundle(lang);
+
+    ResourceBundleService service = (ResourceBundleService) portalContainer.getComponentInstanceOfType(ResourceBundleService.class);
+    ResourceBundle resource = service.getResourceBundle(service.getSharedResourceBundleNames(), request.getLocale());
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -40,9 +41,9 @@
 </head>
 <body>
 
-    <div class="uiWelcomeBox" id="AccountSetup" style="width:605px;">
+    <div class="uiWelcomeBox">
 
-        <h2 style="text-align:center"><%=resource.getString("termsAndConditions.title")%></h2>
+        <h2><%=resource.getString("termsAndConditions.title")%></h2>
 
         <div><%=webContentContent%></div>
 

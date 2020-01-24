@@ -55,7 +55,6 @@ public class TermsAndConditionsService {
             Version baseVersion = termsAndConditionsNode.getBaseVersion();
             return baseVersion.getUUID();
         } catch (RepositoryException e) {
-            LOGGER.error("Could not get actual terms and conditions version");
             throw new FunctionalConfigurationRuntimeException("invalid.termsAndConditions");
         }
     }
