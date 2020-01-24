@@ -32,7 +32,7 @@ public class TermsAndConditionsService {
         this.identityManager = identityManager;
     }
 
-    public boolean isTermsAndConditionsAcceptedBy(String userName){
+    boolean isTermsAndConditionsAcceptedBy(String userName){
         Profile socialProfile = findUserProfileByUserName(userName);
 
         try {
@@ -74,13 +74,14 @@ public class TermsAndConditionsService {
         }
     }
 
-    public boolean isTermsAndConditionsActive()  {
+    boolean isTermsAndConditionsActive()  {
 
         TermsAndConditions termsAndConditions = functionalConfigurationService.getTermsAndConditions();
-        boolean isValidFile = false;
+        boolean isValidFile;
         try {
             isValidFile = Objects.nonNull(NodeUtils.findCollaborationFile(termsAndConditions.getWebContentUrl()));
         } catch (Exception e) {
+            return false;
         }
 
         return termsAndConditions.isActive() && isValidFile;

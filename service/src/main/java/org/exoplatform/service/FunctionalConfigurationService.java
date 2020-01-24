@@ -432,8 +432,8 @@ public class FunctionalConfigurationService {
             : new ArrayList<>();
   }
 
-  private String loadSettingsAsString(String highlightSpaces) {
-    SettingValue settingValue = settingService.get(Context.GLOBAL, Scope.GLOBAL, highlightSpaces);
+  private String loadSettingsAsString(String settingKey) {
+    SettingValue settingValue = settingService.get(Context.GLOBAL, Scope.GLOBAL, settingKey);
 
     return nonNull(settingValue)
             ? (String) settingValue.getValue()

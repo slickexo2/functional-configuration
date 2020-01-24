@@ -36,7 +36,7 @@
 
     <!-- Terms and conditions -->
     <div class="d-flex justify-content-start align-items-center">
-      <div class="custom-control custom-switch hide-switches" style="min-width: 250px;">
+      <div class="custom-control custom-switch hide-switches term-and-conditions-input">
       
         <input
             type="checkbox"
@@ -48,7 +48,7 @@
       </div>
       
       <div class="d-flex align-items-center pr-2">
-        <label class="control-label pr-1" for="inputTermsAndConditions" style="margin-left:10px">
+        <label class="control-label pr-1" for="inputTermsAndConditions term-and-conditions-label">
           {{ $t('functionalConfiguration.termsAndConditionsWebContentUrl') }}
 
           <font-awesome-icon :title="$t('functionalConfiguration.termsAndConditionsWebContentUrl.info')" :icon="['fas', 'info-circle']" />
@@ -231,16 +231,6 @@ export default {
       .then(data => (self.configuration = data));
   },
   methods: {
-    updateTermsAndConditions() {
-      functionalConfigurationService.putTermsAndConditions(this.configuration.urlWebContent)
-        .then(response => {
-            this.successResponse();
-        })
-        .catch(error => {
-            this.failedResponse();
-        });
-      
-    },
       //  Edit hideDocumentActionActivities
     changeHideDocumentActionActivities() {
       functionalConfigurationService
@@ -357,7 +347,6 @@ export default {
           .catch(error => {
             
             const errorMessage = error.response.data;
-            console.log(termsAndConditions.webContentUrl)
             this.toastDanger(this.$t(errorMessage, { "url": termsAndConditions.webContentUrl }) );
           });
       }
@@ -485,4 +474,6 @@ const SORT_STATE = {
 .saveTermsButton {
   background-color: transparent;
 }
+.term-and-conditions-input { min-width: 250px; }
+.term-and-conditions-label { margin-left:10px; }
 </style>

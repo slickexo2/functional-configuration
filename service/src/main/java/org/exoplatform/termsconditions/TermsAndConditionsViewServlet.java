@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.exoplatform.utils.ServletUtils.getBaseUrl;
-
 public class TermsAndConditionsViewServlet extends HttpServlet {
 
     private static final String JSP_PATH = "/WEB-INF/jsp/charte-utilisation/charte.jsp";
