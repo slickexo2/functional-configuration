@@ -28,5 +28,5 @@
   "functionalConfiguration.highlightSpaces.edit.group": "Group",
   "functionalConfiguration.highlightSpaces.edit.close": "Close",
   "functionalConfiguration.highlightSpaces.edit.save": "Save",
-  "functionalConfiguration.termsAndConditions.fileNotFound": "Le fichier est introuvable"
+  "functionalConfiguration.termsAndConditions.fileNotFound": "The terms and conditions content cannot be found at {url}"
 }
