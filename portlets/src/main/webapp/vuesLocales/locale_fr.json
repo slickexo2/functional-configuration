@@ -19,7 +19,7 @@
   "functionalConfiguration.table.save": "Sauvegarder",
   "functionalConfiguration.table.empty": "Aucun espace",
   "functionalConfiguration.activeTermsAndConditions": "Activer la charte utilisateur",
-  "functionalConfiguration.termsAndConditionsWebContentUrl": "Lien du contenu WEB",
+  "functionalConfiguration.termsAndConditionsWebContentUrl": "Chemin du contenu de la charte utilisateur",
   "functionalConfiguration.table.group": "Groupe : ",
   "functionalConfiguration.table.order": "Ordre : ",
   "functionalConfiguration.highlightSpaces.edit.portletName": "Nom de la portlet : ",
@@ -28,5 +28,5 @@
   "functionalConfiguration.highlightSpaces.edit.close": "Fermer",
   "functionalConfiguration.highlightSpaces.edit.save": "Sauvegarder",
   "functionalConfiguration.termsAndConditionsWebContentUrl.info": "Le fichier doit se trouver dans le dossier collaboration (ex : /charte.pdf). Le document doit être versionné.",
-  "functionalConfiguration.termsAndConditions.fileNotFound": "Le webcontent est introuvable à l'adresse : {url}"
+  "functionalConfiguration.termsAndConditions.fileNotFound": "Le contenu de la charte utilisateur est introuvable à cet emplacement : {url}"
 }
