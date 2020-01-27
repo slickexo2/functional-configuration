@@ -3,9 +3,12 @@ package org.exoplatform.utils;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.service.exception.FunctionalConfigurationRuntimeException;
 import org.exoplatform.services.wcm.core.NodeLocation;
+import org.exoplatform.services.wcm.publication.WCMComposer;
+import org.exoplatform.services.wcm.utils.WCMCoreUtils;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class NodeUtils {
@@ -32,10 +35,24 @@ public class NodeUtils {
         }
     }
 
+
+
+
+
     public static String getWebContentContentFromUrl(String webContentUrl) {
         try {
-            return NodeUtils.findCollaborationFile(webContentUrl).getNode("default.html/jcr:content").getProperty("jcr:data").getString();
-        } catch (RepositoryException e) {
+            Node node = NodeUtils.findCollaborationFile(webContentUrl);
+            NodeLocation nodeLocationByNode = NodeLocation.getNodeLocationByNode(node);
+
+            Node content = WCMCoreUtils.getService(WCMComposer.class)
+                    .getContent(nodeLocationByNode.getWorkspace(),
+                            nodeLocationByNode.getPath(),
+                            new HashMap<>(),
+                            WCMCoreUtils.getSystemSessionProvider());
+
+
+            return content.getNode("default.html/jcr:content").getProperty("jcr:data").getString();
+        } catch (Exception e) {
             throw new FunctionalConfigurationRuntimeException(e.getMessage());
         }
     }
