@@ -27,6 +27,6 @@
   "functionalConfiguration.highlightSpaces.edit.group": "Groupe",
   "functionalConfiguration.highlightSpaces.edit.close": "Fermer",
   "functionalConfiguration.highlightSpaces.edit.save": "Sauvegarder",
-  "functionalConfiguration.termsAndConditionsWebContentUrl.info": "Le fichier doit se trouver dans le dossier collaboration (ex : /charte.pdf). Le document doit être versionné.",
+  "functionalConfiguration.termsAndConditionsWebContentUrl.info": "Chemin du fichier de la charte dans le workspace collaboration (par exemple /sites/intranet/web contents/terms). La dernière version publiée est utilisée.",
   "functionalConfiguration.termsAndConditions.fileNotFound": "Le contenu de la charte utilisateur est introuvable à cet emplacement : {url}"
 }
