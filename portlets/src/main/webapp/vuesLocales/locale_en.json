@@ -20,7 +20,7 @@
   "functionalConfiguration.table.empty": "No data",
   "functionalConfiguration.activeTermsAndConditions": "Enable terms and conditions",
   "functionalConfiguration.termsAndConditionsWebContentUrl": "Terms and conditions content path",
-  "functionalConfiguration.termsAndConditionsWebContentUrl.info": "Webcontent link should be into collaboration shared folder (eg:/myTerms.pdf). This document should have a version.",
+  "functionalConfiguration.termsAndConditionsWebContentUrl.info": "Path of the content in the collaboration workspace (for example /sites/intranet/web contents/terms). The latest published version is used.",
   "functionalConfiguration.table.group": "Group: ",
   "functionalConfiguration.table.order": "Order: ",
   "functionalConfiguration.highlightSpaces.edit.portletName": "Portlet name: ",
