@@ -1,12 +1,9 @@
 package org.exoplatform.termsconditions;
 
-import org.exoplatform.ecm.jcr.model.VersionNode;
+import org.apache.commons.lang.StringUtils;
 import org.exoplatform.rest.response.TermsAndConditions;
 import org.exoplatform.service.FunctionalConfigurationService;
 import org.exoplatform.service.exception.FunctionalConfigurationRuntimeException;
-import org.exoplatform.services.jcr.RepositoryService;
-import org.exoplatform.services.jcr.ext.app.SessionProviderService;
-import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.social.core.identity.model.Profile;
@@ -14,10 +11,6 @@ import org.exoplatform.social.core.manager.IdentityManager;
 import org.exoplatform.utils.NodeUtils;
 
 import javax.jcr.Node;
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import static org.exoplatform.utils.IdentityUtils.findUserProfileByUserName;
@@ -53,11 +46,19 @@ public class TermsAndConditionsService {
 
     private String getCurrentTermsAndConditionsVersion() {
 
+        final String DEFAULT_DRAFT_VERSION_NAME = "jcr:rootVersion";
+
         TermsAndConditions termsAndConditions = functionalConfigurationService.getTermsAndConditions();
         Node termsAndConditionsNode = NodeUtils.findCollaborationFile(termsAndConditions.getWebContentUrl());
 
         try {
-            return termsAndConditionsNode.getBaseVersion().getName();
+            String name = termsAndConditionsNode.getBaseVersion().getName();
+
+            if (DEFAULT_DRAFT_VERSION_NAME.equals(name)) {
+                throw new FunctionalConfigurationRuntimeException("invalid.termsAndConditions");
+            }
+
+            return name;
         } catch (Exception e) {
             throw new FunctionalConfigurationRuntimeException("invalid.termsAndConditions");
         }
@@ -80,9 +81,12 @@ public class TermsAndConditionsService {
     boolean isTermsAndConditionsActive()  {
 
         TermsAndConditions termsAndConditions = functionalConfigurationService.getTermsAndConditions();
+
         boolean isValidFile;
         try {
-            isValidFile = Objects.nonNull(NodeUtils.findCollaborationFile(termsAndConditions.getWebContentUrl()));
+            String currentVersion = getCurrentTermsAndConditionsVersion();
+            isValidFile = Objects.nonNull(NodeUtils.findCollaborationFile(termsAndConditions.getWebContentUrl()))
+                    && StringUtils.isNotEmpty(currentVersion);
         } catch (Exception e) {
             return false;
         }
